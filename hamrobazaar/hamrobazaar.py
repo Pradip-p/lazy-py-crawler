@@ -11,6 +11,9 @@ from lazy_crawler.crawler.spiders.base_crawler import LazyBaseCrawler
 from lazy_crawler.lib.user_agent import get_user_agent
 from lazy_crawler.lib.html import to_browser
 from lazy_crawler.lib.forms import get_form_fields
+# from lazy_crawler.puppeteer.puppeteer import browse
+from lazy_crawler.puppeteer.puppeteer import browse
+
 
 class LazyCrawler(scrapy.Spider):
     
@@ -25,10 +28,12 @@ class LazyCrawler(scrapy.Spider):
         yield scrapy.Request(url, self.parse, dont_filter=True)
 
     def parse(self, response):
-        to_browser(response)
+        # to_browser(response)
+        browse(response)
+        
         #get get_form_fields    
-        form_fields = get_form_fields(selector='//form', response=response, selector_type='xpath', excluded_fields=[], allowed_fields=[])
-        print(form_fields)
+        # form_fields = get_form_fields(selector='//form', response=response, selector_type='xpath', excluded_fields=[], allowed_fields=[])
+        # print(form_fields)
 
 
 settings_file_path = 'lazy_crawler.crawler.settings'

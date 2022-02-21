@@ -10,6 +10,8 @@ from scrapy.utils.project import get_project_settings
 from lazy_crawler.crawler.spiders.base_crawler import LazyBaseCrawler
 from lazy_crawler.lib.user_agent import get_user_agent
 from lazy_crawler.lib.html import to_browser
+from lazy_crawler.lib.image import process_image_instagram
+
 
 class LazyCrawler(LazyBaseCrawler):
     
@@ -39,6 +41,8 @@ class LazyCrawler(LazyBaseCrawler):
         sku = response.xpath('//span[@class="sku_wrapper"]/span[@class="sku"]/text()').extract_first()
         desc = response.xpath('//div[@class="richText-root-2t- "]//text()').extract()
         # import ipdb; ipdb.set_trace()
+        #download image
+        res=process_image_instagram(image_url, "random")
         
         yield{
             

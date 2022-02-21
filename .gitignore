@@ -127,3 +127,15 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+*.csv
+*.json
+*.log
+*.msg
+*.pyre
+*.pyre_cache
+*.pyre_out
+*.xlsx
+*.xls
+*.xlsm
+*.xlsb
+*.xml

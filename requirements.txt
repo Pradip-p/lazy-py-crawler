@@ -1,0 +1,13 @@
+Scrapy
+ipdb
+protobuf
+ruamel.yaml
+s3transfer
+pillow
+pyppeteer
+pandas
+googletrans
+pdfminer.six
+PyYAML
+openpyxl
+LazyPyProcessor is a modified version of the popular open-source web scraping framework, Scrapy, that is designed for easy of setup and use. It includes a predefined library of functions and utilities that make it easy to extract and process data from websites.

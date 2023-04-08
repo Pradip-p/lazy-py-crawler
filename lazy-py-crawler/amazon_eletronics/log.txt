@@ -2590,3 +2590,471 @@ INFO: Dumping Scrapy stats:
  'scheduler/enqueued/disk': 323,
  'start_time': datetime.datetime(2023, 1, 22, 10, 17, 6, 696135)}
 INFO: Spider closed (shutdown)
+INFO: Scrapy 2.8.0 started (bot: lazy_py_crawler)
+INFO: Versions: lxml 4.9.2.0, libxml2 2.9.14, cssselect 1.2.0, parsel 1.7.0, w3lib 2.1.1, Twisted 22.10.0, Python 3.10.6 (main, Mar 10 2023, 10:55:28) [GCC 11.3.0], pyOpenSSL 23.1.1 (OpenSSL 3.1.0 14 Mar 2023), cryptography 40.0.1, Platform Linux-5.19.0-38-generic-x86_64-with-glibc2.35
+INFO: Overridden settings:
+{'AUTOTHROTTLE_DEBUG': True,
+ 'AUTOTHROTTLE_ENABLED': True,
+ 'AUTOTHROTTLE_MAX_DELAY': 0.25,
+ 'AUTOTHROTTLE_START_DELAY': 1,
+ 'AUTOTHROTTLE_TARGET_CONCURRENCY': 128,
+ 'BOT_NAME': 'lazy_py_crawler',
+ 'CONCURRENT_REQUESTS': 1,
+ 'CONCURRENT_REQUESTS_PER_DOMAIN': 1,
+ 'CONCURRENT_REQUESTS_PER_IP': 1,
+ 'DOWNLOAD_DELAY': 4,
+ 'DOWNLOAD_TIMEOUT': 500,
+ 'FEED_EXPORT_ENCODING': 'utf-8',
+ 'NEWSPIDER_MODULE': 'lazy_crawler.crawler.spiders',
+ 'RANDOMIZE_DOWNLOAD_DELAY': False,
+ 'REACTOR_THREADPOOL_MAXSIZE': 128,
+ 'RETRY_HTTP_CODES': [500,
+                      502,
+                      503,
+                      504,
+                      400,
+                      401,
+                      403,
+                      404,
+                      405,
+                      406,
+                      407,
+                      408,
+                      409,
+                      410,
+                      429],
+ 'RETRY_TIMES': 4,
+ 'SPIDER_MODULES': ['lazy_crawler.crawler.spiders'],
+ 'USER_AGENT': 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 '
+               'Firefox/36.0'}
+WARNING: /home/pradip/.virtualenvs/lazy/lib/python3.10/site-packages/scrapy/utils/request.py:232: ScrapyDeprecationWarning: '2.6' is a deprecated value for the 'REQUEST_FINGERPRINTER_IMPLEMENTATION' setting.
+
+It is also the default value. In other words, it is normal to get this warning if you have not defined a value for the 'REQUEST_FINGERPRINTER_IMPLEMENTATION' setting. This is so for backward compatibility reasons, but it will change in a future version of Scrapy.
+
+See the documentation of the 'REQUEST_FINGERPRINTER_IMPLEMENTATION' setting for information on how to handle this deprecation.
+  return cls(crawler)
+
+DEBUG: Using reactor: twisted.internet.epollreactor.EPollReactor
+INFO: Telnet Password: b76791610a4a1e02
+INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats',
+ 'scrapy.extensions.spiderstate.SpiderState',
+ 'scrapy.extensions.throttle.AutoThrottle']
+INFO: Enabled downloader middlewares:
+['scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'lazy_crawler.crawler.middlewares.RandomUserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.cookies.CookiesMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'lazy_crawler.crawler.middlewares.CrawlerSpiderMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware']
+INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+INFO: Enabled item pipelines:
+['lazy_crawler.crawler.pipelines.CSVPipeline']
+INFO: Spider opened
+INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+INFO: Spider opened: amazon
+INFO: Telnet console listening on 127.0.0.1:6024
+INFO: slot: www.amazon.com | conc: 1 | delay:  250 ms (-3750) | latency:  393 ms | size:124547 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/s?k=Electronics> (referer: None)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (-3750) | latency:  409 ms | size:359427 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B003D3NEEU/> (referer: https://www.amazon.com/s?k=Electronics&page=8)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B003D3NEEU/>
+{'title': 'Metra Electronics 95-2001 Double DIN Installation Dash Kit for Select 1994 - 2012 GM Vehicles (packaging may vary)', 'Rating': '18,208 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  779 ms | size:274221 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B0BNYXG4Y7/> (referer: https://www.amazon.com/s?k=Electronics)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B0BNYXG4Y7/>
+{'title': 'How To Do Wiring Repairs Easily for Beginners: Step By Step Guide on How to Do Simple Electrical Wiring Projects in And Around Your Home (For Both US And U.K.)', 'Rating': '1 rating'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  326 ms | size:118632 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/s?k=Electronics&page=2> (referer: https://www.amazon.com/dp/B003D3NEEU/)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  380 ms | size:124420 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/s?k=Electronics&page=3> (referer: https://www.amazon.com/dp/B0BNYXG4Y7/)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  396 ms | size:272087 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B0BNTWF6YL/> (referer: https://www.amazon.com/s?k=Electronics&page=2)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B0BNTWF6YL/>
+{'title': 'How To Do Wiring Repairs Easily for Beginners: Step By Step Guide on How to Do Simple Electrical Wiring Projects in And Around Your Home (For Both US And U.K.)', 'Rating': '1 rating'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  397 ms | size:239271 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B00XIHE5VM/> (referer: https://www.amazon.com/s?k=Electronics&page=3)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B00XIHE5VM/>
+{'title': 'Electronics: A Physical Approach', 'Rating': '7 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  324 ms | size:121782 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/s?k=Electronics&page=4> (referer: https://www.amazon.com/dp/B0BNTWF6YL/)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  283 ms | size:119171 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/s?k=Electronics&page=5> (referer: https://www.amazon.com/dp/B00XIHE5VM/)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency: 1695 ms | size:236332 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B086FNYH28/> (referer: https://www.amazon.com/s?k=Electronics&page=4)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B086FNYH28/>
+{'title': '', 'Rating': None}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  853 ms | size:361760 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B08F81BWHL/> (referer: https://www.amazon.com/s?k=Electronics&page=5)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B08F81BWHL/>
+{'title': 'ASURION 3 Year Portable Electronic Accident Protection Plan ($500 - $599.99)', 'Rating': '461 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  302 ms | size:119989 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/s?k=Electronics&page=6> (referer: https://www.amazon.com/dp/B086FNYH28/)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  309 ms | size:120657 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/s?k=Electronics&page=7> (referer: https://www.amazon.com/dp/B08F81BWHL/)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  369 ms | size:382887 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B07Q38SCGL/> (referer: https://www.amazon.com/s?k=Electronics&page=6)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B07Q38SCGL/>
+{'title': 'ASURION 3 Year Electronics Protection Plan ($30 - $39.99)', 'Rating': '39,983 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  888 ms | size:387631 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B07Q46QWKG/> (referer: https://www.amazon.com/s?k=Electronics&page=7)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B07Q46QWKG/>
+{'title': 'ASURION 3 Year Portable Electronic Accident Protection Plan ($50 - $59.99)', 'Rating': '16,117 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  293 ms | size:123086 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/s?k=Electronics&page=8> (referer: https://www.amazon.com/dp/B07Q38SCGL/)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  293 ms | size:121651 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/s?k=Electronics&page=9> (referer: https://www.amazon.com/dp/B07Q46QWKG/)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  374 ms | size:427662 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B09J8SXVT1/> (referer: https://www.amazon.com/s?k=Electronics&page=8)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B09J8SXVT1/>
+{'title': 'SAMSUNG Electronics Galaxy Book Odyssey Intel Laptop Computer 15.6" LED Screen Intel Core i7 Processor 16GB Memory 512GB SSD Long-Lasting Battery, Mystic Black', 'Rating': '44 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  393 ms | size:383879 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B07RZ58571/> (referer: https://www.amazon.com/s?k=Electronics&page=9)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B07RZ58571/>
+{'title': 'Kwikset SmartCode 955 Keypad Electronic Lever Door Lock Deadbolt Alternative with Pembroke Door Handle Lever Featuring SmartKey Security in Venetian Bronze', 'Rating': '3,448 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  309 ms | size:123163 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/s?k=Electronics&page=10> (referer: https://www.amazon.com/dp/B09J8SXVT1/)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  359 ms | size:119997 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/s?k=Electronics&page=11> (referer: https://www.amazon.com/dp/B07RZ58571/)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  360 ms | size:305345 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B07PC3VJK2/> (referer: https://www.amazon.com/s?k=Electronics&page=10)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B07PC3VJK2/>
+{'title': 'ASURION 2 Year Portable Electronic Accident Protection Plan ($300 - $349.99)', 'Rating': '1,973 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  398 ms | size:269463 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/0131110667/> (referer: https://www.amazon.com/s?k=Electronics&page=11)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/0131110667/>
+{'title': 'Electronics: A Complete Course', 'Rating': '19 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  285 ms | size:123527 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/s?k=Electronics&page=12> (referer: https://www.amazon.com/dp/B07PC3VJK2/)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  273 ms | size:122192 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/s?k=Electronics&page=13> (referer: https://www.amazon.com/dp/0131110667/)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  378 ms | size:410871 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B01LVW1IM2/> (referer: https://www.amazon.com/s?k=Electronics&page=12)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B01LVW1IM2/>
+{'title': 'Wilson Electronics 4G Omni Residential Antenna 700-2700 MHz, 75 Ohm (304421)', 'Rating': '1,612 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  373 ms | size:383640 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B008PEKYA4/> (referer: https://www.amazon.com/s?k=Electronics&page=13)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B008PEKYA4/>
+{'title': 'Snap Circuits LIGHT Electronics Exploration Kit | Over 175 Exciting STEM Projects | Full Color Project Manual | 55+ Snap Circuits Parts | STEM Educational Toys for Kids 8+,Multi', 'Rating': '3,252 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  296 ms | size:121090 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/s?k=Electronics&page=14> (referer: https://www.amazon.com/dp/B01LVW1IM2/)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  316 ms | size:121272 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/s?k=Electronics&page=15> (referer: https://www.amazon.com/dp/B008PEKYA4/)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  411 ms | size:320984 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B06XF9BNHN/> (referer: https://www.amazon.com/s?k=Electronics&page=14)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B06XF9BNHN/>
+{'title': 'TC Electronic Hall of Fame 2 Reverb Pedal', 'Rating': '478 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  374 ms | size:294351 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B0B2F3JVM8/> (referer: https://www.amazon.com/s?k=Electronics&page=15)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B0B2F3JVM8/>
+{'title': 'STAR WARS Boba Fett Electronic Mask with Sound Effects, Costume for Kids, Toys for 5 Year Old Boys and Girls', 'Rating': None}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  298 ms | size:119778 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/s?k=Electronics&page=16> (referer: https://www.amazon.com/dp/B06XF9BNHN/)
+INFO: Crawled 32 pages (at 32 pages/min), scraped 16 items (at 16 items/min)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  308 ms | size:122938 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/s?k=Electronics&page=17> (referer: https://www.amazon.com/dp/B0B2F3JVM8/)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  356 ms | size:324655 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B0BVCP2LNN/> (referer: https://www.amazon.com/s?k=Electronics&page=16)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B0BVCP2LNN/>
+{'title': 'President Electronics Harrison FCC AM/FM Mobile CB Radio with CTCSS/DCS', 'Rating': None}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  406 ms | size:364749 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B01N39QLRQ/> (referer: https://www.amazon.com/s?k=Electronics&page=17)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B01N39QLRQ/>
+{'title': "Walker's Razor Slim Electronic Quad Earmuff 23Db/Realtree Xtra Camo", 'Rating': '806 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  334 ms | size:123995 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/s?k=Electronics&page=18> (referer: https://www.amazon.com/dp/B0BVCP2LNN/)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  298 ms | size:122882 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/s?k=Electronics&page=19> (referer: https://www.amazon.com/dp/B01N39QLRQ/)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  470 ms | size:347614 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B01NBR9ZMZ/> (referer: https://www.amazon.com/s?k=Electronics&page=18)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B01NBR9ZMZ/>
+{'title': 'Western Rivers Mantis 25 Compact Easy-to-Use Electronic Call for Hunting with Hand Lanyard', 'Rating': '278 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  386 ms | size:379761 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B08R999QQT/> (referer: https://www.amazon.com/s?k=Electronics&page=19)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B08R999QQT/>
+{'title': 'Snap Circuits Green Energy Electronics Exploration Kit | Over 125 Exciting STEM Projects | Full Color Project Manual | 45+ Snap Circuits Parts | STEM Educational Toys for Kids 8+', 'Rating': '3,403 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  286 ms | size:107512 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/s?k=Electronics&page=20> (referer: https://www.amazon.com/dp/B01NBR9ZMZ/)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  305 ms | size:112901 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/s?k=Electronics&page=21> (referer: https://www.amazon.com/dp/B08R999QQT/)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  415 ms | size:382654 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B06VWM97KK/> (referer: https://www.amazon.com/s?k=Electronics&page=20)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B06VWM97KK/>
+{'title': 'Howard Leight - R-02232 Impact Sport Bolt Digital Electronic Shooting Earmuff, Gray', 'Rating': '1,221 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  398 ms | size:316845 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B0B6GKQKRR/> (referer: https://www.amazon.com/s?k=Electronics&page=20)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B0B6GKQKRR/>
+{'title': 'Pyle 2-Way Electronic Crossover Network PLXR2B - Independent High-Pass/Low-Pass Output Level Controls', 'Rating': '11 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  390 ms | size:353075 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B0087OS83M/> (referer: https://www.amazon.com/s?k=Electronics&page=19)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B0087OS83M/>
+{'title': 'TC Electronic SPARK BOOSTER Awesome Booster Pedal with Gain Control and Active EQ', 'Rating': '293 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  441 ms | size:389753 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B0009VFOME/> (referer: https://www.amazon.com/s?k=Electronics&page=19)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B0009VFOME/>
+{'title': 'Directed Electronics Install essentials Dual Zone Motion Sensor 508d', 'Rating': '602 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  472 ms | size:390479 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B003D1QPHK/> (referer: https://www.amazon.com/s?k=Electronics&page=19)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B003D1QPHK/>
+{'title': 'Wilson Electronics Pole Mount for weBoost Outside Home Antenna - 901117 - 10" length', 'Rating': '3,901 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  388 ms | size:384391 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B06VWM97KK/> (referer: https://www.amazon.com/s?k=Electronics&page=19)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B06VWM97KK/>
+{'title': 'Howard Leight - R-02232 Impact Sport Bolt Digital Electronic Shooting Earmuff, Gray', 'Rating': '1,221 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  402 ms | size:322017 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B0B6GKQKRR/> (referer: https://www.amazon.com/s?k=Electronics&page=19)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B0B6GKQKRR/>
+{'title': 'Pyle 2-Way Electronic Crossover Network PLXR2B - Independent High-Pass/Low-Pass Output Level Controls', 'Rating': '11 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  402 ms | size:300349 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B08ZN82HH7/> (referer: https://www.amazon.com/s?k=Electronics&page=19)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B08ZN82HH7/>
+{'title': 'Echo Show 8 (2nd Gen, 2021 release) - Charcoal bundle with Blink Mini', 'Rating': '64,841 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  376 ms | size:322825 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B005GEMC06/> (referer: https://www.amazon.com/s?k=Electronics&page=19)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B005GEMC06/>
+{'title': 'CDI Electronics 133-3376 Johnson/Evinrude Timer Base - 4 Cyl (1978-1987)', 'Rating': '20 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  395 ms | size:323664 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B002IZKBU4/> (referer: https://www.amazon.com/s?k=Electronics&page=19)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B002IZKBU4/>
+{'title': 'CDI Electronics 173-3724 Johnson/Evinrude Stator - 3 Cyl. 9 Amp (1979-1990)', 'Rating': '28 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  488 ms | size:407208 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B078H89R6R/> (referer: https://www.amazon.com/s?k=Electronics&page=19)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B078H89R6R/>
+{'title': 'TOTO SW3056#01 S550E Electronic Bidet Toilet Seat with Cleansing Warm, Nightlight, Auto Open and Close Lid, Instantaneous Water Heating, and EWATER+, Elongated Contemporary, Cotton White', 'Rating': '1,078 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  408 ms | size:379234 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B0BSYFB99D/> (referer: https://www.amazon.com/s?k=Electronics&page=19)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B0BSYFB99D/>
+{'title': 'DualSense Edge Wireless Controller', 'Rating': '71,891 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  411 ms | size:368502 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B005EXOF8Q/> (referer: https://www.amazon.com/s?k=Electronics&page=19)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B005EXOF8Q/>
+{'title': 'Electronics Super Knips-ESD Handles', 'Rating': '180 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  393 ms | size:334444 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B06XDJPSFB/> (referer: https://www.amazon.com/s?k=Electronics&page=19)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B06XDJPSFB/>
+{'title': 'Windex Electronics Wipes, Pre-Moistened, Provides Streak-Free Shine, 25 Count (Pack of 3)', 'Rating': '208 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  365 ms | size:388113 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B01GF0KV6G/> (referer: https://www.amazon.com/s?k=Electronics&page=19)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B01GF0KV6G/>
+{'title': 'iFixit Pro Tech Toolkit - Electronics, Smartphone, Computer & Tablet Repair Kit', 'Rating': '15,492 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  393 ms | size:276180 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B0924W33PP/> (referer: https://www.amazon.com/s?k=Electronics&page=19)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B0924W33PP/>
+{'title': "Walker's Razor Slim Electronic MUFF - Battle Brown, One Size, (GWP-RSEM-BB)", 'Rating': '14 ratings'}
+INFO: Crawled 57 pages (at 25 pages/min), scraped 36 items (at 20 items/min)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  376 ms | size:357436 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B00MWQ7FGM/> (referer: https://www.amazon.com/s?k=Electronics&page=19)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B00MWQ7FGM/>
+{'title': 'Nix Electronic Lice Comb Instantly Kills Lice & Eggs and Removes From Hair, White/Blue, 1 Count (Pack of 1)', 'Rating': '9,413 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  399 ms | size:271979 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/0367656248/> (referer: https://www.amazon.com/s?k=Electronics&page=18)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/0367656248/>
+{'title': 'FPGAs (Industrial Electronics)', 'Rating': None}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  374 ms | size:293441 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B07PBD887Z/> (referer: https://www.amazon.com/s?k=Electronics&page=18)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B07PBD887Z/>
+{'title': 'ASURION 2 Year Electronics Protection Plan ($1500 - $1999.99)', 'Rating': '50 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  372 ms | size:378569 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B0BSYFB99D/> (referer: https://www.amazon.com/s?k=Electronics&page=18)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B0BSYFB99D/>
+{'title': 'DualSense Edge Wireless Controller', 'Rating': '71,891 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  435 ms | size:397851 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B00JJY0S4G/> (referer: https://www.amazon.com/s?k=Electronics&page=18)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B00JJY0S4G/>
+{'title': 'Lutron Caséta Wireless Smart Lighting Dimmer Switch and Remote Kit | P-PKG1W-WH', 'Rating': '1,531 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  370 ms | size:410867 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B01EZ0X55C/> (referer: https://www.amazon.com/s?k=Electronics&page=18)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B01EZ0X55C/>
+{'title': 'SanDisk 128GB Ultra Dual Drive USB Type-C - USB-C, USB 3.1 - SDDDC2-128G-G46', 'Rating': '87,670 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  376 ms | size:404700 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B016KNIJHG/> (referer: https://www.amazon.com/s?k=Electronics&page=18)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B016KNIJHG/>
+{'title': 'Alesis CompactKit 4 – Tabletop Electric Drum Set with 70 Electronic and Acoustic Drum Kit Sounds, 4 Pads, and Drum Sticks', 'Rating': '4,833 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  369 ms | size:302685 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B00000IRMM/> (referer: https://www.amazon.com/s?k=Electronics&page=18)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B00000IRMM/>
+{'title': 'Educational Insights MathShark Electronic Math Game for Kids Ages 6+, Addition, Subtraction, Multiplication & Division, Fractions & More, Classroom Supply', 'Rating': '1,935 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  379 ms | size:362341 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B01N39QLRQ/> (referer: https://www.amazon.com/s?k=Electronics&page=18)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B01N39QLRQ/>
+{'title': "Walker's Razor Slim Electronic Quad Earmuff 23Db/Realtree Xtra Camo", 'Rating': '806 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  423 ms | size:267174 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B0002FROSY/> (referer: https://www.amazon.com/s?k=Electronics&page=18)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B0002FROSY/>
+{'title': 'NTE Electronics NTE5344 Silicon Bridge Rectifier, Single Phase, 40 Amps Average Forward Current, 1000V Peak Reverse Voltage', 'Rating': '21 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  478 ms | size:305606 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B07T17GBSB/> (referer: https://www.amazon.com/s?k=Electronics&page=18)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B07T17GBSB/>
+{'title': 'Bulova Mens Archive Series LED Computron Stainless Steel Watch', 'Rating': '231 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  415 ms | size:326894 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B08467TJ3Y/> (referer: https://www.amazon.com/s?k=Electronics&page=18)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B08467TJ3Y/>
+{'title': 'AIP Electronics Ignition Upgrade Kit Compatible With Ford Trucks & Tractors 2N 8N 9N w/ 12v Negative Ground COMPLETE TUNE UP KIT Cap Rotor Module Coil Suppression Spark Plug Wire Factory Fit KIT-8NMN', 'Rating': '13 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  387 ms | size:398071 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B00KY4Q7DG/> (referer: https://www.amazon.com/s?k=Electronics&page=18)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B00KY4Q7DG/>
+{'title': 'Wilson Electronics 311125 Dual-Band Magnet Mount Antenna 800/1900 MHz Omni Directional w/ 12.5 ft. RG174 Cable and SMA Male Connector', 'Rating': '1,435 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  896 ms | size:376653 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B00AZUAORE/> (referer: https://www.amazon.com/s?k=Electronics&page=18)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B00AZUAORE/>
+{'title': 'TC Electronic DITTO LOOPER Highly Intuitive Looper Pedal with 5 Minutes of Looping Time, Analog-Dry-Through and True Bypass', 'Rating': '2,547 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  390 ms | size:317834 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B0854CH9WR/> (referer: https://www.amazon.com/s?k=Electronics&page=18)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B0854CH9WR/>
+{'title': 'Metra Electronics Dodge Ram 1994-1997', 'Rating': '25 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  370 ms | size:297815 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B01LZITKXC/> (referer: https://www.amazon.com/s?k=Electronics&page=18)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B01LZITKXC/>
+{'title': 'Viper Showdown Electronic Dartboard Sport Size Over 30 Games with 590 Options Automatic Scoring LCD Display Missed-Dart Catch Band Battery Operated Included Soft Tip Darts with Replacement Points', 'Rating': '723 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  365 ms | size:266720 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B0002FROSY/> (referer: https://www.amazon.com/s?k=Electronics&page=17)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B0002FROSY/>
+{'title': 'NTE Electronics NTE5344 Silicon Bridge Rectifier, Single Phase, 40 Amps Average Forward Current, 1000V Peak Reverse Voltage', 'Rating': '21 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  389 ms | size:306806 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B07T17GBSB/> (referer: https://www.amazon.com/s?k=Electronics&page=17)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B07T17GBSB/>
+{'title': 'Bulova Mens Archive Series LED Computron Stainless Steel Watch', 'Rating': '231 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  363 ms | size:326300 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B08467TJ3Y/> (referer: https://www.amazon.com/s?k=Electronics&page=17)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B08467TJ3Y/>
+{'title': 'AIP Electronics Ignition Upgrade Kit Compatible With Ford Trucks & Tractors 2N 8N 9N w/ 12v Negative Ground COMPLETE TUNE UP KIT Cap Rotor Module Coil Suppression Spark Plug Wire Factory Fit KIT-8NMN', 'Rating': '13 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  381 ms | size:355614 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B00KY4Q7DG/> (referer: https://www.amazon.com/s?k=Electronics&page=17)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B00KY4Q7DG/>
+{'title': 'Wilson Electronics 311125 Dual-Band Magnet Mount Antenna 800/1900 MHz Omni Directional w/ 12.5 ft. RG174 Cable and SMA Male Connector', 'Rating': '1,435 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  424 ms | size:374947 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B00AZUAORE/> (referer: https://www.amazon.com/s?k=Electronics&page=17)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B00AZUAORE/>
+{'title': 'TC Electronic DITTO LOOPER Highly Intuitive Looper Pedal with 5 Minutes of Looping Time, Analog-Dry-Through and True Bypass', 'Rating': '2,547 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  374 ms | size:319671 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B0854CH9WR/> (referer: https://www.amazon.com/s?k=Electronics&page=17)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B0854CH9WR/>
+{'title': 'Metra Electronics Dodge Ram 1994-1997', 'Rating': '25 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  400 ms | size:377572 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B0BFJWCYTL/> (referer: https://www.amazon.com/s?k=Electronics&page=17)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B0BFJWCYTL/>
+{'title': 'Nintendo Switch™ with Neon Blue and Neon Red Joy‑Con™', 'Rating': '1,986 ratings'}
+INFO: Crawled 80 pages (at 23 pages/min), scraped 59 items (at 23 items/min)
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  371 ms | size:293915 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B01LZITKXC/> (referer: https://www.amazon.com/s?k=Electronics&page=17)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B01LZITKXC/>
+{'title': 'Viper Showdown Electronic Dartboard Sport Size Over 30 Games with 590 Options Automatic Scoring LCD Display Missed-Dart Catch Band Battery Operated Included Soft Tip Darts with Replacement Points', 'Rating': '723 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  372 ms | size:350725 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B0857CYHK1/> (referer: https://www.amazon.com/s?k=Electronics&page=17)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B0857CYHK1/>
+{'title': 'TC Electronic PLETHORA X5 TonePrint Pedal Board Loaded with all Your Favorite FX and 5 MASH Footswitches', 'Rating': '187 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  386 ms | size:358844 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B000PUDZKW/> (referer: https://www.amazon.com/s?k=Electronics&page=17)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B000PUDZKW/>
+{'title': 'Bird-X BirdXPeller® Pro Electronic Bird Repeller Version 1 for Pigeons, Starlings, Sparrows, & Gulls', 'Rating': '472 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  387 ms | size:393072 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B00IK06XM6/> (referer: https://www.amazon.com/s?k=Electronics&page=17)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B00IK06XM6/>
+{'title': 'Kwikset 99130-003 SmartCode 913 Non-Connected Keyless Entry Electronic Keypad Deadbolt Door Lock Featuring SmartKey Security, Traditional Venetian Bronze', 'Rating': '7,151 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  376 ms | size:308906 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B079LZL13R/> (referer: https://www.amazon.com/s?k=Electronics&page=17)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B079LZL13R/>
+{'title': 'TC Electronic TUBE PILOT OVERDRIVE 12AX7-Equipped Real Tube Overdrive Pedal with Warm and Expressive Sound', 'Rating': '91 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  383 ms | size:351627 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B06Y42MJ4N/> (referer: https://www.amazon.com/s?k=Electronics&page=17)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B06Y42MJ4N/>
+{'title': 'TC Electronic FLASHBACK 2 DELAY Legendary Delay Pedal with Groundbreaking MASH Footswitch, Crystal Delay Effect and Built-In TonePrint Technology', 'Rating': '529 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  386 ms | size:374197 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B005UMF3H8/> (referer: https://www.amazon.com/s?k=Electronics&page=17)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B005UMF3H8/>
+{'title': 'Endust for Electronics Screen Cleaner Spray, Electronic Anti-Static Cleaning Gel and dusting Pump Multi-Surface Spray, for Tablet, Laptop, and Computer Screens, Monitor and Keyboard, 8 oz (097000P12)', 'Rating': '7 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  382 ms | size:316998 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B005GEF3WA/> (referer: https://www.amazon.com/s?k=Electronics&page=17)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B005GEF3WA/>
+{'title': 'CDI Electronics 511-9773NL DVA Adapter', 'Rating': '14 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  375 ms | size:395960 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B00JJY0S4G/> (referer: https://www.amazon.com/s?k=Electronics&page=16)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B00JJY0S4G/>
+{'title': 'Lutron Caséta Wireless Smart Lighting Dimmer Switch and Remote Kit | P-PKG1W-WH', 'Rating': '1,531 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  387 ms | size:398516 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B0016DUM44/> (referer: https://www.amazon.com/s?k=Electronics&page=16)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B0016DUM44/>
+{'title': 'Schlage BE365 CAM 505 Camelot Keypad Deadbolt, Electronic Keyless Entry Lock, Bright Brass', 'Rating': '15,198 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  393 ms | size:380753 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B07PNC5MPB/> (referer: https://www.amazon.com/s?k=Electronics&page=16)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B07PNC5MPB/>
+{'title': 'Klein Tools 32614 Multi-bit Precision Screwdriver Set, 4-in-1 Electronics Pocket Screwdriver, Professional Phillips and Slotted Bits', 'Rating': '8,421 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  399 ms | size:378400 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B00P871NOW/> (referer: https://www.amazon.com/s?k=Electronics&page=16)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B00P871NOW/>
+{'title': 'Snap Circuits 203 Electronics Exploration Kit | Over 200 STEM Projects | Full Color Project Manual | 42 Snap Modules | Unlimited Fun', 'Rating': '993 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  416 ms | size:416880 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B003EEMDMC/> (referer: https://www.amazon.com/s?k=Electronics&page=16)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B003EEMDMC/>
+{'title': 'Endust for Electronics, CD/DVD Lens Cleaner, Blu Ray, Great for desktop computers and players (262000)', 'Rating': '9,023 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  404 ms | size:343133 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B084YNM9VF/> (referer: https://www.amazon.com/s?k=Electronics&page=16)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B084YNM9VF/>
+{'title': 'Fisher-Price Little People Toddler Learning Toy Caring For Animals Farm Electronic Playset With Smart Stages For Ages 1+ Years', 'Rating': '12,181 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  354 ms | size:273682 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/0367656248/> (referer: https://www.amazon.com/s?k=Electronics&page=16)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/0367656248/>
+{'title': 'FPGAs (Industrial Electronics)', 'Rating': None}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  370 ms | size:389376 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B07V9PGGQF/> (referer: https://www.amazon.com/s?k=Electronics&page=16)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B07V9PGGQF/>
+{'title': 'Wilson Electronics 850034 Wideband 2-Way Splitter with F-Female Connector, Black', 'Rating': '24 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  377 ms | size:305762 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B07T17GBSB/> (referer: https://www.amazon.com/s?k=Electronics&page=16)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B07T17GBSB/>
+{'title': 'Bulova Mens Archive Series LED Computron Stainless Steel Watch', 'Rating': '231 ratings'}
+INFO: slot: 124.41.245.145 | conc: 1 | delay:  250 ms (+0) | latency:  373 ms | size:330897 bytes
+DEBUG: Crawled (200) <GET https://www.amazon.com/dp/B002Z32OHW/> (referer: https://www.amazon.com/s?k=Electronics&page=16)
+DEBUG: Scraped from <200 https://www.amazon.com/dp/B002Z32OHW/>
+{'title': 'Electronic Specialties 328 EZ Tach Plus', 'Rating': '424 ratings'}
+INFO: Received SIGINT, shutting down gracefully. Send again to force 
+INFO: Closing spider (shutdown)
+INFO: Received SIGINT twice, forcing unclean shutdown
+WARNING: Got data loss in https://www.amazon.com/dp/B0018PVVB8/. If you want to process broken responses set the setting DOWNLOAD_FAIL_ON_DATALOSS = False -- This message won't be shown in further requests
+DEBUG: Retrying <GET https://www.amazon.com/dp/B0018PVVB8/> (failed 1 times): [<twisted.python.failure.Failure twisted.internet.error.ConnectionLost: Connection to the other side was lost in a non-clean fashion: Connection lost.>, <twisted.python.failure.Failure twisted.web.http._DataLoss: Chunked decoder in 'CHUNK_LENGTH' state, still expecting more data to get to 'FINISHED' state.>]
+INFO: Dumping Scrapy stats:
+{'downloader/exception_count': 1,
+ 'downloader/exception_type_count/twisted.web._newclient.ResponseFailed': 1,
+ 'downloader/request_bytes': 70371,
+ 'downloader/request_count': 99,
+ 'downloader/request_method_count/GET': 99,
+ 'downloader/response_bytes': 29157614,
+ 'downloader/response_count': 98,
+ 'downloader/response_status_count/200': 98,
+ 'elapsed_time_seconds': 225.711893,
+ 'finish_reason': 'shutdown',
+ 'finish_time': datetime.datetime(2023, 4, 8, 3, 50, 49, 159229),
+ 'httpcompression/response_bytes': 146795504,
+ 'httpcompression/response_count': 98,
+ 'item_scraped_count': 77,
+ 'log_count/DEBUG': 177,
+ 'log_count/INFO': 114,
+ 'log_count/WARNING': 2,
+ 'memusage/max': 307453952,
+ 'memusage/startup': 88846336,
+ 'request_depth_max': 47,
+ 'response_received_count': 98,
+ 'retry/count': 1,
+ 'retry/reason_count/twisted.web._newclient.ResponseFailed': 1,
+ 'scheduler/dequeued': 99,
+ 'scheduler/dequeued/disk': 99,
+ 'scheduler/enqueued': 341,
+ 'scheduler/enqueued/disk': 341,
+ 'start_time': datetime.datetime(2023, 4, 8, 3, 47, 3, 447336)}
+INFO: Spider closed (shutdown)

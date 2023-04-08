@@ -18,7 +18,7 @@ or Alternatively, you can install LazyPyProcessor Scrapy by cloning the reposito
 git clone https://github.com/Pradip-p/lazy-py-processor.git
 ```
 ```
-cd lazy-py-processor
+cd lazy-py-crawler
 ```
 ```
 pip install . 
@@ -151,11 +151,11 @@ process.start() # the script will block here until the crawling is finished
 ```
 ## Further resources
 
-For more information and examples of how to use Lazy Py Processor, see the project documentation.
+For more information and examples of how to use Lazy Py Crawler, see the project documentation.
 ## Credits
 
-Lazy Py Processor was created by Pradip p.
+Lazy Py Crawler was created by Pradip p.
 
 ## License
 
-Lazy Py Processor is released under the MIT License.
+Lazy Py Crawler is released under the MIT License.

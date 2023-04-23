@@ -7,7 +7,7 @@ setup(
     name='lazy_crawler',
     version='0.1',
     description='Scrapy boiler plate for LazyScraping',
-    url='git@github.com:Pradip-p/lazy-py-processor.git',
+    url='git@github.com:Pradip-p/lazy-py-crawler.git',
     author='Pradip Thapa',
     author_email='lazy_crawler@gmail.com',
     license='private',

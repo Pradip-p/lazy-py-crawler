@@ -1,7 +1,7 @@
 import asyncio
 from pyppeteer import launch
 from typing import List
-from lazy_crawler.lib.user_agent import get_user_agent
+# from lazy_crawler.lib.user_agent import get_user_agent
 
 async def main(url: str, headless: bool, proxy: str = None, cookies: List[dict] = None, useragent: str = None,
                headers: dict = None, timeout: int = 0, close: bool = True):
@@ -74,10 +74,8 @@ def browse(url: str, headless: bool = True, proxy: str = None, cookies: list = N
     timeout=timeout, close=close))
     return data
 
-#main 
-# if __name__ =='__main__':
-#     url = 'https://www.yellowpages.com/'
 
-#     res = browse(url, headless=False,useragent=get_user_agent('random'))
-
-#     print(res)
+if __name__ == '__main__':
+    url = 'https://example.com'
+    res = browse(url, headless=False)
+    print(res)

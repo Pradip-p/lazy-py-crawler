@@ -65,7 +65,7 @@ class LazyCrawler(LazyBaseCrawler):
         text = [word.strip() for word in text]
         
         # Write the unique words to a file
-        with open('phrases.txt', 'a') as f:
+        with open('output.txt', 'a') as f:
             for word in set(text):
                 if word not in self.unique_words:
                     f.write(word + '\n')

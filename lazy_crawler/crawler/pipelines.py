@@ -3,6 +3,7 @@ from scrapy.exporters import CsvItemExporter
 import json
 from itemadapter import ItemAdapter
 import openpyxl
+from scrapy.utils.serialize import ScrapyJSONEncoder
 # from openpyxl.utils import get_column_letter
 # from scrapy.pipelines.images import ImagesPipeline
 # from scrapy.exceptions import DropItem
@@ -36,17 +37,34 @@ class CSVPipeline(object):
 class JsonWriterPipeline(object):
     def __init__(self):
         self.created_time = datetime.datetime.now()
+        self.items = []
 
     def open_spider(self, spider):
-        self.file = open(f'scraped_data_{self.created_time}.json', 'w', encoding='utf-8')
+        pass
 
     def close_spider(self, spider):
-        self.file.close()
+        file_name = f'scraped_data_{self.created_time}.json'
+        with open(file_name, 'w', encoding='utf-8') as f:
+            json.dump(self.items, f, indent=2, cls=ScrapyJSONEncoder, ensure_ascii=False)
 
     def process_item(self, item, spider):
-        line = json.dumps(ItemAdapter(item).asdict(), ensure_ascii=False) + "\n"
-        self.file.write(line)
+        self.items.append(ItemAdapter(item).asdict())
         return item
+    
+# class JsonWriterPipeline(object):
+#     def __init__(self):
+#         self.created_time = datetime.datetime.now()
+
+#     def open_spider(self, spider):
+#         self.file = open(f'scraped_data_{self.created_time}.json', 'w', encoding='utf-8')
+
+#     def close_spider(self, spider):
+#         self.file.close()
+
+#     def process_item(self, item, spider):
+#         line = json.dumps(ItemAdapter(item).asdict(), ensure_ascii=False) + "\n"
+#         self.file.write(line)
+#         return item
 
 
 class ExcelWriterPipeline(object):

@@ -129,10 +129,10 @@ class LazyCrawler(LazyBaseCrawler):
     def start_requests(self):
         alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         
-        url = 'https://www.phrases.com/letter/0'
-        # for letter in alphabet:
-            # url = 'https://www.phrases.com/letter/{}/'.format(letter)
-        yield scrapy.Request(url, self.parse_first_page, dont_filter=True)
+        # url = 'https://www.phrases.com/letter/0'
+        for letter in alphabet:
+            url = 'https://www.phrases.com/letter/{}/'.format(letter)
+            yield scrapy.Request(url, self.parse_first_page, dont_filter=True)
 
 
 
@@ -143,7 +143,7 @@ class LazyCrawler(LazyBaseCrawler):
         # Remove left and right spaces from each word
         
         # Write the unique words to a file
-        with open('phrases.txt', 'a') as f:
+        with open('phrases_1.txt', 'a') as f:
             for word in set(text):
                 if word not in self.unique_words:
                     f.write(word + '\n')
@@ -166,7 +166,7 @@ class LazyCrawler(LazyBaseCrawler):
         # Remove left and right spaces from each word
         
         # Write the unique words to a file
-        with open('phrases.txt', 'a') as f:
+        with open('phrases_1.txt', 'a') as f:
             for word in set(text):
                 if word not in self.unique_words:
                     f.write(word + '\n')

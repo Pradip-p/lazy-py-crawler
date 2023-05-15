@@ -106,6 +106,81 @@ def parse_details(driver):
         details[key] = val
 
     details['url'] = driver.current_url
+    faq_dict = {}
+
+    faq_questions = driver.find_elements(By.XPATH,'//a[@class="faq-question"]')
+    faq_answers = driver.find_elements(By.XPATH,'//p[@class="faq-accordion-answer"]')
+    for question, answer in zip(faq_questions, faq_answers):
+        answer_text = answer.get_attribute("innerText").replace("\n", "").replace("\t", "")
+        faq_dict[question.text] = answer_text
+
+    details['faq'] = faq_dict
+
+    technologies_url = driver.current_url+'/technologies'
+    technologies_stack(technologies_url, details)
+
+def technologies_stack(url, data):
+    options = Options()
+    options.add_argument('--headless')  # use headless browser mode
+    options.add_argument(f"user-agent:{get_user_agent('random')}")
+    technologies_driver = webdriver.Chrome(options=options)
+    technologies_driver.get(url)
+    stack_text = []
+    stacks = technologies_driver.find_elements(By.XPATH,'//div[@class="company-post"]/div[@class="columns data-points-columns"]/div[@class="column field"]/p[@class="data-point-title"]/b')
+    for stack in stacks:
+        stack_text.append(stack.text)
+    data['Tech Stack'] = ' '.join(stack_text)
+    ###tech faq
+    faq_tech = {}
+
+    faq_questions = technologies_driver.find_elements(By.XPATH,'//a[@class="faq-question"]')
+    faq_answers = technologies_driver.find_elements(By.XPATH,'//p[@class="faq-accordion-answer"]')
+    for question, answer in zip(faq_questions, faq_answers):
+        answer_text = answer.get_attribute("innerText").replace("\n", "").replace("\t", "")
+        faq_tech[question.text] = answer_text
+    data['faq tech'] = faq_tech
+    technologies_driver.quit()
+
+    ##send to get email-fromat data
+    url = data['url']
+    url = url+'/email-format'
+    email_format(url,data)
+
+
+def email_format(url, data):
+    options = Options()
+    options.add_argument('--headless')  # use headless browser mode
+    options.add_argument(f"user-agent:{get_user_agent('random')}")
+    email_driver = webdriver.Chrome(options=options)
+    email_driver.get(url)
+
+    headers = email_driver.find_elements(By.XPATH, '//tr[@id="table-headers"]/th')
+
+    rows = email_driver.find_elements(By.XPATH, '//tbody/tr')
+    
+    email_data = []
+    for row in rows:
+        cells = row.find_elements(By.TAG_NAME, "td")
+        if len(cells) == len(headers):
+            email_row = {}
+            for header, cell in zip(headers, cells):
+                header_text = header.text.strip()
+                value_text = cell.text.strip()
+                email_row[header_text] = value_text
+            email_data.append(email_row)
+    ###email faq data
+    data['email_data']  =email_data
+    
+    faq_email = {}
+
+    faq_questions = email_driver.find_elements(By.XPATH,'//a[@class="faq-question"]')
+    faq_answers = email_driver.find_elements(By.XPATH,'//p[@class="faq-accordion-answer"]')
+    for question, answer in zip(faq_questions, faq_answers):
+        answer_text = answer.get_attribute("innerText").replace("\n", "").replace("\t", "")
+        faq_email[question.text] = answer_text
+    data['faq email'] = faq_email
+    email_driver.quit()
+
     # Check if the JSON file exists
     if os.path.exists('scraped_data.json'):
         # Load the existing data from the JSON file
@@ -116,14 +191,14 @@ def parse_details(driver):
         existing_data = []
 
     # # Append the new data to the existing data list
-    existing_data.append(details)
+    existing_data.append(data)
 
     # Save the merged data as a JSON file with the current timestamp
     file_name = f'scraped_data.json'
     with open(file_name, 'w', encoding='utf-8') as f:
         json.dump(existing_data, f, indent=2, ensure_ascii=False)
 
-    print(details)
+    print(data)
 
 if __name__ == '__main__':
     start_crawl()

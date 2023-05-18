@@ -1,21 +1,14 @@
-import json
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException
-
-from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.options import Options
 import time
+import csv
 from lazy_crawler.lib.user_agent import get_user_agent
-import os.path
-from datetime import datetime
 
 
 def start_crawl():
-    start_url = 'https://www.getcyberleads.com/directories/companies/A'
     options = Options()
     options.add_argument('--headless')  # use headless browser mode
     options.add_argument(f"user-agent:{get_user_agent('random')}")
@@ -24,9 +17,12 @@ def start_crawl():
     retry_wait_time = 60
 
     driver = webdriver.Chrome(options=options)
-    driver.get(start_url)
-    parse_url(driver, wait_time, timeout, retry_wait_time)
 
+    for letter in range(ord('A'), ord('Z')+1):
+        start_url = f'https://www.getcyberleads.com/directories/companies/{chr(letter)}'
+        driver.get(start_url)
+        parse_url(driver, wait_time, timeout, retry_wait_time)
+    
     driver.quit()
 
 def parse_url(driver, wait_time, timeout, retry_wait_time):
@@ -86,28 +82,106 @@ def parse_details(driver):
         try:
             val = element.find_element(By.XPATH, './/p[@class="data-point-subtitle"]').text
         except NoSuchElementException:
-            val = element.find_element(By.XPATH, './/a').text
+            val = element.find_element(By.XPATH, './/a')
+            if val.get_attribute("href"):
+                val = val.get_attribute("href")
+            else:
+                val = val.text
+
         details[key] = val
 
     details['url'] = driver.current_url
-    # Check if the JSON file exists
-    if os.path.exists('scraped_data.json'):
-        # Load the existing data from the JSON file
-        with open('scraped_data.json', 'r') as f:
-            existing_data = json.load(f)
-    else:
-    #     # Create an empty list if the JSON file doesn't exist
-        existing_data = []
+    faq_dict = {}
 
-    # # Append the new data to the existing data list
-    existing_data.append(details)
+    faq_questions = driver.find_elements(By.XPATH,'//a[@class="faq-question"]')
+    faq_answers = driver.find_elements(By.XPATH,'//p[@class="faq-accordion-answer"]')
+    for question, answer in zip(faq_questions, faq_answers):
+        answer_text = answer.get_attribute("innerText").replace("\n", "").replace("\t", "")
+        faq_dict[question.text] = answer_text
 
-    # Save the merged data as a JSON file with the current timestamp
-    file_name = f'scraped_data.json'
-    with open(file_name, 'w', encoding='utf-8') as f:
-        json.dump(existing_data, f, indent=2, ensure_ascii=False)
+    details['faq'] = faq_dict
 
-    print(details)
+    technologies_url = driver.current_url+'/technologies'
+    technologies_stack(technologies_url, details)
+
+def technologies_stack(url, data):
+    options = Options()
+    options.add_argument('--headless')  # use headless browser mode
+    options.add_argument(f"user-agent:{get_user_agent('random')}")
+    technologies_driver = webdriver.Chrome(options=options)
+    technologies_driver.get(url)
+    stack_text = []
+    stacks = technologies_driver.find_elements(By.XPATH,'//div[@class="company-post"]/div[@class="columns data-points-columns"]/div[@class="column field"]/p[@class="data-point-title"]/b')
+    for stack in stacks:
+        stack_text.append(stack.text)
+    data['Tech Stack'] = ' '.join(stack_text)
+    ###tech faq
+    faq_tech = {}
+
+    faq_questions = technologies_driver.find_elements(By.XPATH,'//a[@class="faq-question"]')
+    faq_answers = technologies_driver.find_elements(By.XPATH,'//p[@class="faq-accordion-answer"]')
+    for question, answer in zip(faq_questions, faq_answers):
+        answer_text = answer.get_attribute("innerText").replace("\n", "").replace("\t", "")
+        faq_tech[question.text] = answer_text
+    data['faq tech'] = faq_tech
+    technologies_driver.quit()
+
+    ##send to get email-fromat data
+    url = data['url']
+    url = url+'/email-format'
+    email_format(url,data)
+
+
+def email_format(url, data):
+    options = Options()
+    options.add_argument('--headless')  # use headless browser mode
+    options.add_argument(f"user-agent:{get_user_agent('random')}")
+    email_driver = webdriver.Chrome(options=options)
+    email_driver.get(url)
+
+    headers = email_driver.find_elements(By.XPATH, '//tr[@id="table-headers"]/th')
+
+    rows = email_driver.find_elements(By.XPATH, '//tbody/tr')
+    
+    email_data = []
+    for row in rows:
+        cells = row.find_elements(By.TAG_NAME, "td")
+        if len(cells) == len(headers):
+            email_row = {}
+            for header, cell in zip(headers, cells):
+                header_text = header.text.strip()
+                value_text = cell.text.strip()
+                email_row[header_text] = value_text
+            email_data.append(email_row)
+    ###email faq data
+    data['email_data']  =email_data
+    
+    faq_email = {}
+
+    faq_questions = email_driver.find_elements(By.XPATH,'//a[@class="faq-question"]')
+    faq_answers = email_driver.find_elements(By.XPATH,'//p[@class="faq-accordion-answer"]')
+    for question, answer in zip(faq_questions, faq_answers):
+        answer_text = answer.get_attribute("innerText").replace("\n", "").replace("\t", "")
+        faq_email[question.text] = answer_text
+    data['faq email'] = faq_email
+    email_driver.quit()
+
+    # Write the updated data to the CSV file
+    write_data_to_csv("export.csv", data)
+
+    print(data)
+
+def write_data_to_csv(filename, data):
+    col_name = list(data.keys())
+    col_value = [data]
+
+    with open(filename, 'a', newline='') as csvFile:
+        writer = csv.DictWriter(csvFile, fieldnames=col_name)
+        if csvFile.tell() == 0:  # Check if the file is empty
+            writer.writeheader()
+        writer.writerow(data)
+
+    
 
 if __name__ == '__main__':
     start_crawl()

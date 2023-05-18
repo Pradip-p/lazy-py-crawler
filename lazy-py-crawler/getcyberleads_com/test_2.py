@@ -30,21 +30,6 @@ def start_crawl():
 
     driver.quit()
 
-# def start_crawl():
-#     start_url = 'https://www.getcyberleads.com/directories/companies/A'
-#     options = Options()
-#     options.add_argument('--headless')  # use headless browser mode
-#     options.add_argument(f"user-agent:{get_user_agent('random')}")
-#     wait_time = 10
-#     timeout = 30
-#     retry_wait_time = 60
-
-#     driver = webdriver.Chrome(options=options)
-#     driver.get(start_url)
-#     parse_url(driver, wait_time, timeout, retry_wait_time)
-
-#     driver.quit()
-
 def parse_url(driver, wait_time, timeout, retry_wait_time):
     while True:
         elements = driver.find_elements(By.XPATH, '//div[@class="company-post"]/div/ul/li/a')

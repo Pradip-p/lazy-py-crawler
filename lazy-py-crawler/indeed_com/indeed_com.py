@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from lazy_crawler.puppeteer.puppeteer import browse
+from lazy_crawler.puppeteer.script import browse
 from lazy_crawler.lib.user_agent import get_user_agent
 
 # import os

@@ -1,7 +1,7 @@
 from multiprocessing import Process, Queue
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
-from lazy_crawler.puppeteer.puppeteer import browse
+from lazy_crawler.puppeteer.script import browse
 from lazy_crawler.lib.user_agent import get_user_agent
 from lxml import html
 import scrapy

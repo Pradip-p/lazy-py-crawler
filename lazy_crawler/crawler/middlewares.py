@@ -7,6 +7,10 @@ from scrapy import signals
 
 # useful for handling different item types with a single interface
 from lazy_crawler.lib.user_agent import get_user_agent
+import time
+from scrapy.exceptions import IgnoreRequest
+from scrapy.downloadermiddlewares.retry import RetryMiddleware
+from scrapy.utils.response import response_status_message
 
 class CrawlerSpiderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
@@ -76,3 +80,32 @@ class RandomUserAgentMiddleware(object):
             request.headers.setdefault(b'User-Agent', self.user_agent)
 
 #you can find list of user-agent in https://www.useragentstring.com/pages/useragentstring.php
+
+
+
+
+
+class CustomRetryMiddleware(RetryMiddleware):
+    def __init__(self, settings):
+        super().__init__(settings)
+        self.ignore_status_codes = [430, 503]
+        self.retry_interval_map = {430: 240, 503: 480}
+
+    def process_response(self, request, response, spider):
+        if response.status in self.ignore_status_codes:
+            self.logger.info(f"Ignoring response {response.url} with status code {response.status}")
+            time.sleep(self.retry_interval_map[response.status])
+            return self._retry_request(request, response=response, reason=response_status_message(response))
+
+        return response
+
+    def process_exception(self, request, exception, spider):
+        if isinstance(exception, self.EXCEPTIONS_TO_RETRY) and not isinstance(exception, IgnoreRequest):
+            return self._retry_request(request, reason=str(exception), spider=spider)
+        raise exception
+
+    def _retry_request(self, request, response=None, reason=None, spider=None):
+        retryreq = request.copy()
+        retryreq.meta['retry_times'] = request.meta.get('retry_times', 0) + 1
+        retryreq.dont_filter = True
+        return retryreq

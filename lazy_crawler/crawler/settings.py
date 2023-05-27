@@ -124,7 +124,7 @@ RETRY_ENABLED = True
 # PROXY SETTINGS
 ################################################################
 # Retry on most error codes since proxies fail for different reasons
-RETRY_HTTP_CODES = [500, 502, 503, 504, 400, 401, 403, 404, 405, 406, 407, 408, 409, 410, 429]
+RETRY_HTTP_CODES = [500, 502, 503, 504, 400, 401, 403, 404, 405, 406, 407, 408, 409, 410, 429, 403]
 # 
 
 # PROXY_LIST = get_proxy()

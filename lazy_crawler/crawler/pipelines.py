@@ -4,9 +4,6 @@ import json
 from itemadapter import ItemAdapter
 import openpyxl
 from scrapy.utils.serialize import ScrapyJSONEncoder
-# from openpyxl.utils import get_column_letter
-# from scrapy.pipelines.images import ImagesPipeline
-# from scrapy.exceptions import DropItem
 import datetime
 
 class CSVPipeline(object):

@@ -14,15 +14,17 @@ async def main():
             # },
         )
         page = await context.new_page()
-        await page.goto("https://www.rent.com/")
-        # Using XPath to select an element
-        element = await page.wait_for_selector('//h1')
-        # Interacting with the element
-        text = await element.text_content()
-        print(text)
-        
-        print(await page.title())
-        
+        sections = ['economics']
+
+        for section in sections:
+            
+            res = await page.goto("https://www.bloomberg.com/lineup-next/api/paginate?id=story_list_2&page={}-v2&offset=0".format(section))
+            # print(dir(res))
+            print(res.all_headers)
+            print(res.status)
+            print(res.status_text)
+            print(res.text())
+            
         await browser.close()
 
 def browse():

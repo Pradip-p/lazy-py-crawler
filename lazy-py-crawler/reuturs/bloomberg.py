@@ -4,7 +4,6 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 import json
 import base64
-import cloudscraper
 
 from lazy_crawler.lib.user_agent import get_user_agent
 
@@ -26,29 +25,18 @@ class LazyCrawler(scrapy.Spider):
     
 
     def start_requests(self):
-        scraper = cloudscraper.create_scraper()  # returns a CloudScraper instance
-
-        proxy = 'p.webshare.io:80'
-
-        # user_pass = base64.encodebytes("hpiukvrn-rotate:yahyayahya".encode()).decode()
-        user_pass = base64.encodebytes("gkoffhkj-rotate:9qsx6zrpagq6".encode()).decode()
         sections = ['economics']
 
         for section in sections:
             url = 'https://www.bloomberg.com/lineup-next/api/paginate?id=story_list_2&page={}-v2&offset=0'.format(section)
-            print(scraper.get(url).text)
-
-            # yield scrapy.Request(url, callback=self.parse_json,
-            #                      meta={'proxy': 'http://' + proxy},
-            #                      headers={'Proxy-Authorization': 'Basic ' + user_pass})
-            # 
-            # yield scrapy.Request(url, self.parse_json, dont_filter=True, meta={'section_id':section}, headers ={'User-Agent': get_user_agent('random')})
+            
+            yield scrapy.Request(url, self.parse_json, dont_filter=True, meta={'section_id':section}, headers ={'User-Agent': get_user_agent('random')})
 
     def parse_json(self, response):
         try:
             res = response.json()
-            print(res)
             # process the JSON data
+            
         except json.decoder.JSONDecodeError as e:
             self.logger.error("Error parsing JSON response: %s", str(e))
             return

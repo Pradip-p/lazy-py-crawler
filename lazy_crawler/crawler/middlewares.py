@@ -109,3 +109,27 @@ class CustomRetryMiddleware(RetryMiddleware):
         retryreq.meta['retry_times'] = request.meta.get('retry_times', 0) + 1
         retryreq.dont_filter = True
         return retryreq
+
+# from playwright.sync_api import sync_playwright
+# import scrapy
+# # 
+# class PlaywrightDownloaderMiddleware:
+#     def __init__(self):
+#         self.playwright = sync_playwright().start()
+#         self.browser = self.playwright.chromium.launch()
+
+#     def process_request(self, request, spider):
+#         page = self.browser.new_page()
+#         page.goto(request.url)
+#         body = page.content()
+#         response = scrapy.http.HtmlResponse(
+#             url=request.url,
+#             body=body,
+#             encoding='utf-8',
+#             request=request
+#         )
+#         return response
+
+#     def __del__(self):
+#         self.browser.close()
+#         self.playwright.stop()

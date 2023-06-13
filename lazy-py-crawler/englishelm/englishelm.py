@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import os
 import scrapy
 from scrapy.crawler import CrawlerProcess
@@ -68,7 +67,7 @@ class LazyCrawler(LazyBaseCrawler):
             **self.HEADERS,  # Merge the HEADERS dictionary with the User-Agent header
             }
         # url = 'https://englishelm.com/collections/all'
-        url = 'https://englishelm.com/collections/zuo-modern'
+        url = 'https://englishelm.com/collections/modway-furniture'
         yield scrapy.Request(url, self.parse_json, dont_filter=True,
                 errback=self.errback_http_ignored,
                 headers= headers,
@@ -85,8 +84,8 @@ class LazyCrawler(LazyBaseCrawler):
             parsed.xpath("//var[@name='meta']/object")[0])
         products = results['products']
         for product in products:
-            yield product
-            # yield{"variants":  product['variants'], } 
+            # yield product
+            yield{"variants":  product['variants'], } 
         
         next_page = response.xpath('//ul[@class="pagination-page"]/li[@class="text"]/a[@title="Next"]/@href').extract_first()
         if next_page:

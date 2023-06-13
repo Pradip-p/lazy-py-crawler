@@ -9,6 +9,7 @@ import gc
 import time
 from scrapy.spidermiddlewares.httperror import HttpError
 from lazy_crawler.lib.image import process_image
+import pandas as pd
 
 class LazyCrawler(LazyBaseCrawler):
     def errback_http_ignored(self, failure):
@@ -68,23 +69,28 @@ class LazyCrawler(LazyBaseCrawler):
             **self.HEADERS,  # Merge the HEADERS dictionary with the User-Agent header
             }
         url = 'https://www.zappos.com/men-shirts-tops'
-        yield scrapy.Request(url, self.parse_json, dont_filter=True,
-                errback=self.errback_http_ignored,
-                headers= headers,
-                )
+        df = pd.read_excel('SCRAPE IMAGES.xlsx')
+        urls = df['LINK'].to_list()
+        for url in urls:
+            yield scrapy.Request(url, self.parse_detail, dont_filter=True,
+                    errback=self.errback_http_ignored,
+                    headers= headers,
+                    )
     
 
-    def parse_json(self, response):
+    # def parse_json(self, response):
 
-        urls = response.xpath('//a[@class="dk-z"]/@href').extract()
-        for url in urls:
-            url = 'https://www.zappos.com/{}'.format(url)
-            yield scrapy.Request(url, callback= self.parse_detail, dont_filter=True)
+    #     urls = response.xpath('//a[@class="dk-z"]/@href').extract()
+    #     for url in urls:
+    #         url = 'https://www.zappos.com/{}'.format(url)
+    #         yield scrapy.Request(url, callback= self.parse_detail, dont_filter=True)
     
     def parse_detail(self, response):
-        name = response.xpath('//span[@class="Aq-z"]/text()').extract_first()
-        
-        images = response.xpath('//img[@class="sja-z"]/@src').extract()
+        # name = response.xpath('//span[@class="Aq-z"]/text()').extract_first()
+        name = response.xpath('//span[@class="Ll-z"]/text()').extract_first()
+        # images = response.xpath('//img[@class="sja-z"]/@src').extract()class="k2-z p0-z q0-z"
+        # images = response.xpath('//picture/source/@srcset').extract()
+        images  =response.xpath('//picture/img/@src').extract()
         
         for img_url in images:
             # Extract the filename from the URL

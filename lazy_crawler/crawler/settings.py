@@ -136,6 +136,7 @@ USER_AGENT = get_user_agent('random')
 # CHANGE_PROXY_AFTER = 10
 
 DOWNLOADER_MIDDLEWARES = {
+    # 'lazy_crawler.crawler.middlewares.PlaywrightDownloaderMiddleware': 543,
     'lazy_crawler.crawler.middlewares.CrawlerSpiderMiddleware': 400,
     'lazy_crawler.crawler.middlewares.RandomUserAgentMiddleware': 120,
     'scrapy.spidermiddlewares.referer.RefererMiddleware': 80,
@@ -148,4 +149,13 @@ DOWNLOADER_MIDDLEWARES = {
     # 'scrapy_proxies.RandomProxy': 80,
     # 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
 }
+# settings.py
+
+# DOWNLOAD_HANDLERS = {
+#     "http": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
+#     "https": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
+# }
+
+# TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
+
 

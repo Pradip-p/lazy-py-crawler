@@ -110,9 +110,11 @@ class LazyCrawler(LazyBaseCrawler):
                 for url in urls:
                     yield scrapy.Request(url, self.parse, dont_filter=True,
                         meta={'proxy': 'http://' + self.proxy, 'category_name':category_name},
+                        
                         headers={'Proxy-Authorization': 'Basic ' + self.user_pass,
                         'User-Agent': get_user_agent('random')
-                        })
+                        }
+                        )
 
     def parse(self, response):
         category_name = response.meta['category_name']

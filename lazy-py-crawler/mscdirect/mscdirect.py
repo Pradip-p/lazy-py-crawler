@@ -21,7 +21,7 @@ class LazyCrawler(scrapy.Spider):
         'CONCURRENT_REQUESTS_PER_IP': 1,
         'CONCURRENT_REQUESTS_PER_DOMAIN': 1,
         'RETRY_TIMES': 2,
-        'COOKIES_ENABLED': True,
+        'COOKIES_ENABLED': False,
         'DOWNLOAD_TIMEOUT': 180,
         'REDIRECT_ENABLED' : False,
         'ITEM_PIPELINES': {
@@ -29,8 +29,6 @@ class LazyCrawler(scrapy.Spider):
         }
     }
     
-    proxy = 'p.webshare.io:80'
-    user_pass = base64.encodebytes("gkoffhkj-rotate:9qsx6zrpagq6".encode()).decode()
     HEADERS = {
         'Accept':' application/json, text/plain, */*',
         'Accept-Encoding':' gzip, deflate, br',
@@ -76,9 +74,8 @@ class LazyCrawler(scrapy.Spider):
             "Cookie": 'visid_incap_2587862=tNDYOB4sQUCJRyDF3/lguaxSO2UAAAAAQUIPAAAAAACdD8p52qHeEXn9OaGePnOU; cj_channel=Direct_Navigation; cjConsent=MHxOfDB8Tnww; cjUser=81d9b193-42f7-4fe9-8914-d0412303eeae; WCDE_XREFCONTACTNUMBERGUEST=; _gcl_au=1.1.711734735.1698386612; _gid=GA1.2.29800666.1698386612; _blka_ruab=159; sa-user-id=s%253A0-43afeb23-8be3-561a-6914-0c737c6c8308.Y8f%252BRPPxnRHG5aE3gOkWqxPgz%252BtvsNLkRYcgRKdchJI; sa-user-id-v2=s%253AQ6_rI4vjVhppFAxzfGyDCBsiZHI.bvS8AFDXCza0ZMC45DNR3vx%252FYJQxNrxNrl5uO0PC1Fo; sa-user-id-v3=s%253AAQAKIDVpIORW7Vqngy1xAYpC_9lqBi7akSRRQNhWLBEet82FENYBGAQg9eieqAYwAToEY-o0A0IETYdSRQ.fk1k3J1skic71K%252FMOrCiBQZgM%252BCgkLyHoQPvDLJtLs8; _fbp=fb.1.1698386612400.1470456857; _clck=h38bq5|2|fg7|0|1395; gig_bootstrap_4_R0HZVTou0ajlxJ_Xco0l_w=identity_ver4; incap_ses_50_2587862=DSxoTSKIfAf0g+Vq/aKxAOp7O2UAAAAAIZg6b/3km00GZCcPgazYdQ==; dtCookie=v_4_srv_24_sn_959726F527195983ABC7D9E83F5F8F8B_perc_100000_ol_0_mul_1_app-3A4933650768ea878a_1_rcs-3Acss_0; nlbi_2587862=v/dMCEYEh2052bc3Z8kABQAAAACpE1WM/5mJBSOOjaOezxOn; rxVisitor=1698397168914R3MLJD3G9HC5LBHJTI27ODGMJ24SL8I5; at_check=true; Mscdirect=3926399404.33588.0000; AMCVS_99591C8B53306B560A490D4D%40AdobeOrg=1; AMCV_99591C8B53306B560A490D4D%40AdobeOrg=-1124106680%7CMCIDTS%7C19658%7CMCMID%7C12943450803725019072851901685428099152%7CMCAAMLH-1699001975%7C3%7CMCAAMB-1699001975%7CRKhpRz8krg2tLO6pguXWp5olkAcUniQYPHaMWWgdJ3xzPWQmdj0y%7CMCOPTOUT-1698404375s%7CNONE%7CvVersion%7C5.2.0; c4=guest; c15=msc%3Acategory%3Aabrasives; s_vnum=1698776100367%26vn%3D2; s_invisit=true; s_cc=true; reese84=3:uvIx8r3mYsnmqGpkpeHPYA==:wIib0hqrWCoFk1vnxaLX2TAl9lXODwA+PY1AiOelfpDibQ8YgMta/ZCRJ+z8ScRz92SUIqaHdWgdsqWcYfdKSolmITvQqFDWRNxGtEfKoAHHzdOjzhev6vfarVOgp78qbgriSuOXphBwV6LfvzRCuRaJE9vSxQhdpux2mUjkLM8mdEx3wRueoFmdbY8rVk/TJxU3ePbX95U5xPBLK0TgJ3ZQ6Kodkn8WWn1Xa7verYQla3ZivcihMgskpktIeft3IsHmy0/ngOH6h1oKeFSnfR9ZV3J6YjYNxfOkB8xgKP05WIzMs7P3mr7Tukst5o8fO6sCd4zW9zAPuwJjmeAXDGPNJxDaDsaClGB91abV4ITOcjfwkfi53To9by7fFCULCNC1ndBLoz/vkczqsPvm6oWD937aHjqBhiz8bbT00fkz4DM2rD6GpyabYbM3Jvo6WckyxwfdFWDpXvZD45bbxdpqxxRrDblK1u6pVgY3mXY=:qFiyvXCVtD2jUF9y0jkiqg/aSjdo7rDizkUra8FwehI=; dtSa=-; mboxEdgeCluster=38; mbox=PC#b4382606bc3e480f9e0bdecc9a9dd527.38_0#1761643688|session#23028205d6b74263b47c7a4418d55b06#1698400748; nlbi_2587862_2147483392=jMv3SZWlawUuag95Z8kABQAAAAA1o0wDD4S37xWtQtIslI9S; gig_canary=false; gig_canary_ver=15482-3-28306635; _br_uid_2=uid%3D7604019146950%3Av%3D12.0%3Ats%3D1698386612017%3Ahc%3D10; _ga_KG0FCGTKBP=GS1.1.1698398893.2.0.1698398893.60.0.0; _ga=GA1.1.1254696081.1698386612; _uetsid=8e844c30748e11ee80dfcf6d98d00eb5; _uetvid=8e845f40748e11ee907ee53fa8463206; __blka_ts=1698400695104; fs_lua=1.169839889670',
             "Host": "www.mscdirect.com",
             "Sec-Fetch-Dest": "document",
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36",
-            'Proxy-Authorization': 'Basic ' + self.user_pass,
-            # 'User-Agent': get_user_agent('random')
+            # "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36",
+            'User-Agent': get_user_agent('random')
         }
         
         # url ='https://www.mscdirect.com/browse{}'.format(cat.get('link'))
@@ -86,7 +83,6 @@ class LazyCrawler(scrapy.Spider):
         url = 'https://www.mscdirect.com/browse/Abrasives?navid=2100008'
         
         yield scrapy.Request(url, self.sub_category, dont_filter=True,
-                        meta={'proxy': 'http://' + self.proxy,},
                         headers= headers_data)
         
         # yield scrapy.Request(url, callback=self.sub_category,headers= headers_data, dont_filter=True)

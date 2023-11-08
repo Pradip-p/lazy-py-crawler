@@ -32,8 +32,8 @@ class LazyCrawler(LazyBaseCrawler):
         
     def start_requests(self): #project start from here.
         
-        # for url in urls:
         url = 'https://www.amazon.com/s?k=Electronics'
+        
         yield scrapy.Request(url, self.parse_get_product_urls, dont_filter=True)
 
 

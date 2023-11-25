@@ -3,11 +3,12 @@ import scrapy
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 from lazy_crawler.lib.user_agent import get_user_agent
-import ipdb
-import re
+from scrapy.shell import inspect_response
+from scrapy import FormRequest
 import datetime
+import re
 
-
+# from lazy_crawler.crawler.pipelines import JsonWriterPipeline
 class LazyCrawler(scrapy.Spider):
 
     name = "doctors"
@@ -17,113 +18,228 @@ class LazyCrawler(scrapy.Spider):
     custom_settings = {
         'DOWNLOAD_DELAY': 2,
         'LOG_LEVEL': 'DEBUG',
-        'CONCURRENT_REQUESTS': 1,
-        'CONCURRENT_REQUESTS_PER_IP': 1,
-        'CONCURRENT_REQUESTS_PER_DOMAIN': 1,
+        'CONCURRENT_REQUESTS': 16,
+        'CONCURRENT_REQUESTS_PER_IP': 8,
+        'CONCURRENT_REQUESTS_PER_DOMAIN': 8,
         'RETRY_TIMES': 2,
-        'COOKIES_ENABLED': False,
+        'COOKIES_ENABLED': True,
         'DOWNLOAD_TIMEOUT': 180,
-        'REDIRECT_ENABLED' : False,
+        'COOKIES_DEBUG': True,
+        # 'REDIRECT_ENABLED' : False,
         'ITEM_PIPELINES': {
-            'lazy_crawler.crawler.pipelines.ExcelWriterPipeline': None
+            'lazy_crawler.crawler.pipelines.JsonWriterPipeline': None
         }
     }
     
-    headers = {
-        "Host": "doctors.cpso.on.ca",
-        'User-Agent': get_user_agent('random'),
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.5",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Content-Length": "2439",
-        "Origin": "https://doctors.cpso.on.ca",
-        "Connection": "keep-alive",
-        "Cookie": "CMSPreferredCulture=en-CA; CMSCsrfCookie=mLUnpeXTnvLtBsuesykRaSqvMsgxPxJQ50IZywkw; ASP.NET_SessionId=qcrtee14k1hpqsq4ysvgxtxe; _ga_04KQWSX9S4=GS1.1.1698910795.1.1.1698910869.0.0.0; _ga=GA1.1.1065468384.1698910796; cusid=1698910796547; cuvon=1698910841317; cusid=1698910796547; cuvid=c5dc450e62f74057a39f3af80d91a54b"
-        
-    }
-    formdata = {
-            "__CMSCsrfToken":"kYk197Q8HhWfqqaUtcyt8Rv9d588b4jh8bstXhklwjvxIkwWOQOsWbsTArqPbXY4SUE8Nn9fcgVGhfjgEoFSB0Jnbhb3e7e0O6FgnnFajhA=",
-            "__EVENTTARGET":	"p$lt$ctl01$pageplaceholder$p$lt$ctl03$CPSO_DoctorSearchResults$lnbNextGroup",
-            "__EVENTARGUMENT"	:"",
-            "__VIEWSTATE"	: "g8IIMCAyz9hD0CF0A0UsfvUI9bSyxRCO9jokLqP+/a6S7yKgS5iJmumov4fVFvRGUBgq4OkV5wyorlWqr4YCbWMcYFR9SJkjNT/T9UftGKEBoZ4WZwNC03i6Bj+hIswdId2FVur+OXLvybLYlK+POy9k6OD/jDydb7E4IIEPlS2Lfw25EmJ8RfOl4x9tPndi7b9ZpW6QynwhxHfVJi9UQcngYDb9lbcqP8vSEXi0Y5PP9lGBb1dZhxKw2JGeadUs5zvxb8pJqjTqgebV+o3XcnRM5Kx8m271QUSaaeVEXqyjU/t8CGTHJR5vSYJIo2d+sIHkSUtjjP4pEc9+DVufWScYzMVBSH+C0R9pzbEkTmD050GebwJoDnIgDjQPRNYcCRTaT9phyWvouoPLjnMHhgCh0sob4P8lx9Dq7OU9heD3LhEHh90GaYkywkEXC4bRiycRaeUAPq0b+xuoAqTH8f+KZfLEU6oHyxv8kgf19J0vOteANIlIDsgjoHk5Uxs…KwMdVSwWFX0J9bRB0tmG2bA66knLmhV+QJhswIsathe29sPeuWO2E7CqAHngdjoCfGiMV1UPLzrGcUxbozg8hCvTh/K7f2aIbJ1/qn6hkGRBwz/Ahp9gB55USD9wNxL1lvEpynPaWlIKN0HxjmxyecEIB5/YZ4zfWk3g9qziJw7Va7YKvzlzgkSF2XDpWuNMmwXKxcIelPG2eEs5jt0AcOFuF9YQJO26eqxn7DkeGJ46Hk8a8G67iqEiWUxAduTlT1NkTjwGo9hwL4Fq+rEsIjCurdvP2g9Kb5SoaMCxZJ+ABSJ6f9421qCKyGajwVDjm2HVhy2yrLQSoUDDbmVoMBTbBXE9LLrLWkYAmlzFWFWiYcznIV9apfJU3tzmYHiZasJMH0DalMx5OvJM5D8K4hMFNBFghwHM99DcBXMlSMMaETkeobp2tl80t8lW5clfHwuVa4xKzm9P4iu6+I2giZZhRqXZHXPRWpRCYjV1w28hvbl1gBBLLx6MaqaLg=",
-            "lng":	"en-CA",
-            "__VIEWSTATEGENERATOR"	:"A5343185",
-            "p$lt$ctl01$pageplaceholder$p$lt$ctl03$CPSO_DoctorSearchResults$hdnCurrentPage"	:"1"
-        }
+
+    start_urls = ['https://doctors.cpso.on.ca/?refine=true&search=general']
     
-    def start_requests(self):
+    event_target_val = -1
+    
+    page_number = 0
+    
+    def parse(self, response):   
+        formdata = {
+            '__EVENTTARGET': '',
+            '__EVENTARGUMENT': '',
+            '__LASTFOCUS':'' ,
+            '__VIEWSTATEGENERATOR': 'A5343185',
+            'searchType': 'general',
+            'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$advancedState': 'closed',
+            'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$ConcernsState': 'closed',
+            'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$txtLastNameQuick': '',
+            'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$txtCPSONumber': '',
+            'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$chkActiveDoctors': 'on',
+            'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$txtCPSONumberGeneral': '',
+            'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$txtLastName': '',
+            'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$ddCity': '',
+            'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$txtPostalCode': '',
+            'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$grpGender':  '',
+            'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$grpDocType': 'rdoDocTypeAll',
+            'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$ddHospitalCity': '',
+            'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$ddHospitalName': '-1',
+            'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$ddLanguage': '08',
+            'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$chkPracticeRestrictions': 'on',
+            'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$chkPendingHearings': 'on',
+            'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$chkPastHearings': 'on',
+            'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$chkHospitalNotices': 'on',
+            'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$chkConcerns': 'on',
+            'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$chkNotices': 'on',
+            'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$txtExtraInfo': '',
+            'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$btnSubmit1': 'Submit',
+        }   
+        yield FormRequest.from_response(
+            response,
+            formdata=formdata,
+            headers={
+                "Content-Type":"application/x-www-form-urlencoded"
+                },
+            callback = self.parse_doctors_urls,
+         
+        )
+    
+    def parse_doctors_urls(self, response):
+        # inspect_response(response, self)
+        urls = response.xpath('//article[@class="doctor-search-results--result"]/h3/a/@href').extract()    
+        print(urls)    
+        # for url in urls:
+        #     yield scrapy.Request(url, callback=self.doctor_details, dont_filter=True)
+            
+        # Extract the form data for the next page
+        self.page_number += 1
+        if self.page_number <= 3:
+            # if self.event_target_val <= 5: 
+                # print(self.event_target_val, self.page_number)
+            formdata_next_page = {
+                '__EVENTTARGET':'p$lt$ctl01$pageplaceholder$p$lt$ctl03$CPSO_DoctorSearchResults$lnbNextGroup',
+                # '__EVENTTARGET': 'p$lt$ctl01$pageplaceholder$p$lt$ctl03$CPSO_DoctorSearchResults$rptPages$ctl0{}$lnbPage'.format(self.event_target_val),
+                '__EVENTARGUMENT': '',
+                '__VIEWSTATEGENERATOR': 'A5343185',
+                'p$lt$ctl01$pageplaceholder$p$lt$ctl03$CPSO_DoctorSearchResults$hdnCurrentPage': str(self.page_number)
+                
+            }
+            yield FormRequest.from_response(response,formdata=formdata_next_page,
+                                        headers={"Content-Type": "application/x-www-form-urlencoded"},
+                                        callback=self.parse_doctors_urls,
+                                    )
+            
 
-        # url = 'https://doctors.cpso.on.ca//Doctor-Search-Results'
-        # url = 'https://doctors.cpso.on.ca//Doctor-Search-Results?type=name&term='
-        url = 'https://doctors.cpso.on.ca/Doctor-Search-Results?type=name&term='
-        yield scrapy.FormRequest(url, callback=self.parse_doctor_urls,
-                            method = 'POST',
-                            headers= self.headers, 
-                            formdata=self.formdata,
-                            dont_filter=True)
+    def extract_postal_code(self,text):
+        # pattern = re.compile(r'\b[A-Za-z]\d[A-Za-z]\s\d[A-Za-z]\d\b')#previous
+        pattern = re.compile(r'\b[A-Za-z]\d[A-Za-z]\s?\d[A-Za-z]\d\b')
+        postal_code_match = pattern.search(text)
+        return postal_code_match.group(0) if postal_code_match else ''
 
-    def parse_doctor_urls(self, response):
-        doctors_urls = response.xpath('//div[@class="doctor-search-results"]/article/h3/a/@href').extract()
-        for url in doctors_urls:
-            yield scrapy.Request(url, callback=self.parse_doctor_details,
-                            headers= self.headers, 
-                            dont_filter=True)
-        
-    def parse_doctor_details(self, response):
-        full_name = response.xpath('//h1[@id="docTitle"]/text()').extract_first()
-        first_name, last_name = full_name.split(maxsplit=1) if ' ' in full_name else (full_name, '')
-        cpso_text = response.xpath('//div[@class="name_cpso_num"]/h3/text()').extract_first()
-        cpso = ''.join([c for c in cpso_text if c.isdigit()])
-        member_status_text = response.xpath('//div[@class="doctor-info"]/div[@class="columns medium-6 text-align--right"]/strong/text()').extract_first()
-        status = "Active Member" if "Active" in member_status_text else "Inactive Member"
-        specialty = response.xpath('//section[@id="specialties"]/table[@class="stack"]/tr/td/text()').extract_first()
-        # Assuming you have a response object containing the HTML content
-        summary_info_val = response.xpath('//section[@id="summary"]/div[@class="info"]/p/text()').extract()
-        filtered_list = [text.strip() for text in summary_info_val if text.strip() != '']
 
-        summary_info_key = response.xpath('//section[@id="summary"]/div[@class="info"]/p/strong/text()').extract()
-        
-        if len(summary_info_key) == len(filtered_list):
-            summary_dict = {}
+    def doctor_details(self, response):    
+        doctor_info = {}
+        try:
+            full_name = response.xpath('//h1[@id="docTitle"]/text()').get()
+            last_name, first_name = full_name.split(maxsplit=1) if ' ' in full_name else (full_name, '')
+            last_name = last_name.replace(',', '')
 
-            for key, val in zip(summary_info_key, filtered_list):
-                key = key.strip()
-                val = val.strip()
-                summary_dict[key] = val
-        locations_details = response.xpath('//div[@class="location_details"]//text()').extract()
+            cpso_text_element = response.xpath('//div[@class="name_cpso_num"]/h3/text()').get()
+            cpso_text = cpso_text_element
+            cpso = ''.join([c.strip() for c in cpso_text if c.isdigit()])
 
-        data = [text.strip() for text in locations_details if text.strip() != '']
-        print(data)
-        phone_number = next((re.search(r'\(\d{3}\)\s\d{3}-\d{4}', item).group() for item in data if re.search(r'\(\d{3}\)\s\d{3}-\d{4}', item)), None)
-        fax_number = next((re.search(r'\(\d{3}\)\s\d{3}-\d{4}', item).group() for item in data if re.search(r'\(\d{3}\)\s\d{3}-\d{4}', item) and "Fax:" in data[data.index(item) - 1]), None)
-        address = ','.join(data[2:3])
+            member_status_element = response.xpath('//div[@class="doctor-info"]/div[@class="columns medium-6 text-align--right"]/strong/text()').get()
+            status = "Active Member" if "Active" in member_status_element else "Inactive Member"
 
-        
-        yield{
-            "Link": response.url,
-            "Last Name": last_name,
-            "First Name": first_name,
-            "CPSO": cpso,
-            "Member Status":status,
-            "Current or Past CPSO Registration Class": "",
-            "Former Name": summary_dict.get('Former Name:'),
-            "Gender": summary_dict.get('Gender:') if summary_dict.get('Gender:') else '',
-            "Education":summary_dict.get('Education:') if summary_dict.get('Education:') else '',
-            "Specialty":specialty,
-            "City": "",
-            "Address": address if address else '' ,
-            "Postal Code":"",
-            "Phone": phone_number if phone_number else '' ,
-            "Fax": fax_number if fax_number else '',
-            "Date of Entry": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") ,
-            "Notes":""
-        }
-        
-        # # Save the content of the current page as a text file
-        # with open(f'response.txt', 'w', encoding='utf-8') as file:
-        #     file.write(response.text)
+            independent_practice_as_of = response.xpath('(//div[@class="doctor-info"]/div[@class="columns medium-6 text-align--right"])[last()]/text()').get()
+            independent_practice_as_of_text = independent_practice_as_of.split('as')[0]
+            
+            independent_parsed_date = ' '.join(independent_practice_as_of.split()[-3:])
+            parsed_date = datetime.datetime.strptime(independent_parsed_date, "%d %b %Y")
+            independent_parsed_date_formatted_date = parsed_date.strftime("%#m/%#d/%Y")
+
+            tr_elements = response.xpath('//section[@id="specialties"]/table[@class="stack"]//tr')
+            specialties_list = tr_elements.xpath('.//td[1]/text()').getall()
+
+            summary_info_val_elements = response.xpath('//section[@id="summary"]/div[@class="info"]/p//text()').getall()
+            filtered_list = [text.strip() for text in summary_info_val_elements if text.strip() != '']
+            results = dict((filtered_list[i].strip(':'), filtered_list[i + 1].strip()) for i in range(0, len(filtered_list), 2)) if len(filtered_list) % 2 == 0 else None
+
+            education = results.get('Education').split(',')
+            education_year = education.pop()
+
+            locations_details = response.xpath('//div[@class="location_details"]//text()').extract()
+            # Split the text content into a list using line breaks or any other suitable delimiter
+            data = [detail.replace('\xa0', '').strip() for detail in locations_details if detail.strip()]
+
+            data = [detail.strip() for detail in locations_details if detail.strip()]
+            city, postal_code, address, phone, fax = '', '', '', '', ''
+            if len(data) == 1:
+                address = ''.join(data)
+            else:   
+                for index, text in enumerate(data):
+                    if text == 'Phone:' and index + 1 < len(data):
+                        phone = data[index + 1].strip()
+                        
+                    elif text == 'Fax:' and index + 1 < len(data):
+                        fax = data[index + 1].strip()  
+
+            #         #i want to remove both index 
+                
+                provinces = ['ON','NL','SK','PE','NS','NB','QC','MB','AB','BC','YT','NT','NU']
+                #remove Electoral District: from data
+                if 'Electoral District:' in data:
+                    data.pop()
+                    data.pop()
                     
+                if not phone and not fax:
+                    address = ', '.join(data)
+                    postal_code = self.extract_postal_code(address)
+                    if postal_code:
+                        #it's all about city
+                        city_postal_code = data[-1]
+                        for province in provinces:
+                            if province in city_postal_code:
+                                city_postal_code = city_postal_code.split(province)
+                                if postal_code:
+                                    city_postal_code.pop()
+                                    city = ''.join(city_postal_code)
+                        
+
+                #posal code format: letter-number-letter-space-number-letter-number
+                
+                elif phone and fax:
+                    address = ', '.join(data)
+                    postal_code = self.extract_postal_code(address)
+                    #it's all about city
+                    city_postal_code = data[-1]
+                    if postal_code:
+                        for province in provinces:
+                            if province in city_postal_code:
+                                city_postal_code = city_postal_code.split(province)
+                                if postal_code:
+                                    city_postal_code.pop()
+                                    city = ''.join(city_postal_code)
+
+     
+                elif phone or fax:
+                    address = ', '.join(data)
+                    postal_code = self.extract_postal_code(address)
+                    #it's all about city
+                    city_postal_code = data[-1]
+                    if postal_code:
+                        for province in provinces:
+                            if province in city_postal_code:
+                                city_postal_code = city_postal_code.split(province)
+                                if postal_code:
+                                    city_postal_code.pop()
+                                    city = ''.join(city_postal_code)
+                                    
+        except Exception as e:
+            self.log(f"Error: {e}")
+
+        # # Create a dictionary to store the extracted information
+        # doctor_info['Link'] = response.url
+        # doctor_info['First Name'] = first_name.strip()
+        # doctor_info['Last Name'] = last_name.strip()
+        # doctor_info['CPSO'] = cpso.strip()
+        # doctor_info['Member Status'] = status.strip()
+        # doctor_info['Current or Past CPSO Registration Class'] = independent_practice_as_of_text.strip()
+        # doctor_info['Independent Practice as of'] = independent_parsed_date_formatted_date
+        # doctor_info['Former Name'] = results.get('Former Name')
+        # doctor_info['Gender'] = results.get('Gender')
+        # doctor_info['Education'] = ' '.join(education)
+        # doctor_info['Graduating Year'] = education_year
+        # doctor_info['Specialty'] = ','.join(specialties_list)
+        # Add the rest of the fields to doctor_info
+        doctor_info['City'] =  city.strip()
+        doctor_info['Address'] = address.strip()
+        
+        # Extract and add location information to the dictionary
+        doctor_info["Postal Code"] = postal_code
+        doctor_info['Phone'] = phone.replace('(', '').replace(')', '').replace('-', '').replace(' ', '').replace('Ext', 'ext')
+
+        doctor_info['Fax'] = fax.replace('(', '').replace(')', '').replace('-', '').replace(' ', '')
+        doctor_info["Date of Entry"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        doctor_info['Notes'] = ''
+        yield doctor_info
+
+
+# response.xpath('//article[@class="doctor-search-results--result"]/h3/a/@href').extract()
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
 process = CrawlerProcess(get_project_settings())  

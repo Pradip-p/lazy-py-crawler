@@ -7,7 +7,6 @@ from scrapy.shell import inspect_response
 from scrapy import FormRequest
 import datetime
 import re
-
 # from lazy_crawler.crawler.pipelines import JsonWriterPipeline
 class LazyCrawler(scrapy.Spider):
 

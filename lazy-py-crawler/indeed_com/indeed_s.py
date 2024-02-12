@@ -17,10 +17,12 @@ class LazyCrawler(LazyBaseCrawler):
     name = "indeed"
 
     custom_settings = {
-        'DOWNLOAD_DELAY': 2,'LOG_LEVEL': 'DEBUG','CHANGE_PROXY_AFTER':1,'USE_PROXY':True,
+        'DOWNLOAD_DELAY': 2,'LOG_LEVEL': 'DEBUG',
         'CONCURRENT_REQUESTS' : 1,'CONCURRENT_REQUESTS_PER_IP': 1,'CONCURRENT_REQUESTS_PER_DOMAIN': 1,
-        'RETRY_TIMES': 5, "COOKIES_ENABLED": True,'DOWNLOAD_TIMEOUT': 180,
-
+        'RETRY_TIMES': 5, 
+        "COOKIES_ENABLED": False,
+        'DOWNLOAD_TIMEOUT': 180,
+        'COOKIES_DEBUG': True,
         'ITEM_PIPELINES' : {
         'lazy_crawler.crawler.pipelines.ExcelWriterPipeline': None
         }
@@ -29,14 +31,21 @@ class LazyCrawler(LazyBaseCrawler):
     
 
     def start_requests(self):
-        url = 'https://www.indeed.com/?from=gnav-homepage'
-        soup = self.get_soup(url)
+        url = 'https://au.indeed.com/jobs?q=nurse&l=Australia'
+        
+        yield scrapy.Request(url,
+                            headers = {
+                                'User-Agent': get_user_agent('random'),
+                            }, dont_filter=True
+                            )
+        # soup = self.get_soup(url)
 
-        parse_job = self.parse_jobs(soup)
-        print(parse_job)
-        yield scrapy.Request('http://example.com/', self.parse, dont_filter=True)
+        # parse_job = self.parse_jobs(soup)
+        # print(parse_job)
+        # yield scrapy.Request('http://example.com/', self.parse, dont_filter=True)
 
     def parse(self, response):
+        print(response.text)
         yield {}
     #     # url = response.meta['next_url']
     #     for i in range(1,66):
@@ -96,16 +105,24 @@ class LazyCrawler(LazyBaseCrawler):
 
     def get_soup(self,url):
         print("*"*100, url)
-        data = browse(url, useragent=get_user_agent('random'))
-        content = data['content']
-        tree = html.fromstring(content)
-        with open('test.txt', 'w') as f:
-            f.write(str(content))
-        # scraper = cloudscraper.create_scraper(delay=100)
-        # # scraper = cloudscraper.create_scraper(disableCloudflareV1=True)
-        # response = scraper.get(url)
-        # soup = BeautifulSoup(response.text, 'lxml')
-        # return soup
+        # data = browse(url, useragent=get_user_agent('random'))
+        # content = data['content']
+        # tree = html.fromstring(content)
+        # with open('test.txt', 'w') as f:
+        #     f.write(str(content))
+        # scraper = cloudscraper.create_scraper(
+        #     browser={
+        #         'browser': 'firefox',
+        #         'platform': 'windows',
+        #         'mobile': False
+        #     }
+        # )
+        scraper = cloudscraper.create_scraper(debug=True)
+        
+        response = scraper.get(url)
+        
+        soup = BeautifulSoup(response.text, 'lxml')
+        return soup
 
 
     def parse_jobs(self, soup):

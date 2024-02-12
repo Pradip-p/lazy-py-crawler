@@ -2,7 +2,6 @@
 __pycache__/
 *.py[cod]
 *$py.class
-/lazy_crawler/
 # C extensions
 *.so
 images/
@@ -139,4 +138,3 @@ dmypy.json
 *.xlsm
 *.xlsb
 *.xml
-*.txt

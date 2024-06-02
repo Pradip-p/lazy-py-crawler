@@ -1,67 +1,17 @@
 
-# LazyPyProcessor
+# Lazy Crawler
+Lazy Crawler is a Python package that simplifies web scraping tasks. It builds upon Scrapy, a powerful web crawling and scraping framework, providing additional utilities and features for easier data extraction. With Lazy Crawler, you can quickly set up and deploy web scraping projects, saving time and effort.
 
-Customized Scrapy is a modified version of the popular open-source web scraping framework, Scrapy, that is designed for easy of setup and use. It includes a predefined library of functions and utilities that make it easy to extract and process data from websites.
+Features:
+- Simplified setup: Lazy Crawler streamlines the process of setting up and configuring web scraping projects.
+- Predefined library: It comes with a library of functions and utilities for common web scraping tasks, reducing the need for manual coding.
+- Easy data extraction: Lazy Crawler makes it simple to extract and process data from websites, allowing you to focus on analysis and insights.
+- Includes utilities like finding emails, numbers, mentions, hashtags, links, and more.
+- Provides a pipeline for storing data in various formats such as CSV, JSON, Google Sheets, and Excel.
 
-##### Note. This library was written for python3 and scrapy1.6.0. However higher version is supported.
-
-### Installation Instruction
-
-Create a virtual environment for your project. Install Customized Scrapy using pip 
-    
-```
-pip install git+https://github.com/Pradip-p/lazy-py-processor.git
-
-```
-or Alternatively, you can install LazyPyProcessor Scrapy by cloning the repository and installing it locally:
-```
-git clone https://github.com/Pradip-p/lazy-py-processor.git
-```
-```
-cd lazy-py-crawler
-```
-```
-pip install . 
-```
-
-
-###### Note if you are having installation issue. please check if you have added your public ssh keys to github. Visit this blog for more details on adding ssh keys to github
-[https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
-
-### Visit documentation here
-
-#### It is recommended to take a look at scrapy documentation also as this library merly hides setup complexity of scrapy and some other settings. You would still need to learn scrapy framework for using spiders.
-
-https://docs.scrapy.org/en/latest/
-
-
-## Build instructions
-
-We use semantic versioning(https://en.wikipedia.org/wiki/Software_versioning)
-
-In order to build the docker container.
-
-1. Commit your changes.
-2. Increase the version(patch, minor , major)
-
-    Normally, its patch
-    
-    Install bumpversion for easier version management.
-    
-    In order to increase patch version simply do
-    `bumpversion patch`
-    
-    For example if the current tag is 1.04
-    Doing `bumpversion patch` will make the tag 1.05
-    
-3. push to tags
-```git push --tags```
-
-4. Also push to master branch
-``` git push origin master```
 
 ### Usage
-### To use LazyPyProcessor 
+### To use Lazy Crawler
 ##### make a python file for your project (example: `scrapy_example.py`)
 
 
@@ -151,11 +101,11 @@ process.start() # the script will block here until the crawling is finished
 ```
 ## Further resources
 
-For more information and examples of how to use Lazy Py Crawler, see the project documentation.
+For more information and examples of how to use Lazy Crawler, see the project documentation.
 ## Credits
 
-Lazy Py Crawler was created by Pradip p.
+Lazy Crawler was created by Pradip p.
 
 ## License
 
-Lazy Py Crawler is released under the MIT License.
+Lazy Crawler is released under the MIT License.

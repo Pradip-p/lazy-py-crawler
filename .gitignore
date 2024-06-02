@@ -138,3 +138,6 @@ dmypy.json
 *.xlsm
 *.xlsb
 *.xml
+lazy
+test_p.py
+/lazy-py-crawler

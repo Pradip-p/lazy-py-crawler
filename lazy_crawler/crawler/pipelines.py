@@ -115,38 +115,3 @@ class ExcelWriterPipeline(object):
     def close_spider(self, spider):
         # self.wb.save(f"scraped_data_{self.created_time}.xlsx")  # save the workbook
         self.wb.save(f"scraped_data.xlsx")  # save the workbook
-
-# class ExcelWriterPipeline(object):
-
-#     def __init__(self):
-#         self.created_time = datetime.datetime.now()
-#         self.wb = openpyxl.Workbook()
-#         self.wb.remove(self.wb.active)  # Remove the default sheet created by openpyxl
-#         self.faculty_ws = self.wb.create_sheet(title="Faculty Data")
-#         self.resident_ws = self.wb.create_sheet(title="Resident Data")
-#         self.faculty_row_num = 1
-#         self.resident_row_num = 1
-
-#     def process_item(self, item, spider):
-#         if 'Faculty' in item:
-#             # Add headings to the faculty sheet if it's the first faculty item
-#             if self.faculty_row_num == 1:
-#                 self.faculty_ws.append(list(item['Faculty'].keys()))
-
-#             # Add the faculty data to the faculty sheet
-#             self.faculty_ws.append(list(item['Faculty'].values()))
-#             self.faculty_row_num += 1
-
-#         elif 'Resident' in item:
-#             # Add headings to the resident sheet if it's the first resident item
-#             if self.resident_row_num == 1:
-#                 self.resident_ws.append(list(item['Resident'].keys()))
-
-#             # Add the resident data to the resident sheet
-#             self.resident_ws.append(list(item['Resident'].values()))
-#             self.resident_row_num += 1
-
-#         return item
-
-#     def close_spider(self, spider):
-#         self.wb.save(f"scraped_data.xlsx")  # save the workbook

@@ -61,13 +61,6 @@ class LazyCrawler(LazyBaseCrawler):
             'Rating':rating,
         }
 
-        if self.page_number <=20:
-            self.page_number += 1
-            url = f"https://www.amazon.com/s?k=Electronics&page={self.page_number}"
-            yield scrapy.Request(url, self.parse_get_product_urls, dont_filter=True, )
-    
-
-
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
 process = CrawlerProcess(get_project_settings())  

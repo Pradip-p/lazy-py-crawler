@@ -140,7 +140,6 @@ dmypy.json
 *.xml
 lazy
 test_p.py
-/lazy-py-crawler
 *.github
 /.github
 *.txt

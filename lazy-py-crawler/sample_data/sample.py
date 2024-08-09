@@ -45,14 +45,14 @@ class LazyCrawler(LazyBaseCrawler):
         # # urls => extract all url of product from one page
         # urls = response.xpath('//div[@class="product-small box "]/div[@class="box-image"]/div[@class="image-zoom_in"]/a/@href').extract()
 
-        # # to get next page url if available 
+        # # to get next page url if available
         # next_url = response.xpath('//link[@rel="next"]/@href').extract_first()
-        
+
         # for url in urls:
-            
+
         #     # send the requst for each product details
         #     yield scrapy.Request(url, self.parse_detail, dont_filter=True)
-        
+
         # to send next page until next page available.
         # if next_url:
         #     yield scrapy.Request(next_url, self.parse, dont_filter=True)
@@ -65,12 +65,12 @@ class LazyCrawler(LazyBaseCrawler):
     #     desc = response.xpath('//div[@id="tab-description"]//text()').extract()
     #     desc = [re.sub(r'[\r\n\t]', '', x) for x in desc]
     #     image_name = image_url.split('?')[0].split('/')[-1]
-        
+
     #     img = process_image(image_url,image_name)
 
     #     # print(img)
     #     # ipdb.set_trace()
-        
+
     #     #send to wordpress api https://shirtof.com/
 
     #     url = 'https://shirtof.com/wp-json/wp/v2/posts'
@@ -84,7 +84,7 @@ class LazyCrawler(LazyBaseCrawler):
 
     #     # token = base64.b64decode(creds.encode())
     #     token = base64.b64encode(credentials.encode())
-        
+
 
     #     header = {'Authorization': 'Basic ' + token.decode('utf-8'),
     #     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.82 Safari/537.36'
@@ -111,7 +111,7 @@ class LazyCrawler(LazyBaseCrawler):
     #     }
 
     #     image = requests.post(image_url, headers=header1, files=media)
-    
+
     #     # ['source_url']
     #     imageURL = json.loads(image.content)
     #     imageURL = imageURL.get('source_url')
@@ -129,6 +129,6 @@ class LazyCrawler(LazyBaseCrawler):
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished

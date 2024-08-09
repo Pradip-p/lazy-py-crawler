@@ -39,7 +39,7 @@ class AwesomeSpider(scrapy.Spider):
                 print('Waiting for a second and re-calling with a new proxy IP')
                 # time.sleep(100)  # Wait for a second
                 return self._retry_request(response.request, reason=failure.getErrorMessage(), spider=self)
-            
+
     def _retry_request(self, request, reason, spider):
         retryreq = request.copy()
         retryreq.meta['retry_times'] = request.meta.get('retry_times', 0) + 1
@@ -51,20 +51,20 @@ class AwesomeSpider(scrapy.Spider):
         }
         retryreq.meta['playwright_context_kwargs']['proxy'] = proxy
         return retryreq
-    
+
     def start_requests(self):
         # GET request
         search_terms = ["massage"]  # Replace with the desired search terms
-        
+
         for search_term in search_terms:
-            
+
             # for page_num in range(1, 30):
             headers = {
             "User-Agent": get_user_agent('random'),
             "Referer": "https://www.yellowpages.com.au/",
             }
-            # url = f"https://www.yellowpages.com.au/search/listings?clue={search_term}&locationClue=All+States"                
-            url = 'https://www.yellowpages.com.au/search/listings?clue=massage&locationClue=All+States'              
+            # url = f"https://www.yellowpages.com.au/search/listings?clue={search_term}&locationClue=All+States"
+            url = 'https://www.yellowpages.com.au/search/listings?clue=massage&locationClue=All+States'
             yield scrapy.Request(
                 url=url,
                 headers= headers,
@@ -84,16 +84,16 @@ class AwesomeSpider(scrapy.Spider):
                 # errback=self.errback_http_ignored,  # Assign the error callback
                 dont_filter=True
             )
-            
+
 
     def parse(self, response):
-        # name = response.xpath("//h3[contains(@class,'MuiTypography-root')]/text()").extract()  
+        # name = response.xpath("//h3[contains(@class,'MuiTypography-root')]/text()").extract()
         # phone = response.xpath('//span[@class="MuiButton-label"]/text()').extract()
         # yield{
         #     'name': name,
         #     'Phone': phone
-        # } 
-             
+        # }
+
         # main_div = response.xpath('//div[@class="Box__Div-sc-dws99b-0 iOfhmk MuiPaper-root MuiCard-root PaidListing MuiPaper-elevation1 MuiPaper-rounded"]')
         # print('*'*10, main_div)
         # for res in main_div:
@@ -115,9 +115,9 @@ class AwesomeSpider(scrapy.Spider):
                 # 'Description': ' '.join(desc),
                 # 'Scrapped URL': response.url
             # }
-        
+
         # 'response' contains the page as seen by the browser
-        
+
         urls = response.xpath('//a[@class="MuiTypography-root MuiLink-root MuiLink-underlineNone MuiTypography-colorPrimary"]/@href').extract()
         for url in urls:
             url = 'https://www.yellowpages.com.au{}'.format(url)
@@ -125,7 +125,7 @@ class AwesomeSpider(scrapy.Spider):
             "User-Agent": get_user_agent('random'),
             "Referer": "https://www.yellowpages.com.au/",
             }
-            
+
             yield scrapy.Request(
                     url=url,
                     callback=self.parse_page,
@@ -146,7 +146,7 @@ class AwesomeSpider(scrapy.Spider):
                     # errback=self.errback_http_ignored,  # Assign the error callback
                     dont_filter=True
                 )
-            
+
     def parse_page(self, response):
         name = response.xpath('//h1/a[@class="listing-name"]/text()').extract_first()
         addr = response.xpath('//div[@class="listing-address mappable-address mappable-address-with-poi"]/text()').extract_first()
@@ -155,8 +155,8 @@ class AwesomeSpider(scrapy.Spider):
         website = response.xpath('//div[@class="contacts"]/div[@class="main"]/a[@class="contact contact-main contact-url"]/@href').extract_first()
         details = response.xpath('//p[@class="details"]/text()').extract()
         desc = response.xpath('//ul[@class="item-list item-list-usp"]/li/text()').extract()
-        full_desc = ' '.join(details) + ' '.join(desc) 
-           
+        full_desc = ' '.join(details) + ' '.join(desc)
+
         yield{
             'Name': name,
             'Address': addr,
@@ -166,8 +166,8 @@ class AwesomeSpider(scrapy.Spider):
             "URL": response.url,
             'Description': full_desc
         }
-            
-            
+
+
         # main_div = response.xpath('//div[@class="Box__Div-sc-dws99b-0 iOfhmk MuiPaper-root MuiCard-root PaidListing MuiPaper-elevation1 MuiPaper-rounded"]')
         # print('*'*10, main_div)
         # for res in main_div:
@@ -178,7 +178,7 @@ class AwesomeSpider(scrapy.Spider):
         #     desc = res.xpath('.//div[@class="Box__Div-sc-dws99b-0 iswkLA"]//text()').extract()
         #     addr = res.xpath('.//div[@class="Box__Div-sc-dws99b-0 bvRSwt"]/a/p/text()').extract_first()
         #     website = res.xpath('.//a[@class="MuiButtonBase-root MuiButton-root MuiButton-text ButtonWebsite MuiButton-textSecondary MuiButton-fullWidth"]/@href').extract_first()
-            
+
         #     yield {
         #         'Name': name,
         #         'Phone Number': ph_num,
@@ -189,7 +189,7 @@ class AwesomeSpider(scrapy.Spider):
         #         'Description': ' '.join(desc),
         #         'Scrapped URL': response.url
         #     }
-        
+
         #next page urls
         # last_next_page_url = response.xpath('//a/span[contains(text(), "Next")]/ancestor::a/@href').get()
         # # next_page_urls = response.xpath('//a[@class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-fullWidth"]/@href').extract()
@@ -201,7 +201,7 @@ class AwesomeSpider(scrapy.Spider):
         #     "User-Agent": get_user_agent('random'),
         #     "Referer": "https://www.yellowpages.com.au/",
         #     }
-            
+
         #     yield scrapy.Request(
         #             url=last_next_page_url,
         #             callback=self.parse,
@@ -225,6 +225,6 @@ class AwesomeSpider(scrapy.Spider):
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(AwesomeSpider)
 process.start() # the script will block here until the crawling is finished

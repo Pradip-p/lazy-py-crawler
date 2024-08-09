@@ -23,7 +23,7 @@ class LazyCrawler:
                 print(f"Fetching URLs from page {page_number}...")
                 # Wait until all "View Listing" buttons are present
                 view_listing_buttons = self.wait.until(EC.presence_of_all_elements_located((By.XPATH, '//a[contains(@class, "btn btn-success btn-block")]')))
-                
+
                 # Collect URLs for current page
                 for button in view_listing_buttons:
                     try:
@@ -42,7 +42,7 @@ class LazyCrawler:
                 # Scroll the "Load More" button into view
                 self.driver.execute_script("arguments[0].scrollIntoView(true);", load_more_button)
                 time.sleep(2)  # Adjust sleep time as needed for the button to be clickable
-                
+
                 # Click the "Load More" button using JavaScript
                 try:
                     self.driver.execute_script("arguments[0].click();", load_more_button)

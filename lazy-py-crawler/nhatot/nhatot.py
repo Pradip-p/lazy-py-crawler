@@ -23,9 +23,9 @@ class LazyCrawler(LazyBaseCrawler):
         # chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36")
 
         # self.driver = webdriver.Chrome(options=chrome_options)
-        
+
     name = "nhatot"
-    
+
     allowed_domains = ["nhatot.com.vn"]
 
     custom_settings = {
@@ -36,7 +36,7 @@ class LazyCrawler(LazyBaseCrawler):
             'lazy_crawler.crawler.pipelines.JsonWriterPipeline': None
         }
     }
-    
+
     headers = {
         "Accept": "application/json, text/plain, */*",
         "Accept-Encoding": "gzip, deflate, br",
@@ -72,10 +72,10 @@ class LazyCrawler(LazyBaseCrawler):
         retryreq.meta['retry_times'] = request.meta.get('retry_times', 0) + 1
         retryreq.dont_filter = True
         return retryreq
-    
+
     def start_requests(self):
         url = 'https://gateway.chotot.com/v1/public/ad-listing'
-        
+
         payload = {
             "limit": "10",
             "protection_entitlement": "true",
@@ -83,7 +83,7 @@ class LazyCrawler(LazyBaseCrawler):
             "st": "s,k",
             "key_param_included": "true"
         }
-        
+
         yield scrapy.Request(url=url, headers=self.headers, callback=self.parse, method='GET',
                              body=json.dumps(payload),errback=self.errback_http_ignored  )
 
@@ -94,31 +94,30 @@ class LazyCrawler(LazyBaseCrawler):
             list_id = ad.get('list_id')
             # Second API use to crawl Listing Information:
             url = 'https://gateway.chotot.com/v1/public/ad-listing/{}'.format(list_id)
-            yield scrapy.Request(url=url, headers=self.headers, callback=self.parse_list_information, 
+            yield scrapy.Request(url=url, headers=self.headers, callback=self.parse_list_information,
                     errback=self.errback_http_ignored,dont_filter=True)
-    
+
     def parse_list_information(self, response):
         json_response = response.json()
         list_id = json_response['ad']['list_id']
         url = 'https://www.nhatot.com/{}.htm'.format(list_id)
-         
+
         phone_number = self.scrape_phone_from_url(url)
-        
+
     def scrape_phone_from_url(self, url):
         self.driver.get(url)
         phone_number = ''
         time.sleep(30)
         # Close the browser
-        # self.driver.quit()    
+        # self.driver.quit()
 
         return phone_number
-    
-            
+
+
             # You can now use list_id as needed, perhaps yielding it or passing to another callback
-          
+
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished
-

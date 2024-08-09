@@ -27,7 +27,7 @@ class LazyCrawler(scrapy.Spider):
             'lazy_crawler.crawler.pipelines.JsonWriterPipeline': 300
         }
     }
-    
+
     def errback_http_ignored(self, failure):
         if failure.check(HttpError):
             response = failure.value.response
@@ -47,7 +47,7 @@ class LazyCrawler(scrapy.Spider):
         retryreq.meta['retry_times'] = request.meta.get('retry_times', 0) + 1
         retryreq.dont_filter = True
         return retryreq
-    
+
     HEADERS = {
         # "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
         # "Accept-Language": "en-US,en;q=0.5",
@@ -69,7 +69,7 @@ class LazyCrawler(scrapy.Spider):
         'Upgrade-Insecure-Requests': '1',
         #'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36'
     }
-    
+
     def start_requests(self):
         for page_num in range(1,35):
             proxy_list = self.read_proxy_list_from_csv('proxy_list.csv')
@@ -79,15 +79,15 @@ class LazyCrawler(scrapy.Spider):
 
             proxy = random.choice(proxy_list)
             proxy_url = f"http://{proxy['user']}:{proxy['pass']}@{proxy['host']}:{proxy['port']}"
-        
-            url = 'https://www.yellowpages.com.au/search/listings?clue=massage&locationClue=All+States&pageNumber={}'.format(page_num)    
+
+            url = 'https://www.yellowpages.com.au/search/listings?clue=massage&locationClue=All+States&pageNumber={}'.format(page_num)
             # url = 'https://www.yellowpages.com.au/search/listings?clue=massage&locationClue=All+States'
             headers = {
                 'User-Agent': get_user_agent('random'),
                 **self.HEADERS,  # Merge the HEADERS dictionary with the User-Agent header
                 }
-            
-            yield scrapy.Request(url, callback=self.parse_load, 
+
+            yield scrapy.Request(url, callback=self.parse_load,
                                 meta={
                                     'proxy': proxy_url,
                                     'proxy_auth': f'{proxy["user"]}:{proxy["pass"]}',
@@ -95,7 +95,7 @@ class LazyCrawler(scrapy.Spider):
                                     'proxy_list':proxy_list
                                 },
                                 errback=self.errback_http_ignored,
-                                headers= headers, 
+                                headers= headers,
                                 dont_filter=True)
 
     def parse_load(self, response):
@@ -106,23 +106,23 @@ class LazyCrawler(scrapy.Spider):
             ph_num = res.xpath('//button[@class="MuiButtonBase-root MuiButton-root MuiButton-text ButtonPhone MuiButton-textPrimary MuiButton-fullWidth"]/span[@class="MuiButton-label"]/text()').extract_first()
             short_desc = res.xpath('//p[@class="MuiTypography-root jss302 MuiTypography-subtitle2"]/text()').extract_first()
             desc  =res.xpath('//div[@class="Box__Div-sc-dws99b-0 iswkLA"]//text()').extract()
-            
+
             yield{
                 'Name': name,
                 'Address': addr,
                 'Phone Number': ph_num,
                 'Short Desc': short_desc,
-                'Description': ' '.join(desc) 
+                'Description': ' '.join(desc)
             }
-            
-            
-            
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
+
+
+
         # next_url =  response.xpath('//a[@class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-fullWidth"]/@href').extract_first()
         # if next_url:
         #     url = 'https://www.yellowpages.com.au'.format(next_url)
@@ -132,7 +132,7 @@ class LazyCrawler(scrapy.Spider):
         #     headers = {
         #     'User-Agent': get_user_agent('random'),
         #     }
-        #     yield scrapy.Request(url, callback=self.parse_load, 
+        #     yield scrapy.Request(url, callback=self.parse_load,
         #                      meta={
         #                         'proxy': proxy_url,
         #                         'proxy_auth': f'{proxy["user"]}:{proxy["pass"]}',
@@ -140,24 +140,24 @@ class LazyCrawler(scrapy.Spider):
         #                         'proxy_list':response.meta['proxy_list']
         #                     },
         #                     errback=self.errback_http_ignored,
-        #                     headers= headers, 
+        #                     headers= headers,
         #                     dont_filter=True)
 
         # name = response.xpath('//h3[@class="MuiTypography-root jss371 MuiTypography-h3 MuiTypography-displayBlock"]/text()').extract()
         # short = response
         # urls = response.xpath('//a[@class="MuiTypography-root MuiLink-root MuiLink-underlineNone MuiTypography-colorPrimary"]/@href').extract()
-    
+
         # proxy_list = self.read_proxy_list_from_csv('proxy_list.csv')
 
         # if not proxy_list:
         #     self.logger.error('No proxies found in the CSV file.')
         #     return
-    
+
         # urls = response.xpath('//a[@class="MuiTypography-root MuiLink-root MuiLink-underlineNone MuiTypography-colorPrimary"]/@href').extract()
         # for url in urls:
         #     proxy = random.choice(proxy_list)
         #     proxy_url = f"http://{proxy['user']}:{proxy['pass']}@{proxy['host']}:{proxy['port']}"
-        
+
         #     url = 'https://www.yellowpages.com.au' + url
         #     yield scrapy.Request(url, callback=self.parse_page, meta={'proxy': proxy_url, 'proxy_auth': f'{proxy["user"]}:{proxy["pass"]}'}, dont_filter=True)
 
@@ -175,7 +175,7 @@ class LazyCrawler(scrapy.Spider):
             'Short Desc': short_desc,
             'phone number': phone_no
         }
-        
+
     def read_proxy_list_from_csv(self, filename):
         proxy_list = []
         try:
@@ -212,39 +212,39 @@ class LazyCrawler(scrapy.Spider):
 #         'lazy_crawler.crawler.pipelines.ExcelWriterPipeline': None
 #         }
 #     }
-    
+
 #     # Proxy configuration
 #     proxy_host = 'proxy.speedproxies.net'
 #     proxy_port = '12321'
 #     proxy_user = 'curadigitala4828'
 #     proxy_pass = '34d89f51e9f5'
-    
+
 #     # Set the proxy for the spider
 #     proxy = f'http://{proxy_user}:{proxy_pass}@{proxy_host}:{proxy_port}'
-    
+
 
 #     def start_requests(self):
-        
+
 #         meta = {'proxy': self.proxy, 'proxy_auth': f'{self.proxy_user}:{self.proxy_pass}'}
 #         # meta = {'proxy': proxy}
 #         url='https://www.yellowpages.com.au/search/listings?clue=massage&locationClue=All+States'
 #         # Start the request with the configured proxy
 #         yield scrapy.Request(url, callback=self.parse, meta=meta, dont_filter=True)
-        
-        
+
+
 #     def parse(self, response):
 #         urls = response.xpath('//a[@class="MuiTypography-root MuiLink-root MuiLink-underlineNone MuiTypography-colorPrimary"]/@href').extract()
 #         # Extract data from individual URLs
 #         for url in urls:
 #             url = 'https://www.yellowpages.com.au'.format(url)
 #             yield scrapy.Request(url, callback=self.parse_page, meta=response.meta, dont_filter=True)
-            
+
 #         # next_page_url =  response.xpath('//a[@class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-fullWidth"]/@herf').extract_first()
 #         # if next_page_url:
 #         #     yield scrapy.Request(next_page_url, callback=self.parse, meta=response.meta, dont_filter=True)
 
-            
-            
+
+
 #     def parse_page(self, response):
 #         # Extract data from the page
 #         # Example: Extracting the name and address
@@ -252,7 +252,7 @@ class LazyCrawler(scrapy.Spider):
 #         address = response.xpath('//span[@class="glyph icon-pin-location"]/text()').get()
 #         short_desc = response.xpath('//p[@class="listing-short-description"]/text()').get()
 #         phone_no = response.xpath('//span[@class="text middle  "]/div[@class="desktop-display-value"]/text()').get()
-        
+
 #         yield{
 #             'name': name,
 #             'Address': address,
@@ -263,6 +263,6 @@ class LazyCrawler(scrapy.Spider):
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished

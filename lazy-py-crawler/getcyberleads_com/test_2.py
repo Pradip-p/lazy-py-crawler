@@ -82,7 +82,7 @@ def parse_details(driver):
     details = {}
     elements = driver.find_elements(By.XPATH,'//div[@class="column field"]')
     for element in elements:
-        
+
         key = element.find_element(By.XPATH, './/p[@class="data-point-title"]/b').text
         try:
             val = element.find_element(By.XPATH, './/p[@class="data-point-subtitle"]').text
@@ -142,7 +142,7 @@ def email_format(url, data):
     headers = email_driver.find_elements(By.XPATH, '//tr[@id="table-headers"]/th')
 
     rows = email_driver.find_elements(By.XPATH, '//tbody/tr')
-    
+
     email_data = []
     for row in rows:
         cells = row.find_elements(By.TAG_NAME, "td")
@@ -155,7 +155,7 @@ def email_format(url, data):
             email_data.append(email_row)
     ###email faq data
     data['email_data']  =email_data
-    
+
     faq_email = {}
 
     faq_questions = email_driver.find_elements(By.XPATH,'//a[@class="faq-question"]')

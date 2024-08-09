@@ -31,14 +31,14 @@ class LazyCrawler(LazyBaseCrawler):
         retryreq.meta['retry_times'] = request.meta.get('retry_times', 0) + 1
         retryreq.dont_filter = True
         return retryreq
-    
+
     name = "chewy"
 
     allowed_domains = ['chewy.com']
 
     custom_settings = {
         'DOWNLOAD_DELAY': 2,'LOG_LEVEL': 'DEBUG',
-        
+
         'CONCURRENT_REQUESTS' : 32,'CONCURRENT_REQUESTS_PER_IP': 32,
 
         'CONCURRENT_REQUESTS_PER_DOMAIN': 32,'RETRY_TIMES': 1,
@@ -68,19 +68,19 @@ class LazyCrawler(LazyBaseCrawler):
             'User-Agent': get_user_agent('random'),
             **self.HEADERS,  # Merge the HEADERS dictionary with the User-Agent header
             }
-        
+
         url = 'https://www.chewy.com/brands'
         yield scrapy.Request(url, self.brand_url, dont_filter=True,
                 errback=self.errback_http_ignored,
                 headers= headers,
                 )
-    
+
     def brand_url(self, response, **kwargs):
         urls = response.xpath('//a[@class="jsx-3519525548 jsx-193800844 brand-link"]/@href').extract()
         for url in urls:
             url = 'https://www.chewy.com{}'.format(url)
             yield scrapy.Request(url, callback=self.data_category_id, dont_filter=True)
-    
+
 
 
     def data_category_id(self, response):
@@ -109,6 +109,6 @@ class LazyCrawler(LazyBaseCrawler):
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished

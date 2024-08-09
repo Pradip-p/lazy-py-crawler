@@ -8,7 +8,7 @@
 
 #         # Replace this with your specific scraping logic.
 #         title = page.title()
-        
+
 #         print(f'Title of the page: {title}')
 
 #         browser.close()
@@ -23,7 +23,7 @@ async def main():
    await page.goto('https://www.mscdirect.com/browse/Abrasives?navid=2100008')
    await page.wait_for_timeout(1000)
    await browser.close()
-   
+
 if __name__ == '__main__':
     asyncio.run(main())
 

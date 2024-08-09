@@ -19,11 +19,11 @@ class LazyCrawler(LazyBaseCrawler):
             'lazy_crawler.crawler.pipelines.ExcelWriterPipeline': 300
             }
         }
-        
+
     page_num = 1
 
     def start_requests(self): #project start from here.
-        
+
         settings = get_project_settings()
         url = 'https://api.louisvuitton.com/eco-eu/search-merch-eapi/v1/eng-gb/records?keyword=hoodie&page={}&urlCode=null&filter=sku'.format(self.page_num)
         yield scrapy.Request(url, self.parse, dont_filter=True)
@@ -59,6 +59,6 @@ settings.setdict({
                 'LOG_LEVEL': 'ERROR',
                 'LOG_ENABLED': True,
             })
-process = CrawlerProcess(settings)  
+process = CrawlerProcess(settings)
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished

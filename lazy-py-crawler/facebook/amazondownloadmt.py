@@ -107,4 +107,3 @@ for i in range(20):
 
 # Wait for all the URLs to be processed
 url_queue.join()
-

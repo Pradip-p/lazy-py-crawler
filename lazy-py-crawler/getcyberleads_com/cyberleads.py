@@ -30,7 +30,7 @@ class MySpider(scrapy.Spider):
         retry_wait_time = 60
 
         driver = response.meta['driver']
-        
+
         for letter in range(ord('A'), ord('Z')+1):
             start_url = f'https://www.getcyberleads.com/directories/companies/{chr(letter)}'
             driver.get(start_url)

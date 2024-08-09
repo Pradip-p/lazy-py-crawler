@@ -10,7 +10,7 @@ import csv
 
 
 def start_crawl(url:str, headless:bool = True,useragent: str = None):
-    options = Options()    
+    options = Options()
     if headless:
         options.add_argument('--headless')
     if useragent:
@@ -22,7 +22,7 @@ def start_crawl(url:str, headless:bool = True,useragent: str = None):
 if __name__ == '__main__':
     url = 'https://example.com'
     driver = start_crawl(url, get_user_agent('random'))
-    
+
     print(driver)
     driver.quit()
 
@@ -99,7 +99,7 @@ if __name__ == '__main__':
 #     details = {}
 #     elements = driver.find_elements(By.XPATH,'//div[@class="column field"]')
 #     for element in elements:
-        
+
 #         key = element.find_element(By.XPATH, './/p[@class="data-point-title"]/b').text
 #         try:
 #             val = element.find_element(By.XPATH, './/p[@class="data-point-subtitle"]').text
@@ -160,7 +160,7 @@ if __name__ == '__main__':
 #     headers = email_driver.find_elements(By.XPATH, '//tr[@id="table-headers"]/th')
 
 #     rows = email_driver.find_elements(By.XPATH, '//tbody/tr')
-    
+
 #     email_data = []
 #     for row in rows:
 #         cells = row.find_elements(By.TAG_NAME, "td")
@@ -173,7 +173,7 @@ if __name__ == '__main__':
 #             email_data.append(email_row)
 #     ###email faq data
 #     data['email_data']  =email_data
-    
+
 #     faq_email = {}
 
 #     faq_questions = email_driver.find_elements(By.XPATH,'//a[@class="faq-question"]')
@@ -198,7 +198,3 @@ if __name__ == '__main__':
 #         if csvFile.tell() == 0:  # Check if the file is empty
 #             writer.writeheader()
 #         writer.writerow(data)
-
-    
-
-

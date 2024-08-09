@@ -28,14 +28,14 @@ class LazyCrawler(LazyBaseCrawler):
         retryreq.meta['retry_times'] = request.meta.get('retry_times', 0) + 1
         retryreq.dont_filter = True
         return retryreq
-    
+
     name = "englishelm_elem"
 
     allowed_domains = ['englishelm.com']
 
     custom_settings = {
         'DOWNLOAD_DELAY': 2,'LOG_LEVEL': 'DEBUG',
-        
+
         'CONCURRENT_REQUESTS' : 1,'CONCURRENT_REQUESTS_PER_IP': 1,
 
         'CONCURRENT_REQUESTS_PER_DOMAIN': 1,'RETRY_TIMES': 2,
@@ -72,7 +72,7 @@ class LazyCrawler(LazyBaseCrawler):
                 errback=self.errback_http_ignored,
                 headers= headers,
                 )
-    
+
 
     def parse_json(self, response):
         # script_content = response.xpath('//script[@id="web-pixels-manager-setup"]/text()').extract_first()
@@ -85,8 +85,8 @@ class LazyCrawler(LazyBaseCrawler):
         products = results['products']
         for product in products:
             # yield product
-            yield{"variants":  product['variants'], } 
-        
+            yield{"variants":  product['variants'], }
+
         next_page = response.xpath('//ul[@class="pagination-page"]/li[@class="text"]/a[@title="Next"]/@href').extract_first()
         if next_page:
             url = 'https://englishelm.com{}'.format(next_page)
@@ -103,6 +103,6 @@ class LazyCrawler(LazyBaseCrawler):
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished

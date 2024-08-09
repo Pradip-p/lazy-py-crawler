@@ -13,15 +13,15 @@ class LazyCrawler(LazyBaseCrawler):
             'lazy_crawler.crawler.pipelines.JsonWriterPipeline': None
         }
     }
-    
+
     start_urls = ['http://quotes.toscrape.com/login']
-    
+
     def parse(self, response):
         # Extract CSRF token and other login form data
         # csrf_token = response.css('input[name="csrf_token"]::attr(value)').get()
         csrf_token = response.xpath('//*[@name="csrf_token"]/@value').extract_first()
         # Extract other login form data as needed
-        
+
         # Send a POST request with login data
         yield scrapy.FormRequest.from_response(
             response,
@@ -33,13 +33,13 @@ class LazyCrawler(LazyBaseCrawler):
             },
             callback=self.after_login, dont_filter = True
         )
-    
+
     def after_login(self, response):
         # Check if login was successful
         print(response.xpath('.//div[@class = "col-md-4"]/p/a/text()'))
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished

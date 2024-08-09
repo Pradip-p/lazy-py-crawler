@@ -19,7 +19,7 @@ class LazyCrawler(LazyBaseCrawler):
 
     custom_settings = {
         'DOWNLOAD_DELAY': 4,'LOG_LEVEL': 'DEBUG',
-        
+
         'CONCURRENT_REQUESTS' : 1,'CONCURRENT_REQUESTS_PER_IP': 1,
 
         'CONCURRENT_REQUESTS_PER_DOMAIN': 1,'RETRY_TIMES': 2,
@@ -67,7 +67,7 @@ class LazyCrawler(LazyBaseCrawler):
     proxy = 'p.webshare.io:80'
     # user_pass = base64.encodebytes("hpiukvrn-rotate:yahyayahya".encode()).decode()
     user_pass = base64.encodebytes("gkoffhkj-rotate:9qsx6zrpagq6".encode()).decode()
-    
+
     def start_requests(self): #project start from here.
         # for category in self.categories:
         #     category = category.items()
@@ -92,12 +92,12 @@ class LazyCrawler(LazyBaseCrawler):
         if next_page:
             url = 'https://livaroom.com{}'.format(next_page)
             yield scrapy.Request(url, self.parse_json, dont_filter=True,headers=self.HEADERS)
-            
+
         gc.collect()
 
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished

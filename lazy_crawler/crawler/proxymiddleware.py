@@ -25,4 +25,3 @@ class ProxyMiddleware:
 
         request.meta['proxy'] = f'http://{proxy_url}'
         logging.info(f"Using proxy: {proxy_url} for URL: {request.url}")
-

@@ -31,14 +31,14 @@ class LazyCrawler(LazyBaseCrawler):
         retryreq.meta['retry_times'] = request.meta.get('retry_times', 0) + 1
         retryreq.dont_filter = True
         return retryreq
-    
+
     name = "chewy"
 
     allowed_domains = ['chewy.com']
 
     custom_settings = {
         'DOWNLOAD_DELAY': 2,'LOG_LEVEL': 'DEBUG',
-        
+
         'CONCURRENT_REQUESTS' : 32,'CONCURRENT_REQUESTS_PER_IP': 32,
 
         'CONCURRENT_REQUESTS_PER_DOMAIN': 32,'RETRY_TIMES': 1,
@@ -109,7 +109,7 @@ Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/11
             'User-Agent': get_user_agent('random'),
             **self.HEADERS,  # Merge the HEADERS dictionary with the User-Agent header
             }
-        
+
         url = 'https://www.chewy.com/api/pdp/graphql'
         payload = {
             "operationName": "Reviews",
@@ -124,7 +124,7 @@ Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/11
 
         yield FormRequest(url, dont_filter=True, formdata={'json': json.dumps(payload)}, headers=headers, callback=self.parse_response )
 
-    
+
 
 
 
@@ -133,6 +133,6 @@ Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/11
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished

@@ -33,7 +33,7 @@ class LazyCrawler(scrapy.Spider):
             type_ = item.get('type')
             url = 'https://www.wsj.com/news/economy?id={}&type={}'.format(arctile_id, type_)
             yield scrapy.Request(url, self.parse_article, dont_filter=True)
-        
+
 
     def parse_article(self, response):
         res = json.loads(response.body)
@@ -45,11 +45,11 @@ class LazyCrawler(scrapy.Spider):
         yield scrapy.Request(url, self.details, dont_filter=True, meta={'title':headline,'summary':summary})
 
     def details(self, response):
-        
+
         author = response.xpath('//a[@class="css-mbn33i-AuthorLink e10pnb9y0"]/text()').extract_first()
         time = response.xpath('//time[@class="css-a8mttu-Timestamp-Timestamp emlnvus0"]/text()').extract_first()
         desc = response.xpath('//section[@class="ef4qpkp0 css-1h33ts-Container e1of74uw17"]/p//text()').extract()
-        
+
         yield{
             'title' : response.meta['title'],
             'author':author,
@@ -104,7 +104,7 @@ class LazyCrawler(scrapy.Spider):
 
         query_param_str = quote(json.dumps(query_param))
         return f"{self.base_url}?id={query_param_str}&type=allesseh_content_full"
-    
+
 
 # class LazyCrawler(scrapy.Spider):
 
@@ -129,6 +129,6 @@ class LazyCrawler(scrapy.Spider):
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start()

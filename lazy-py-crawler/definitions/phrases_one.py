@@ -21,7 +21,7 @@
 #     format='%(levelname)s: %(message)s',
 #     level=logging.INFO
 #     )
-    
+
 #     custom_settings = {
 #         'LOG_LEVEL': 'DEBUG','CHANGE_PROXY_AFTER':1,'USE_PROXY':True,
 #         'CONCURRENT_REQUESTS' : 126,'CONCURRENT_REQUESTS_PER_IP': 26,'CONCURRENT_REQUESTS_PER_DOMAIN': 2,
@@ -37,7 +37,7 @@
 #     unique_words = set()
 
 #     settings = get_project_settings()
-    
+
 #     headers = get_user_agent('random')
 
 #     page_number = ''
@@ -50,7 +50,7 @@
 
 #             # yield scrapy.Request(url, self.get_urls, dont_filter=True)
 #             yield scrapy.Request(url, self.get_text, errback=self.handle_error, dont_filter=True)
-    
+
 #     def handle_error(self, failure):
 #         if failure.check(HttpError):
 #             response = failure.value.response
@@ -71,25 +71,25 @@
 #         new_request.dont_filter = True
 #         reactor.callLater(delay, self.crawler.engine.schedule, new_request, self)
 #         return None
-    
+
 
 #     def get_text(self, response):
 #         text = response.xpath('//table[@class="tdata"]/tbody/tr/td/strong/a/text()').extract()
-        
+
 #         text = [word.strip() for word in text]
-        
+
 #         # Write the unique words to a file
 #         with open('text.txt', 'a') as f:
 #             for word in set(text):
 #                 if word not in self.unique_words:
 #                     f.write(word + '\n')
 #                     self.unique_words.add(word)
-        
+
 #         last_page_number = response.xpath('//div[@class="pager"]/a[last()-1]/text()').extract_first()
 #         url = response.url
 # settings_file_path = 'lazy_crawler.crawler.settings'
 # os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-# process = CrawlerProcess(get_project_settings())  
+# process = CrawlerProcess(get_project_settings())
 # process.crawl(LazyCrawler)
 # process.start() # the script will block here until the crawling is finished
 
@@ -128,7 +128,7 @@ class LazyCrawler(LazyBaseCrawler):
 
     def start_requests(self):
         alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        
+
         # url = 'https://www.phrases.com/letter/0'
         for letter in alphabet:
             url = 'https://www.phrases.com/letter/{}/'.format(letter)
@@ -141,7 +141,7 @@ class LazyCrawler(LazyBaseCrawler):
         phrases = response.xpath('//table[@class="tdata"]/tbody/tr/td/strong/a/text()').extract()
         text = [phrase.strip() for phrase in phrases]
         # Remove left and right spaces from each word
-        
+
         # Write the unique words to a file
         with open('phrases_1.txt', 'a') as f:
             for word in set(text):
@@ -149,7 +149,7 @@ class LazyCrawler(LazyBaseCrawler):
                     f.write(word + '\n')
                     self.unique_words.add(word)
 
-    
+
         # Extract the last page number from pagination
         last_page_number = response.xpath('//div[@class="pager"]/a[last()-1]/text()').extract_first()
         if last_page_number:
@@ -158,13 +158,13 @@ class LazyCrawler(LazyBaseCrawler):
             for page in range(2, last_page_number + 1):
                 url = response.url+str(page)
                 yield scrapy.Request(url, self.parse_pagination_page, dont_filter=True)
-    
+
     def parse_pagination_page(self, response):
         # Extract the phrases from the pagination page
         phrases = response.xpath('//table[@class="tdata"]/tbody/tr/td/strong/a/text()').extract()
         text = [phrase.strip() for phrase in phrases]
         # Remove left and right spaces from each word
-        
+
         # Write the unique words to a file
         with open('phrases_1.txt', 'a') as f:
             for word in set(text):
@@ -174,7 +174,6 @@ class LazyCrawler(LazyBaseCrawler):
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished
-

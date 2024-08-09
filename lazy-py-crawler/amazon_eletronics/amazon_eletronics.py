@@ -17,7 +17,7 @@ class LazyCrawler(LazyBaseCrawler):
     format='%(levelname)s: %(message)s',
     level=logging.INFO
     )
-    
+
     custom_settings = {
         'DOWNLOAD_DELAY': 4,'RANDOMIZE_DOWNLOAD_DELAY':False,'LOG_LEVEL': 'DEBUG','CHANGE_PROXY_AFTER':1,'USE_PROXY':True,
         'CONCURRENT_REQUESTS' : 1,'CONCURRENT_REQUESTS_PER_IP': 1,'CONCURRENT_REQUESTS_PER_DOMAIN': 1,
@@ -29,11 +29,11 @@ class LazyCrawler(LazyBaseCrawler):
     settings = get_project_settings()
 
     settings.set('LOG_FILE','Log.log',priority='cmdline')
-        
+
     def start_requests(self): #project start from here.
-        
+
         url = 'https://www.amazon.com/s?k=Electronics'
-        
+
         yield scrapy.Request(url, self.parse_get_product_urls, dont_filter=True)
 
 
@@ -65,11 +65,11 @@ class LazyCrawler(LazyBaseCrawler):
             self.page_number += 1
             url = f"https://www.amazon.com/s?k=Electronics&page={self.page_number}"
             yield scrapy.Request(url, self.parse_get_product_urls, dont_filter=True, )
-    
+
 
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished

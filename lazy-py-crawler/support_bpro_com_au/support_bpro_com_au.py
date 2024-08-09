@@ -16,12 +16,12 @@ class LazyCrawler(LazyBaseCrawler):
         'CONCURRENT_REQUESTS_PER_DOMAIN': 1,'RETRY_TIMES': 200,
         "COOKIES_ENABLED": True,'DOWNLOAD_TIMEOUT': 180,
     }
-    
+
 
     def start_requests(self): #project start from here.
-        
+
         settings = get_project_settings()
-        
+
         url = 'https://support.bpro.com.au/api/container'
 
         yield scrapy.Request(url, self.parse, dont_filter=True)
@@ -63,9 +63,9 @@ class LazyCrawler(LazyBaseCrawler):
             }
         else:
             print('*'*200)
-        
+
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished

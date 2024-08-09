@@ -34,11 +34,11 @@ class LazyCrawler(LazyBaseCrawler):
     page_num = 1
     start_offset = 0
     page_size = 24
-    asset_ids = ["15839069","10001147", "19854910"]# 
+    asset_ids = ["15839069","10001147", "19854910"]#
     base_url = "https://webql-redesign.cnbcfm.com/graphql"
     query_variables = '{{"id":"{}","offset":{},"pageSize":{},"nonFilter":true,"includeNative":false,"include":[]}}'
     query_extensions = '{{"persistedQuery":{{"version":1,"sha256Hash":"{}"}}}}'
-    
+
     def start_requests(self):
         for asset_id in self.asset_ids:
             url = self.build_url(asset_id, self.start_offset)
@@ -50,7 +50,7 @@ class LazyCrawler(LazyBaseCrawler):
             assets = json_data['data']['assetList']['assets']
         except KeyError:
             return None
-        
+
         if assets:
             for asset in assets:
                 url = asset['url']
@@ -93,7 +93,7 @@ class LazyCrawler(LazyBaseCrawler):
             else:
                 yield {
                     'title':title,
-                    'author': ' '.join(author), 
+                    'author': ' '.join(author),
                     'datePublished':datePublished,
                     'linkHeadline':linkHeadline,
                     'url':response.url,
@@ -108,7 +108,6 @@ class LazyCrawler(LazyBaseCrawler):
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished
-

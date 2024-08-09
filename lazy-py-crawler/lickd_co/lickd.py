@@ -14,7 +14,7 @@ class LazyCrawler(LazyBaseCrawler):
             'lazy_crawler.crawler.pipelines.ExcelWriterPipeline': 300
         }
     }
-    
+
     def start_requests(self):
         url = "https://graphql.lickd.io/"  # Replace with the actual URL
         headers = {
@@ -22,7 +22,7 @@ class LazyCrawler(LazyBaseCrawler):
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
             # Add any other headers you need
         }
-        
+
         data = {
             "query": "query ($query: String, $sortMode: FindSortMode, $sortOrder: FindSortOrder, $pagination: PaginationInput, $filters: FindFiltersInput) {\n  find(query: $query, filters: $filters) {\n    tracks(pagination: $pagination, sortOrder: $sortOrder, sortMode: $sortMode) {\n      pagination {\n        total\n        totalPages\n        from\n        size\n        page\n        __typename\n      }\n      results {\n        identity\n        highlight {\n          key\n          value\n          __typename\n        }\n        title\n        releases {\n          title\n          slug\n          artist {\n            slug\n            __typename\n          }\n          __typename\n        }\n        slug\n        duration\n        created_at\n        is_charting\n        is_featured\n        is_new_release\n        is_stock_music\n        mixes_count\n        brand_sponsored\n        branded_content\n        audio {\n          identity\n          __typename\n        }\n        images {\n          identity\n          __typename\n        }\n        artists {\n          highlight {\n            key\n            value\n            __typename\n          }\n          name\n          slug\n          identity\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n",
             "variables": {
@@ -88,24 +88,24 @@ class LazyCrawler(LazyBaseCrawler):
             meta={'data': data}
         )
 
-    
+
     def parse(self, response):
         data_load = json.loads(response.body)
         results = data_load['data']['find']['tracks']['results']
-        
+
         for result in results:
             artists = result['artists'][0]
             articst_name  = artists['name']
             duration = result['duration']
             created_at = result['created_at']
-            
+
             yield{
                 'track name': result.get('title'),
                 'articst_name': articst_name,
                 'duration': duration,
                 'created_at':created_at
             }
-            
+
         # Extract pagination data from the response
         pagination = data_load['data']['find']['tracks']['pagination']
         total_pages = pagination['totalPages']
@@ -129,6 +129,6 @@ class LazyCrawler(LazyBaseCrawler):
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished

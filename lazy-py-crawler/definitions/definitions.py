@@ -26,7 +26,7 @@ class LazyCrawler(LazyBaseCrawler):
 
 
     settings = get_project_settings()
-    
+
 
     def start_requests(self):
         another_urls = [
@@ -34,7 +34,7 @@ class LazyCrawler(LazyBaseCrawler):
             'https://www.definitions.net/definitions/0/99999',
             'https://www.synonyms.com/synonyms/0/EN',
         ]
-        
+
         urls = [
             'https://www.anagrams.net/letter/{}/99999',
             'https://www.rhymes.com/rhymes/{}/99999',
@@ -50,7 +50,7 @@ class LazyCrawler(LazyBaseCrawler):
                 yield scrapy.Request(formatted_url, self.get_text, dont_filter=True,headers={
                 'User-Agent': get_user_agent('random')
             })
-        
+
         for url in another_urls:
             yield scrapy.Request(formatted_url, self.get_text, dont_filter=True,headers={
                 'User-Agent': get_user_agent('random')
@@ -60,10 +60,10 @@ class LazyCrawler(LazyBaseCrawler):
 
     def get_text(self, response):
         text = response.xpath('//table[@class="tdata"]/tbody/tr/td/a/text()').extract()
-        
+
         # Remove left and right spaces from each word
         text = [word.strip() for word in text]
-        
+
         # Write the unique words to a file
         with open('output.txt', 'a') as f:
             for word in set(text):
@@ -73,7 +73,6 @@ class LazyCrawler(LazyBaseCrawler):
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished
-

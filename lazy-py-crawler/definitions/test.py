@@ -20,4 +20,3 @@ with open('output.txt', 'r') as file:
     for word, freq in word_freq.items():
         if freq > 1:
             print(word, freq)
-

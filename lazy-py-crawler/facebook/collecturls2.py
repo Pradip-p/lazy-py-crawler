@@ -74,5 +74,3 @@ t.start()
 
 #Wait for all the URLs to be processed
 url_queue.join()
-
-

@@ -11,9 +11,9 @@ import ipdb
 class LazyCrawler(scrapy.Spider):
 
     name = "westchestermedicalcenter"
-    
+
     allowed_domains = ['westchestermedicalcenter.org']
-    
+
     custom_settings = {
         'DOWNLOAD_DELAY': 2,
         'LOG_LEVEL': 'DEBUG',
@@ -28,20 +28,20 @@ class LazyCrawler(scrapy.Spider):
             'lazy_crawler.crawler.pipelines.ExcelWriterPipeline': None
         }
     }
-    
 
-    
-    
+
+
+
     def start_requests(self):
 
         url = 'https://www.westchestermedicalcenter.org/neurosurgery2'
-        
+
         headers = {
             'User-Agent': get_user_agent('random'),
             }
-        
+
         yield scrapy.Request(url, callback=self.parse_details,
-                            headers= headers, 
+                            headers= headers,
                             dont_filter=True)
 
 
@@ -54,10 +54,10 @@ class LazyCrawler(scrapy.Spider):
         school_name = residents.xpath('//p/span/span/text()').extract()
         print(school_name)
 
-                
-            
+
+
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished

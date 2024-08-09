@@ -20,7 +20,7 @@ class LazyCrawler(LazyBaseCrawler):
     format='%(levelname)s: %(message)s',
     level=logging.INFO
     )
-    
+
     custom_settings = {
         'DOWNLOAD_DELAY': 0,'LOG_LEVEL': 'DEBUG','CHANGE_PROXY_AFTER':1,'USE_PROXY':True,
         'CONCURRENT_REQUESTS' : 126,'CONCURRENT_REQUESTS_PER_IP': 26,'CONCURRENT_REQUESTS_PER_DOMAIN': 2,
@@ -51,7 +51,7 @@ class LazyCrawler(LazyBaseCrawler):
     url = "https://www.booking.com/searchresults.de.html"
 
     query = 'Siem Reap'
-    
+
     def start_requests(self): #project start from here.
 
         self.url += "?" + urlencode(
@@ -69,7 +69,7 @@ class LazyCrawler(LazyBaseCrawler):
     )
 
         yield scrapy.Request(self.url, self.parse_data, dont_filter=True,  headers=self.HEADERS)
-    
+
 
     def parse_data(self, response):
         to_browser(response)
@@ -91,11 +91,11 @@ class LazyCrawler(LazyBaseCrawler):
         yield hotel_previews
 
 
-    
+
 
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished

@@ -50,5 +50,3 @@ if __name__=='__main__':
     # for asin in asin_list:
     #     url = 'https://www.amazon.com/dp/{}'.format(asin)
     #     get_product_details(url)
-
-

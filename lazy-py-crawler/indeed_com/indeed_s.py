@@ -19,7 +19,7 @@ class LazyCrawler(LazyBaseCrawler):
     custom_settings = {
         'DOWNLOAD_DELAY': 2,'LOG_LEVEL': 'DEBUG',
         'CONCURRENT_REQUESTS' : 1,'CONCURRENT_REQUESTS_PER_IP': 1,'CONCURRENT_REQUESTS_PER_DOMAIN': 1,
-        'RETRY_TIMES': 5, 
+        'RETRY_TIMES': 5,
         "COOKIES_ENABLED": False,
         'DOWNLOAD_TIMEOUT': 180,
         'COOKIES_DEBUG': True,
@@ -28,11 +28,11 @@ class LazyCrawler(LazyBaseCrawler):
         }
     }
 
-    
+
 
     def start_requests(self):
         url = 'https://au.indeed.com/jobs?q=nurse&l=Australia'
-        
+
         yield scrapy.Request(url,
                             headers = {
                                 'User-Agent': get_user_agent('random'),
@@ -51,7 +51,7 @@ class LazyCrawler(LazyBaseCrawler):
     #     for i in range(1,66):
     #         self.count = self.count + 10
     #         url = 'https://au.indeed.com/jobs?q=nurse&l=Australia&start={}'.format(self.count)
-    
+
     #         soup = self.get_soup(url)
 
     #         parse_job = self.parse_jobs(soup)
@@ -118,9 +118,9 @@ class LazyCrawler(LazyBaseCrawler):
         #     }
         # )
         scraper = cloudscraper.create_scraper(debug=True)
-        
+
         response = scraper.get(url)
-        
+
         soup = BeautifulSoup(response.text, 'lxml')
         return soup
 
@@ -158,13 +158,12 @@ class LazyCrawler(LazyBaseCrawler):
     #     'company_bio': ''.join(company_bio),
     #     }
 
-        
+
 
 
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished
-

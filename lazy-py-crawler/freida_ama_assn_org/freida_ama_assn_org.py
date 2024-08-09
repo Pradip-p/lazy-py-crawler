@@ -17,16 +17,16 @@ class LazyCrawler(LazyBaseCrawler):
             'lazy_crawler.crawler.pipelines.ExcelWriterPipeline': 300
             }
         }
-    
+
     start_urls = ['https://freida-admin.ama-assn.org/api/node/program?page[offset]=0&page[limit]=50']
-    
+
     def parse(self, response):
         res = response.json()
         for data in res['data']:
             id_= data['id']
             url = 'https://freida-admin.ama-assn.org/api/node/program/'+id_+'?include=field_specialty,field_survey.field_program_director,field_survey.field_program_contact,field_survey.field_primary_teaching_site,field_institution,field_participant_institution'
             yield scrapy.Request(url, self.parse_get_program_details, dont_filter=True)
-        
+
         next_url = res['links']['next'].get('href')
         # self_url = res['links']['self'].get('href')
 
@@ -49,8 +49,8 @@ class LazyCrawler(LazyBaseCrawler):
         for inc in included:
             #Program Director
             if inc['attributes'].get('parent_field_name') == 'field_program_director':
-            
-                field_first_name =  inc['attributes'].get('field_first_name') 
+
+                field_first_name =  inc['attributes'].get('field_first_name')
                 field_degrees = inc['attributes'].get('field_degrees')
                 field_last_name = inc['attributes'].get('field_last_name')
                 field_middle_name = inc['attributes'].get('field_middle_name')
@@ -65,7 +65,7 @@ class LazyCrawler(LazyBaseCrawler):
                 if field_degrees == None:
                     field_degrees = ''
                 program_director = field_first_name + field_middle_name + field_last_name + field_degrees
-                
+
             # field_program_contact / Other
             if inc['attributes'].get('parent_field_name') == 'field_program_contact':
                 field_first_name = inc['attributes'].get('field_first_name')
@@ -92,7 +92,7 @@ class LazyCrawler(LazyBaseCrawler):
             'Program URL': program_url
         }
 
-        
+
         yield scrapy.Request(field_specialty_url, callback=self.get_specialty, meta={'data':data}, dont_filter=True)
 
 
@@ -101,13 +101,13 @@ class LazyCrawler(LazyBaseCrawler):
         data = response.meta['data']
         specialty = res['data']['attributes'].get('title')
         data['Specialty/Title'] = specialty
-        
+
         yield data
 
 
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished

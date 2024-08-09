@@ -56,9 +56,9 @@ class JsonWriterPipeline(object):
 
 # GoogleSheetsPipeline
 class GoogleSheetsPipeline(object):
-    
+
     def __init__(self):
-        
+
         scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive','https://www.googleapis.com/auth/drive.file','https://www.googleapis.com/auth/spreadsheets']
         self.creds = ServiceAccountCredentials.from_json_keyfile_name('creds.json', scope)
 
@@ -74,7 +74,7 @@ class GoogleSheetsPipeline(object):
         # Add headings to the sheet if it's the first item
         if self.sheet.row_values(1) != list(item.keys()):
             values = list(item.keys())
-            # append body to spreadsheet                
+            # append body to spreadsheet
             self.sheet.insert_row(values, index=self.sheet.row_count)
 
         else:

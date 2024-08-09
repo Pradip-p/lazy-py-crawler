@@ -100,7 +100,7 @@ class LazyCrawler(LazyBaseCrawler):
 
     proxy = 'p.webshare.io:80'
     user_pass = base64.encodebytes("hpiukvrn-rotate:yahyayahya".encode()).decode()
-    
+
     def start_requests(self): #project start from here.
         for category in self.categories:
             category = category.items()
@@ -110,7 +110,7 @@ class LazyCrawler(LazyBaseCrawler):
                 for url in urls:
                     yield scrapy.Request(url, self.parse, dont_filter=True,
                         meta={'proxy': 'http://' + self.proxy, 'category_name':category_name},
-                        
+
                         headers={'Proxy-Authorization': 'Basic ' + self.user_pass,
                         'User-Agent': get_user_agent('random')
                         }
@@ -122,7 +122,7 @@ class LazyCrawler(LazyBaseCrawler):
         for _url in urls:
             url = 'https://englishelm.com{}{}'.format(_url,'.js')
             product_url = 'https://englishelm.com{}'.format(_url)
-            yield scrapy.Request(url, self.parse_details, dont_filter=True, 
+            yield scrapy.Request(url, self.parse_details, dont_filter=True,
             meta={'proxy': 'http://' + self.proxy,
             'product_url':product_url,
             'category_name':category_name
@@ -153,14 +153,14 @@ class LazyCrawler(LazyBaseCrawler):
         # price_max = res['price_max']
         # available = res['available']
         # price_varies = res['price_varies']
-        
+
         # image_urls = []
         # for url in images:
         #     url = 'https:{}'.format(url)
         #     image_urls.append(url)
         # if image_urls:
         #     image_urls = '|'.join(image_urls)
-        
+
         # else:
         #     image_urls = ''
         # featured_image = 'https:{}'.format(res['featured_image'])
@@ -173,7 +173,7 @@ class LazyCrawler(LazyBaseCrawler):
             if variant['featured_image']:
                 created_at = variant['featured_image'].get('created_at')
                 updated_at = variant['featured_image'].get('updated_at')
-                
+
             sku = variant['sku'].strip()
             image_url = []
             for image in images:
@@ -210,12 +210,12 @@ class LazyCrawler(LazyBaseCrawler):
                 'created_at':created_at,
                 'updated_at':updated_at
             }
-            
+
             gc.collect()
 
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished

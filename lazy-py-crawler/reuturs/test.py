@@ -78,5 +78,3 @@ with open('data.json', 'w') as f:
 
 # Close the Selenium web driver
 driver.quit()
-
-

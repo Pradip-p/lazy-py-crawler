@@ -50,7 +50,7 @@ class LazyCrawler(scrapy.Spider):
                     name = author.get('name') if author else 'None'
                     author_name.append(name)
             url = 'https://www.reuters.com{}'.format(article['canonical_url'])
-            
+
             pass_data = {
                 'title': article['title'],
                 'date': published_time_str,
@@ -79,7 +79,7 @@ class LazyCrawler(scrapy.Spider):
         authors = pass_data['authors']
         short_description = pass_data['short_description']
         article_text =  ' '.join(response.css('p.article-body__element__2p5pI::text').getall())
-        
+
         yield {
             'title': title,
             'date': date,
@@ -89,7 +89,7 @@ class LazyCrawler(scrapy.Spider):
             'short_description': short_description,
             'article_text': article_text
         }
-     
+
 
     def get_url(self, section_id):
         return f"{self.base_url}?query={json.dumps({'section_ids': f'/{section_id}/', 'size': self.page_size, 'offset': self.page_number * self.page_size, 'website': 'reuters'})}"
@@ -97,6 +97,6 @@ class LazyCrawler(scrapy.Spider):
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start()

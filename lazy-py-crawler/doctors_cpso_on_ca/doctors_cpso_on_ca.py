@@ -11,9 +11,9 @@ import re
 class LazyCrawler(scrapy.Spider):
 
     name = "doctors"
-    
+
     allowed_domains = ['doctors.cpso.on.ca']
-    
+
     custom_settings = {
         'DOWNLOAD_DELAY': 2,
         'LOG_LEVEL': 'DEBUG',
@@ -29,15 +29,15 @@ class LazyCrawler(scrapy.Spider):
             'lazy_crawler.crawler.pipelines.JsonWriterPipeline': None
         }
     }
-    
+
 
     start_urls = ['https://doctors.cpso.on.ca/?refine=true&search=general']
-    
+
     event_target_val = -1
-    
+
     page_number = 0
-    
-    def parse(self, response):   
+
+    def parse(self, response):
         formdata = {
             '__EVENTTARGET': '',
             '__EVENTARGUMENT': '',
@@ -66,7 +66,7 @@ class LazyCrawler(scrapy.Spider):
             'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$chkNotices': 'on',
             'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$txtExtraInfo': '',
             'p$lt$ctl01$pageplaceholder$p$lt$ctl02$CPSO_AllDoctorsSearch$btnSubmit1': 'Submit',
-        }   
+        }
         yield FormRequest.from_response(
             response,
             formdata=formdata,
@@ -74,20 +74,20 @@ class LazyCrawler(scrapy.Spider):
                 "Content-Type":"application/x-www-form-urlencoded"
                 },
             callback = self.parse_doctors_urls,
-         
+
         )
-    
+
     def parse_doctors_urls(self, response):
         # inspect_response(response, self)
-        urls = response.xpath('//article[@class="doctor-search-results--result"]/h3/a/@href').extract()    
-        print(urls)    
+        urls = response.xpath('//article[@class="doctor-search-results--result"]/h3/a/@href').extract()
+        print(urls)
         # for url in urls:
         #     yield scrapy.Request(url, callback=self.doctor_details, dont_filter=True)
-            
+
         # Extract the form data for the next page
         self.page_number += 1
         if self.page_number <= 3:
-            # if self.event_target_val <= 5: 
+            # if self.event_target_val <= 5:
                 # print(self.event_target_val, self.page_number)
             formdata_next_page = {
                 '__EVENTTARGET':'p$lt$ctl01$pageplaceholder$p$lt$ctl03$CPSO_DoctorSearchResults$lnbNextGroup',
@@ -95,13 +95,13 @@ class LazyCrawler(scrapy.Spider):
                 '__EVENTARGUMENT': '',
                 '__VIEWSTATEGENERATOR': 'A5343185',
                 'p$lt$ctl01$pageplaceholder$p$lt$ctl03$CPSO_DoctorSearchResults$hdnCurrentPage': str(self.page_number)
-                
+
             }
             yield FormRequest.from_response(response,formdata=formdata_next_page,
                                         headers={"Content-Type": "application/x-www-form-urlencoded"},
                                         callback=self.parse_doctors_urls,
                                     )
-            
+
 
     def extract_postal_code(self,text):
         # pattern = re.compile(r'\b[A-Za-z]\d[A-Za-z]\s\d[A-Za-z]\d\b')#previous
@@ -110,7 +110,7 @@ class LazyCrawler(scrapy.Spider):
         return postal_code_match.group(0) if postal_code_match else ''
 
 
-    def doctor_details(self, response):    
+    def doctor_details(self, response):
         doctor_info = {}
         try:
             full_name = response.xpath('//h1[@id="docTitle"]/text()').get()
@@ -126,7 +126,7 @@ class LazyCrawler(scrapy.Spider):
 
             independent_practice_as_of = response.xpath('(//div[@class="doctor-info"]/div[@class="columns medium-6 text-align--right"])[last()]/text()').get()
             independent_practice_as_of_text = independent_practice_as_of.split('as')[0]
-            
+
             independent_parsed_date = ' '.join(independent_practice_as_of.split()[-3:])
             parsed_date = datetime.datetime.strptime(independent_parsed_date, "%d %b %Y")
             independent_parsed_date_formatted_date = parsed_date.strftime("%#m/%#d/%Y")
@@ -149,22 +149,22 @@ class LazyCrawler(scrapy.Spider):
             city, postal_code, address, phone, fax = '', '', '', '', ''
             if len(data) == 1:
                 address = ''.join(data)
-            else:   
+            else:
                 for index, text in enumerate(data):
                     if text == 'Phone:' and index + 1 < len(data):
                         phone = data[index + 1].strip()
-                        
-                    elif text == 'Fax:' and index + 1 < len(data):
-                        fax = data[index + 1].strip()  
 
-            #         #i want to remove both index 
-                
+                    elif text == 'Fax:' and index + 1 < len(data):
+                        fax = data[index + 1].strip()
+
+            #         #i want to remove both index
+
                 provinces = ['ON','NL','SK','PE','NS','NB','QC','MB','AB','BC','YT','NT','NU']
                 #remove Electoral District: from data
                 if 'Electoral District:' in data:
                     data.pop()
                     data.pop()
-                    
+
                 if not phone and not fax:
                     address = ', '.join(data)
                     postal_code = self.extract_postal_code(address)
@@ -177,10 +177,10 @@ class LazyCrawler(scrapy.Spider):
                                 if postal_code:
                                     city_postal_code.pop()
                                     city = ''.join(city_postal_code)
-                        
+
 
                 #posal code format: letter-number-letter-space-number-letter-number
-                
+
                 elif phone and fax:
                     address = ', '.join(data)
                     postal_code = self.extract_postal_code(address)
@@ -194,7 +194,7 @@ class LazyCrawler(scrapy.Spider):
                                     city_postal_code.pop()
                                     city = ''.join(city_postal_code)
 
-     
+
                 elif phone or fax:
                     address = ', '.join(data)
                     postal_code = self.extract_postal_code(address)
@@ -207,7 +207,7 @@ class LazyCrawler(scrapy.Spider):
                                 if postal_code:
                                     city_postal_code.pop()
                                     city = ''.join(city_postal_code)
-                                    
+
         except Exception as e:
             self.log(f"Error: {e}")
 
@@ -227,7 +227,7 @@ class LazyCrawler(scrapy.Spider):
         # Add the rest of the fields to doctor_info
         doctor_info['City'] =  city.strip()
         doctor_info['Address'] = address.strip()
-        
+
         # Extract and add location information to the dictionary
         doctor_info["Postal Code"] = postal_code
         doctor_info['Phone'] = phone.replace('(', '').replace(')', '').replace('-', '').replace(' ', '').replace('Ext', 'ext')
@@ -241,6 +241,6 @@ class LazyCrawler(scrapy.Spider):
 # response.xpath('//article[@class="doctor-search-results--result"]/h3/a/@href').extract()
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished

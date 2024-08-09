@@ -21,7 +21,7 @@ class LazyCrawler(LazyBaseCrawler):
     format='%(levelname)s: %(message)s',
     level=logging.INFO
     )
-    
+
     custom_settings = {
         'LOG_LEVEL': 'DEBUG','CHANGE_PROXY_AFTER':1,'USE_PROXY':True,
         'CONCURRENT_REQUESTS' : 126,'CONCURRENT_REQUESTS_PER_IP': 26,'CONCURRENT_REQUESTS_PER_DOMAIN': 2,
@@ -37,7 +37,7 @@ class LazyCrawler(LazyBaseCrawler):
     unique_words = set()
 
     settings = get_project_settings()
-    
+
     headers = get_user_agent('random')
 
     def start_requests(self):
@@ -48,7 +48,7 @@ class LazyCrawler(LazyBaseCrawler):
 
             # yield scrapy.Request(url, self.get_urls, dont_filter=True)
         yield scrapy.Request(url, self.get_urls, errback=self.handle_error, dont_filter=True)
-    
+
     def handle_error(self, failure):
         if failure.check(HttpError):
             response = failure.value.response
@@ -69,17 +69,17 @@ class LazyCrawler(LazyBaseCrawler):
         new_request.dont_filter = True
         reactor.callLater(delay, self.crawler.engine.schedule, new_request, self)
         return None
-    
+
     def get_urls(self, response):
         urls = response.xpath('//table[@class="tdata"]/tbody/tr/td/a/@href').extract()
 
         for url in urls:
             url = 'https://www.phrases.com'+ url
             yield scrapy.Request(url, self.get_text, errback=self.handle_error, dont_filter=True)
-    
+
     def get_text(self, response):
         word = response.xpath('//h1/a/span/text()').extract_first()
-        
+
         # Write the unique words to a file
         with open('phrases_One.txt', 'a') as f:
             if word:
@@ -90,7 +90,6 @@ class LazyCrawler(LazyBaseCrawler):
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished
-

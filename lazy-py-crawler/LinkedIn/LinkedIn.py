@@ -20,7 +20,7 @@ class LazyCrawler(scrapy.Spider):
     def start_requests(self):
         profile_list = ['reidhoffman']
         for profile in profile_list:
-            linkedin_people_url = f'https://www.linkedin.com/in/{profile}/' 
+            linkedin_people_url = f'https://www.linkedin.com/in/{profile}/'
             yield scrapy.Request(url=linkedin_people_url, callback=self.parse_profile, headers=self.headers, meta={'profile': profile, 'linkedin_url': linkedin_people_url})
 
     def parse_profile(self, response):
@@ -69,12 +69,12 @@ class LazyCrawler(scrapy.Spider):
             experience = {}
             ## organisation profile url
             experience['organisation_profile'] = block.css('h4 a::attr(href)').get(default='').split('?')[0]
-                
-                
+
+
             ## location
             experience['location'] = block.css('p.experience-item__location::text').get(default='').strip()
-                
-                
+
+
             ## description
             try:
                 experience['description'] = block.css('p.show-more-less-text__text--more::text').get().strip()
@@ -85,7 +85,7 @@ class LazyCrawler(scrapy.Spider):
                 except Exception as e:
                     print('experience --> description', e)
                     experience['description'] = ''
-                    
+
             ## time range
             try:
                 date_ranges = block.css('span.date-range time::text').getall()
@@ -102,10 +102,10 @@ class LazyCrawler(scrapy.Spider):
                 experience['start_time'] = ''
                 experience['end_time'] = ''
                 experience['duration'] = ''
-            
+
             item['experience'].append(experience)
 
-        
+
         """
             EDUCATION SECTION
         """
@@ -154,7 +154,6 @@ class LazyCrawler(scrapy.Spider):
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished
-

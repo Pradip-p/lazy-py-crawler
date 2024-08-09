@@ -44,19 +44,18 @@ def process_image(file_name, image_url):
         else:
             print('Already downloaded', image_path)
             im = Image.open(image_path)
-            
-        
+
+
             if im != '':
                 size = im.size
                 del im
                 gc.collect()
                 dimension = '*'.join([str(size[0]), str(size[1])])
                 return dimension, '/' + image_name, image_url
-            
+
             del im
             gc.collect()
 
             return image_path
     except:
         return ''
-

@@ -44,7 +44,7 @@
 
 # for key, value in headers_data.items():
 #     chrome_options.add_argument(f"--header={key}:{value}")
-    
+
 # seleniumwire_options = {
 #     'proxy': {
 #         'http': f'http://{proxy_username}:{proxy_password}@p.webshare.io:80',
@@ -127,7 +127,7 @@ options.add_argument("--headless")
 options.add_argument("--start-maximized")
 
 # Create a new Chrome driver instance with the specified options
-driver = uc.Chrome(options=options) 
+driver = uc.Chrome(options=options)
 website_url = "https://www.mscdirect.com/browse/Abrasives?navid=2100008"
 # Navigate to the website URL
 

@@ -25,18 +25,18 @@ def scrape_subreddit(url):
     # extract information for each post on the current page
     for post in soup.find_all("div", class_="entry unvoted"):
     # extract title, URL, submitter username, and submission date
-        
+
         try:
             title = post.find("a", class_="title").text
         except AttributeError:
             title = ''
-        
+
         try:
             url = post.find("a", class_="title").get("href")
         except AttributeError:
             url = ''
 
-        
+
         try:
             username = post.find("a", class_="author").text
         except AttributeError:
@@ -51,7 +51,7 @@ def scrape_subreddit(url):
         # store information in a dictionary and add it to the list of posts
         posts.append(data)
 
-    # # check for a "next" button to see if there are more pages to scrape    
+    # # check for a "next" button to see if there are more pages to scrape
     next_button = soup.find("span", class_="next-button")
 
     if next_button:
@@ -59,7 +59,7 @@ def scrape_subreddit(url):
         next_url = next_button.find("a").get("href")
 
         scrape_subreddit(next_url)
-        
+
     with open(SUBREDDITS_CSV, 'w') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames = csv_columns)
         writer.writeheader()
@@ -91,7 +91,7 @@ def search_and_scrape_subreddits(search_query):
         print("next page continue...")
         search_and_scrape_subreddits(next_url)
         print('completed next page!')
-        
+
 
 
 if __name__ == "__main__":

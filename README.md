@@ -1,19 +1,20 @@
-
 # Lazy Crawler
+
 Lazy Crawler is a Python package that simplifies web scraping tasks. It builds upon Scrapy, a powerful web crawling and scraping framework, providing additional utilities and features for easier data extraction. With Lazy Crawler, you can quickly set up and deploy web scraping projects, saving time and effort.
 
 Features:
+
 - Simplified setup: Lazy Crawler streamlines the process of setting up and configuring web scraping projects.
 - Predefined library: It comes with a library of functions and utilities for common web scraping tasks, reducing the need for manual coding.
 - Easy data extraction: Lazy Crawler makes it simple to extract and process data from websites, allowing you to focus on analysis and insights.
 - Includes utilities like finding emails, numbers, mentions, hashtags, links, and more.
 - Provides a pipeline for storing data in various formats such as CSV, JSON, Google Sheets, and Excel.
 
-
 ### Usage
-### To use Lazy Crawler
-##### make a python file for your project (example: `scrapy_example.py`)
 
+### To use Lazy Crawler
+
+##### make a python file for your project (example: `scrapy_example.py`)
 
 ```
 import os
@@ -34,7 +35,7 @@ class LazyCrawler(LazyBaseCrawler):
     format='%(levelname)s: %(message)s',
     level=logging.INFO
     )
-    
+
     custom_settings = {
         'DOWNLOAD_DELAY': 0,'LOG_LEVEL': 'DEBUG','CHANGE_PROXY_AFTER':1,'USE_PROXY':True,
         'CONCURRENT_REQUESTS' : 126,'CONCURRENT_REQUESTS_PER_IP': 26,'CONCURRENT_REQUESTS_PER_DOMAIN': 2,
@@ -46,13 +47,13 @@ class LazyCrawler(LazyBaseCrawler):
     settings = get_project_settings()
 
     settings.set('LOG_FILE','Log.log',priority='cmdline')
-    
-    
-        
+
+
+
     headers = get_user_agent('random')
 
     def start_requests(self): #project start from here.
-        
+
         # for url in urls:
         url = 'https://latop10.it/auto/'
         yield scrapy.Request(url, self.parse_get_sub_categories, dont_filter=True, )
@@ -64,11 +65,11 @@ class LazyCrawler(LazyBaseCrawler):
         Logger()
 
         sub_categories_urls = response.xpath('//main[@id="genesis-content"]/article/header[@class="entry-header"]/h2[@class="entry-title"]/a[@class="entry-title-link"]/@href').extract()
-    
+
         next_page_url = response.xpath('//div[@class="archive-pagination pagination"]/ul/li[@class="pagination-next"]/a/@href').extract_first()
-        
+
         for url in sub_categories_urls:
-        
+
             yield scrapy.Request(url, self.get_product_details, dont_filter=True,)
 
         if next_page_url:
@@ -77,7 +78,7 @@ class LazyCrawler(LazyBaseCrawler):
     def get_product_details(self, response):
         main_categories_name = response.xpath('//div[@class="content-sidebar-wrap"]/p[@id="breadcrumbs"]/span/span/span/a/text()').extract_first()
         sub_categories_name = response.xpath('//div[@class="content-sidebar-wrap"]/p[@id="breadcrumbs"]/span/span/span/span/a/text()').extract_first()
-        
+
         product_url = response.xpath('//link[@rel="canonical"]/@href').extract_first()
         try:
             title = response.xpath('//main[@id="genesis-content"]/article/header[@class="entry-header"]/h1[@class="entry-title"]/text()').extract_first()
@@ -90,18 +91,20 @@ class LazyCrawler(LazyBaseCrawler):
             'Category 2': sub_categories_name
         }
 
-    
+
 
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished
 ```
+
 ## Further resources
 
 For more information and examples of how to use Lazy Crawler, see the project documentation.
+
 ## Credits
 
 Lazy Crawler was created by Pradip p.

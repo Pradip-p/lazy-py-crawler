@@ -11,9 +11,9 @@ import re
 class LazyCrawler(scrapy.Spider):
 
     name = "zaubacorp"
-    
+
     allowed_domains = ['zaubacorp.com']
-    
+
     custom_settings = {
         'DOWNLOAD_DELAY': 2,
         'LOG_LEVEL': 'DEBUG',
@@ -28,28 +28,28 @@ class LazyCrawler(scrapy.Spider):
             'lazy_crawler.crawler.pipelines.JsonWriterPipeline': None
         }
     }
-    
+
     def start_requests(self): #project start from here.
         url = 'https://www.zaubacorp.com/company-list'
         yield scrapy.Request(url, self.parse, dont_filter=True, )
 
 
-    def parse(self, response):  
+    def parse(self, response):
         urls = response.xpath('//td/a/@href').extract()
         for url in urls:
             yield scrapy.Request(url, self.parse_details, dont_filter=True, )
-    
+
     def parse_details(self, response):
-        
+
         inspect_response(response, self)
         yield {}
-        
-        
-    
+
+
+
 
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished

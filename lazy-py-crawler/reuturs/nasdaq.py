@@ -21,7 +21,7 @@ class LazyCrawler(scrapy.Spider):
         res = response.json()
         data = res['data']
         articles = data['rows']
-        
+
         for article in articles:
             created_time_str = article['created']
             created_time = datetime.strptime(created_time_str, '%b %d, %Y')
@@ -37,7 +37,7 @@ class LazyCrawler(scrapy.Spider):
                 'authors': article['publisher'],
             }
             yield scrapy.Request(url, self.parse_article, meta={'pass_data':pass_data}, dont_filter=True)
-        
+
         total_records = data['totalrecords']
 
         page_size = len(articles)
@@ -46,8 +46,8 @@ class LazyCrawler(scrapy.Spider):
             next_offset = current_offset + page_size
             next_url = f"https://api.nasdaq.com/api/news/topic/article?q=field_primary_topic:&limit=1000&offset={next_offset}"
             yield scrapy.Request(next_url, self.parse, dont_filter=True)
-    
-    
+
+
     def parse_article(self, response):
         pass_data = response.meta['pass_data']
         title = pass_data['title']
@@ -55,7 +55,7 @@ class LazyCrawler(scrapy.Spider):
         display_time = pass_data['display_time']
         authors = pass_data['authors']
         description =  ' '.join(response.xpath('//div[@class="body__content"]/p//text()').extract())
-        
+
         yield {
             'title': title,
             'date': date,
@@ -66,6 +66,6 @@ class LazyCrawler(scrapy.Spider):
         }
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start()

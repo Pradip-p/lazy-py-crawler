@@ -18,11 +18,11 @@ class LazyCrawler(LazyBaseCrawler):
             'lazy_crawler.crawler.pipelines.JsonWriterPipeline': 300
             }
         }
-        
-    
+
+
 
     def start_requests(self): #project start from here.
-        
+
         settings = get_project_settings()
         blog_url = ['https://latop10.it/abbigliamento-moda/','https://latop10.it/auto/','https://latop10.it/musica/','https://latop10.it/prima-infanzia/',
         'https://latop10.it/regali/']
@@ -39,12 +39,12 @@ class LazyCrawler(LazyBaseCrawler):
 
         # url = 'https://latop10.it/elettronica/'
         for url in urls:
-            
+
             # url = 'https://latop10.it/elettronica/antenna-Ricevitore-TV/' #not found
             yield scrapy.Request(url, self.parse, dont_filter=True)
 
     def parse(self, response):
-        
+
         # uel = https://latop10.it/elettronica/proiettore/
         main_categories_urls = response.xpath('//div[@class="su-row"]/div[@class="su-column su-column-size-1-3"]/div[@class="su-column-inner su-u-clearfix su-u-trim"]/p/a/@href').extract()
         main_categories_name = response.xpath('//main[@class="content"]/div[@class="archive-description taxonomy-archive-description taxonomy-description"]/h1[@class="archive-title"]/text()').extract_first()
@@ -67,7 +67,7 @@ class LazyCrawler(LazyBaseCrawler):
         sub_categories_name = response.meta['sub_categories_name']
         product_url = response.xpath('//link[@rel="canonical"]/@href').extract_first()
         title = response.xpath('//main[@id="genesis-content"]/article/header[@class="entry-header"]/h1[@class="entry-title"]/text()').extract_first()
-        
+
         yield{
             'Title':title,
             'URL': product_url,
@@ -79,6 +79,6 @@ class LazyCrawler(LazyBaseCrawler):
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished

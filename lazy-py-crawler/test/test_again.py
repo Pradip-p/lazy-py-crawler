@@ -15,7 +15,7 @@ class LazyCrawler(LazyBaseCrawler):
     format='%(levelname)s: %(message)s',
     level=logging.INFO
     )
-    
+
     custom_settings = {
         'DOWNLOAD_DELAY': 0,'LOG_LEVEL': 'DEBUG','CHANGE_PROXY_AFTER':1,'USE_PROXY':True,
         'CONCURRENT_REQUESTS' : 126,'CONCURRENT_REQUESTS_PER_IP': 26,'CONCURRENT_REQUESTS_PER_DOMAIN': 2,
@@ -27,13 +27,13 @@ class LazyCrawler(LazyBaseCrawler):
 
 
     settings = get_project_settings()
-    
+
     headers = get_user_agent('random')
 
     start_urls = ['https://latop10.it/auto/']
 
     def parse(self, response):
-        link_ext = LinkExtractor() 
+        link_ext = LinkExtractor()
 
         links = link_ext.extract_links(response)
 
@@ -42,7 +42,6 @@ class LazyCrawler(LazyBaseCrawler):
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished
-

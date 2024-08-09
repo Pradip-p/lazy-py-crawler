@@ -15,7 +15,7 @@ class LazyCrawler(scrapy.Spider):
     #this is get url" https://odresidents.com/search_results
 
     allowed_domains = ['odresidents.com']
-    
+
     custom_settings = {
         'DOWNLOAD_DELAY': 2,
         'LOG_LEVEL': 'DEBUG',
@@ -31,12 +31,12 @@ class LazyCrawler(scrapy.Spider):
             'lazy_crawler.crawler.pipelines.JsonWriterPipeline': None
         }
     }
-    
+
     def start_requests(self):
         url = "https://odresidents.com/search_results"
         yield scrapy.Request(url, callback=self.parse)
 
-    def parse(self, response): 
+    def parse(self, response):
         print(response.text)
         # Define the path for the output file
         output_file_path = 'response_text.txt'
@@ -59,7 +59,7 @@ class LazyCrawler(scrapy.Spider):
             "levId": '',
             "profsPost": '{"new_filename":"search_results"}',
             "widget_name": "Add-On - Bootstrap Theme - Search - Lazy Loader",  # Ensure this is correct
-        }   
+        }
 
         yield FormRequest.from_response(
             response,
@@ -74,7 +74,7 @@ class LazyCrawler(scrapy.Spider):
 
         # Extract the required data using XPath or CSS selectors
         doctors = response.xpath('//div[@class="row-fluid member_results level_6 search_result clearfix"]')
-        
+
         for doctor in doctors:
             name = doctor.xpath('.//span[@class="h3 bold inline-block rmargin member-search-full-name"]/text()').get().strip()
             specialties = doctor.xpath('.//p[@class="small"]/b[contains(text(), "Specialties:")]/following-sibling::text()').get().strip()
@@ -118,14 +118,14 @@ class LazyCrawler(scrapy.Spider):
     #         'school_graduated': school_graduated,
     #         'year_graduated': year_graduated,
     #     }
-        
-        
-            
+
+
+
     # start_urls = ['https://odresidents.com/wapi/widget']
-    
-    
-    # def parse(self, response): 
-    #     print("requesting the POST for readt for url........")  
+
+
+    # def parse(self, response):
+    #     print("requesting the POST for readt for url........")
     #     print(response)
     #     print(response.text)
     #     formdata = {
@@ -143,7 +143,7 @@ class LazyCrawler(scrapy.Spider):
     #         "levId": '',
     #         "profsPost": '{"new_filename":"search_results"}',
     #         "widget_name": "Add-On - Bootstrap Theme - Search - Lazy Loader",
-    #     }   
+    #     }
     #     yield FormRequest.from_response(
     #         response,
     #         formdata=formdata,
@@ -151,19 +151,19 @@ class LazyCrawler(scrapy.Spider):
     #             "Content-Type":"application/x-www-form-urlencoded"
     #             },
     #         callback = self.parse_doctors_urls,
-         
+
     #     )
-    
+
     # def parse_doctors_urls(self, response):
     #     print(response.text)
-        
 
-            
 
- 
+
+
+
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished

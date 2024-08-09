@@ -81,5 +81,3 @@ def get_proxy_manual(n: int = 1) -> list:
     # writing a temp file of current proxies
 
     return proxy_list_parsed[:n]
-
-

@@ -30,14 +30,14 @@ class LazyCrawler(LazyBaseCrawler):
         retryreq.meta['retry_times'] = request.meta.get('retry_times', 0) + 1
         retryreq.dont_filter = True
         return retryreq
-    
+
     name = "zappos"
 
     allowed_domains = ['zappos.com']
 
     custom_settings = {
         'DOWNLOAD_DELAY': 2,'LOG_LEVEL': 'DEBUG',
-        
+
         'CONCURRENT_REQUESTS' : 1,'CONCURRENT_REQUESTS_PER_IP': 1,
 
         'CONCURRENT_REQUESTS_PER_DOMAIN': 1,'RETRY_TIMES': 2,
@@ -76,7 +76,7 @@ class LazyCrawler(LazyBaseCrawler):
                     errback=self.errback_http_ignored,
                     headers= headers,
                     )
-    
+
 
     # def parse_json(self, response):
 
@@ -84,14 +84,14 @@ class LazyCrawler(LazyBaseCrawler):
     #     for url in urls:
     #         url = 'https://www.zappos.com/{}'.format(url)
     #         yield scrapy.Request(url, callback= self.parse_detail, dont_filter=True)
-    
+
     def parse_detail(self, response):
         # name = response.xpath('//span[@class="Aq-z"]/text()').extract_first()
         name = response.xpath('//span[@class="Ll-z"]/text()').extract_first()
         # images = response.xpath('//img[@class="sja-z"]/@src').extract()class="k2-z p0-z q0-z"
         # images = response.xpath('//picture/source/@srcset').extract()
         images  =response.xpath('//picture/img/@src').extract()
-        
+
         for img_url in images:
             # Extract the filename from the URL
             filename = os.path.basename(img_url)
@@ -106,12 +106,12 @@ class LazyCrawler(LazyBaseCrawler):
             # Replace the original filename with the modified filename in the URL
             modified_url = img_url.replace(filename, modified_filename)
             process_image(name,modified_url)
-        
+
         # print('Donwloaded!!!')
         gc.collect()
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())  
+process = CrawlerProcess(get_project_settings())
 process.crawl(LazyCrawler)
 process.start() # the script will block here until the crawling is finished

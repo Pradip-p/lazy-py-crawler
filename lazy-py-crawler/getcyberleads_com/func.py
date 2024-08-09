@@ -75,7 +75,7 @@ def parse_url(driver, wait_time, timeout):
 #     next_page = driver.find_elements(By.XPATH, '//div[@class="pagination"]/a[@class="next_page"]')
 #     if next_page:
 #         next_page_url = next_page[0].get_attribute("href")
-        
+
 #         driver.get(next_page_url)
 #         parse_url(driver, wait_time, timeout)
 #     else:

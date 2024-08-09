@@ -50,4 +50,3 @@ def get_time(format='%H:%M:%S'):
     :return: int
     """
     return datetime.datetime.now().strftime(format)
-

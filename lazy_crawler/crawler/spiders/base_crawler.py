@@ -18,5 +18,3 @@ class LazyBaseCrawler(scrapy.Spider):
 
     # START URLS for your project.
     start_urls = ['']
-
-

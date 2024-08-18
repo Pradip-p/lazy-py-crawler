@@ -12,6 +12,7 @@ from scrapy.exceptions import IgnoreRequest
 from scrapy.downloadermiddlewares.retry import RetryMiddleware
 from scrapy.utils.response import response_status_message
 
+
 class CrawlerSpiderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the spider middleware does not modify the
@@ -56,33 +57,33 @@ class CrawlerSpiderMiddleware:
             yield r
 
     def spider_opened(self, spider):
-        spider.logger.info('Spider opened: %s' % spider.name)
+        spider.logger.info("Spider opened: %s" % spider.name)
+
 
 """Set User-Agent header per spider or use a default value from settings"""
-class RandomUserAgentMiddleware(object):
 
+
+class RandomUserAgentMiddleware(object):
     """This middleware allows spiders to override the user_agent"""
 
-    def __init__(self, user_agent=''):
-        self.user_agent = get_user_agent('random')
+    def __init__(self, user_agent=""):
+        self.user_agent = get_user_agent("random")
 
     @classmethod
     def from_crawler(cls, crawler):
-        o = cls(crawler.settings['USER_AGENT'])
+        o = cls(crawler.settings["USER_AGENT"])
         crawler.signals.connect(o.spider_opened, signal=signals.spider_opened)
         return o
 
     def spider_opened(self, spider):
-        self.user_agent = getattr(spider, 'user_agent', self.user_agent)
+        self.user_agent = getattr(spider, "user_agent", self.user_agent)
 
     def process_request(self, request, spider):
         if self.user_agent:
-            request.headers.setdefault(b'User-Agent', self.user_agent)
-
-#you can find list of user-agent in https://www.useragentstring.com/pages/useragentstring.php
+            request.headers.setdefault(b"User-Agent", self.user_agent)
 
 
-
+# you can find list of user-agent in https://www.useragentstring.com/pages/useragentstring.php
 
 
 class CustomRetryMiddleware(RetryMiddleware):
@@ -93,19 +94,25 @@ class CustomRetryMiddleware(RetryMiddleware):
 
     def process_response(self, request, response, spider):
         if response.status in self.ignore_status_codes:
-            self.logger.info(f"Ignoring response {response.url} with status code {response.status}")
+            self.logger.info(
+                f"Ignoring response {response.url} with status code {response.status}"
+            )
             time.sleep(self.retry_interval_map[response.status])
-            return self._retry_request(request, response=response, reason=response_status_message(response))
+            return self._retry_request(
+                request, response=response, reason=response_status_message(response)
+            )
 
         return response
 
     def process_exception(self, request, exception, spider):
-        if isinstance(exception, self.EXCEPTIONS_TO_RETRY) and not isinstance(exception, IgnoreRequest):
+        if isinstance(exception, self.EXCEPTIONS_TO_RETRY) and not isinstance(
+            exception, IgnoreRequest
+        ):
             return self._retry_request(request, reason=str(exception), spider=spider)
         raise exception
 
     def _retry_request(self, request, response=None, reason=None, spider=None):
         retryreq = request.copy()
-        retryreq.meta['retry_times'] = request.meta.get('retry_times', 0) + 1
+        retryreq.meta["retry_times"] = request.meta.get("retry_times", 0) + 1
         retryreq.dont_filter = True
         return retryreq

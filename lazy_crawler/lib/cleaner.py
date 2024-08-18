@@ -47,7 +47,7 @@ def strip_html(text, remove=(), keep=()):
 
     # this is supposed to hide users from having to know other library. For other needs such as removing certain tags
     # or keeping certain tags. Please use w3lib.html remove_tags directly
-    return remove_tags(text = text, which_ones = remove ,keep = keep)
+    return remove_tags(text=text, which_ones=remove, keep=keep)
 
 
 def prepare_data(data) -> str:
@@ -63,11 +63,11 @@ def prepare_data(data) -> str:
     elif isinstance(data, float):
         data = str(data)
     elif isinstance(data, list):
-        data = ' | '.join(data)
+        data = " | ".join(data)
     elif isinstance(data, dict):
         data = json.dumps(data)
     elif isinstance(data, bytes):
-        data = data.decode('utf-8')
+        data = data.decode("utf-8")
     else:
         data = str(data)
 

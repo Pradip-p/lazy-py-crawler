@@ -32,7 +32,7 @@ NEWSPIDER_MODULE = "lazy_crawler.crawler.spiders"
 
 ROBOTSTXT_OBEY = False
 
-PROXY_SERVER = 'p.webshare.io:80'
+PROXY_SERVER = "p.webshare.io:80"
 PROXY_USERNAME = "gkoffhkj-rotate"
 PROXY_PASSWORD = "9qsx6zrpagq6"
 
@@ -57,8 +57,8 @@ TELNETCONSOLE_ENABLED = True
 
 # Override the default request headers:
 DEFAULT_REQUEST_HEADERS = {
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-    'Accept-Language': 'en',
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en",
 }
 
 # Enable or disable spider middlewares
@@ -83,10 +83,9 @@ DEFAULT_REQUEST_HEADERS = {
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 
-
 ITEM_PIPELINES = {
-    'lazy_crawler.crawler.pipelines.CSVPipeline': 300,
-    }
+    "lazy_crawler.crawler.pipelines.CSVPipeline": 300,
+}
 
 RETRY_TIMES = 3
 
@@ -100,7 +99,7 @@ RETRY_TIMES = 3
 
 # FEED = 'json'
 
-FEED_EXPORT_ENCODING = 'utf-8'
+FEED_EXPORT_ENCODING = "utf-8"
 
 DOWNLOAD_DELAY = 0
 
@@ -137,12 +136,29 @@ RETRY_ENABLED = True
 # PROXY SETTINGS
 ################################################################
 # Retry on most error codes since proxies fail for different reasons
-RETRY_HTTP_CODES = [500, 502, 503, 504, 400, 401, 403, 404, 405, 406, 407, 408, 409, 410, 429, 403]
+RETRY_HTTP_CODES = [
+    500,
+    502,
+    503,
+    504,
+    400,
+    401,
+    403,
+    404,
+    405,
+    406,
+    407,
+    408,
+    409,
+    410,
+    429,
+    403,
+]
 #
 
 # PROXY_LIST = get_proxy()
 
-USER_AGENT = get_user_agent('random')
+USER_AGENT = get_user_agent("random")
 
 # PROXY_MODE = 0
 # USE_PROXY = True
@@ -150,13 +166,13 @@ USER_AGENT = get_user_agent('random')
 
 DOWNLOADER_MIDDLEWARES = {
     # 'lazy_crawler.crawler.proxymiddleware.ProxyMiddleware': 543,
-    'lazy_crawler.crawler.middlewares.CrawlerSpiderMiddleware': 400,
-    'lazy_crawler.crawler.middlewares.RandomUserAgentMiddleware': 120,
-    'scrapy.spidermiddlewares.referer.RefererMiddleware': 80,
-    'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
-    'scrapy.downloadermiddlewares.cookies.CookiesMiddleware': 130,
-    'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
-    'scrapy.downloadermiddlewares.redirect.RedirectMiddleware': 900,
+    "lazy_crawler.crawler.middlewares.CrawlerSpiderMiddleware": 400,
+    "lazy_crawler.crawler.middlewares.RandomUserAgentMiddleware": 120,
+    "scrapy.spidermiddlewares.referer.RefererMiddleware": 80,
+    "scrapy.downloadermiddlewares.retry.RetryMiddleware": 90,
+    "scrapy.downloadermiddlewares.cookies.CookiesMiddleware": 130,
+    "scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware": 810,
+    "scrapy.downloadermiddlewares.redirect.RedirectMiddleware": 900,
     # 'scraper.middlewares.ScraperDownloaderMiddleware': 1000
     # 'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
     # 'scrapy_proxies.RandomProxy': 80,

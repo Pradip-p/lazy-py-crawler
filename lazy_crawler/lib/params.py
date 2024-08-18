@@ -7,6 +7,6 @@ def get_params():
     :return:
     """
     try:
-        return eval(os.environ.get('RUN_PARAMETERS', {}))
+        return eval(os.environ.get("RUN_PARAMETERS", {}))
     except:
         return {}

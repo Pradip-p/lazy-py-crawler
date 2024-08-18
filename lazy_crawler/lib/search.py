@@ -27,7 +27,7 @@ def find_numbers(text):
     :return: list
 
     """
-    return re.findall(r'\d', text)
+    return re.findall(r"\d", text)
 
 
 def get_mentions(text):
@@ -49,15 +49,15 @@ def get_mentions(text):
 
 def get_hashtags(text):
     """
-      It will return hashtags from the text i.e #something
+    It will return hashtags from the text i.e #something
 
-      :param text: string
-      :return: list
+    :param text: string
+    :return: list
 
-      example
-      >>> get_hashtags('my first code #programmer #python #awesome ')
-      ['programmer','python','awesome','Lazy']
-      """
+    example
+    >>> get_hashtags('my first code #programmer #python #awesome ')
+    ['programmer','python','awesome','Lazy']
+    """
 
     result = re.findall("(^|[^@\w])#(\w{1,15})", text)
     if len(result) != 0:
@@ -67,16 +67,16 @@ def get_hashtags(text):
 
 def get_links(text):
     """
-         It will return website links from the text
+     It will return website links from the text
 
-         :param text: string
-         :return: list
+     :param text: string
+     :return: list
 
-         example
-         >>> message = 'http://twitter.com Project URL:'
-         >>> get_links(message)
-        ['http://twitter.com', ]
+     example
+     >>> message = 'http://twitter.com Project URL:'
+     >>> get_links(message)
+    ['http://twitter.com', ]
 
-         """
+    """
     result = re.findall(r"(?P<url>https?://[^\s]+)", text)
     return result

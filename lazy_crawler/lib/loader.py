@@ -4,17 +4,22 @@ from typing import Union
 
 
 def _loader(filename, file_type):
-    if file_type == 'csv':
+    if file_type == "csv":
         return pd.read_csv(filename)
-    elif file_type == 'json':
+    elif file_type == "json":
         return pd.read_json(filename)
-    elif file_type == 'excel':
+    elif file_type == "excel":
         return pd.read_excel(filename)
     else:
-        raise Exception(f'File type: {file_type} not supported')
+        raise Exception(f"File type: {file_type} not supported")
 
 
-def load_file(file: str, project: str, file_type='csv', is_url: bool = False, ):
+def load_file(
+    file: str,
+    project: str,
+    file_type="csv",
+    is_url: bool = False,
+):
     """
     It will try to read the file from disk by default. use `is_url` flag to load via url.
     In case of url. It will first download the  file via request library and then load it.
@@ -27,10 +32,10 @@ def load_file(file: str, project: str, file_type='csv', is_url: bool = False, ):
     :return: pandas dataframe
     """
     if not is_url:
-        if os.environ.get('APP_ENV', 'dev').upper() == 'DEV':
-            file = os.getcwd() + '/' + project + '/' + file
+        if os.environ.get("APP_ENV", "dev").upper() == "DEV":
+            file = os.getcwd() + "/" + project + "/" + file
         else:
-            file = '' + project + '/' + file
+            file = "" + project + "/" + file
 
     df = _loader(file, file_type)
     return df

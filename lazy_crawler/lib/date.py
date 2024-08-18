@@ -39,7 +39,8 @@ def get_year():
     """
     return datetime.datetime.now().year
 
-def get_time(format='%H:%M:%S'):
+
+def get_time(format="%H:%M:%S"):
     """
     Returns current time
     :param format :desired time format

@@ -10,11 +10,11 @@ import scrapy
 # from scrapy.loader import ItemLoader
 # from lazy_crawler.lib.user_agent import get_user_agent
 
-class LazyBaseCrawler(scrapy.Spider):
 
+class LazyBaseCrawler(scrapy.Spider):
     name = "lazy_base_crawler"
 
     allowed_domains = [""]
 
     # START URLS for your project.
-    start_urls = ['']
+    start_urls = [""]

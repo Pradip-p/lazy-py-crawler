@@ -2,23 +2,26 @@
 switching between logs to debugging mode(development) and  Error mode(for production)
 https://docs.python.org/2/howto/logging.html#logging-basic-tutorial
 """
+
 import logging
 import os
 
 
 class Logger:
-    def __init__(self, name='LazyCrawler'):
+    def __init__(self, name="LazyCrawler"):
         self.name = name
         self.LOG_LEVEL_DICT = {
-            'INFO': logging.INFO,
-            'DEBUG': logging.DEBUG,
-            'ERROR': logging.ERROR,
+            "INFO": logging.INFO,
+            "DEBUG": logging.DEBUG,
+            "ERROR": logging.ERROR,
         }
-        self.LOG_LEVEL = os.environ.get('LOG_LEVEL', 'INFO').upper()
+        self.LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO").upper()
 
-        logging.basicConfig(format='%(asctime)s - [%(name)s] - %(levelname)s: %(message)s',
-                            datefmt='%m/%d/%Y %I:%M:%S %p',
-                            level=self.LOG_LEVEL_DICT[self.LOG_LEVEL])
+        logging.basicConfig(
+            format="%(asctime)s - [%(name)s] - %(levelname)s: %(message)s",
+            datefmt="%m/%d/%Y %I:%M:%S %p",
+            level=self.LOG_LEVEL_DICT[self.LOG_LEVEL],
+        )
 
         self.logger = logging.getLogger(self.name)
 

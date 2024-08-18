@@ -1,4 +1,3 @@
-
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -9,27 +8,23 @@ from lazy_crawler.lib.user_agent import get_user_agent
 import csv
 
 
-def start_crawl(url:str, headless:bool = True,useragent: str = None):
+def start_crawl(url: str, headless: bool = True, useragent: str = None):
     options = Options()
     if headless:
-        options.add_argument('--headless')
+        options.add_argument("--headless")
     if useragent:
         options.add_argument(f"user-agent:{useragent}")
     driver = webdriver.Chrome(options=options)
     driver.get(url)
     return driver
 
-if __name__ == '__main__':
-    url = 'https://example.com'
-    driver = start_crawl(url, get_user_agent('random'))
+
+if __name__ == "__main__":
+    url = "https://example.com"
+    driver = start_crawl(url, get_user_agent("random"))
 
     print(driver)
     driver.quit()
-
-
-
-
-
 
 
 # def get_chrome_options():

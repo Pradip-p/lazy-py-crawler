@@ -2,6 +2,7 @@
 Will contain helper functions to help with html DOM
 
 """
+
 from scrapy.utils.response import open_in_browser
 from scrapy.selector import Selector
 

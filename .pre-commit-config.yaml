@@ -75,11 +75,11 @@ repos:
     hooks:
       # Run the linter
       - id: ruff
-        files: ^src/backend/(?:.*/)*.*$
+        files: ^lazy_crawler/backend/(?:.*/)*.*$
         args: [--fix, --exit-non-zero-on-fix]
       # Run the formatter
       - id: ruff-format
-        files: ^src/backend/(?:.*/)*.*$
+        files: ^lazy_crawler/(?:.*/)*.*$
 
   # Autoformat: YAML, JSON, Markdown, etc.
   - repo: https://github.com/pycontribs/mirrors-prettier
@@ -90,11 +90,7 @@ repos:
           [
             --ignore-unknown,
             --no-error-on-unmatched-pattern,
-            "!src/frontend/**",
-            "!chart/**",
-            "!CHANGELOG.md",
-            "!CONTRIBUTING.md",
-            "!src/frontend/pnpm-lock.yaml",
-            "!src/backend/tests/test_data/**",
-            "!src/frontend/**",
+            "!lazy_crawler/**",
+            "!lazy-py-crawler/**",
+            "!example/**",
           ]

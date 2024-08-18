@@ -1,11 +1,3 @@
-\*\*\*\*<!-- markdownlint-disable -->
-
-<p align="center">
-    <!-- github-banner-start -->
-    <img src="https://raw.githubusercontent.com/pradip-p/lazy-crawler/main/docs/images/lazy_crawler_logo.png" alt="Lazy Crawler Logo" width="25%" height="auto" />
-    <!-- github-banner-end -->
-</p>
-
 <div align="center">
     <h1>Lazy Py Crawler</h1>
     <p>Simplify your web scraping tasks with ease.</p>

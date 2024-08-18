@@ -1,114 +1,101 @@
-# Lazy Crawler
+\*\*\*\*<!-- markdownlint-disable -->
 
-Lazy Crawler is a Python package that simplifies web scraping tasks. It builds upon Scrapy, a powerful web crawling and scraping framework, providing additional utilities and features for easier data extraction. With Lazy Crawler, you can quickly set up and deploy web scraping projects, saving time and effort.
+<p align="center">
+    <!-- github-banner-start -->
+    <img src="https://raw.githubusercontent.com/pradip-p/lazy-crawler/main/docs/images/lazy_crawler_logo.png" alt="Lazy Crawler Logo" width="25%" height="auto" />
+    <!-- github-banner-end -->
+</p>
 
-Features:
+<div align="center">
+    <h1>Lazy Py Crawler</h1>
+    <p>Simplify your web scraping tasks with ease.</p>
+    <p>Scrape smarter, not harder.</p>
+    <a href="https://github.com/pradip-p/lazy-crawler/releases">
+        <img src="https://img.shields.io/github/v/release/pradip-p/lazy-crawler?logo=github" alt="Release Version" />
+    </a>
+</div>
 
-- Simplified setup: Lazy Crawler streamlines the process of setting up and configuring web scraping projects.
-- Predefined library: It comes with a library of functions and utilities for common web scraping tasks, reducing the need for manual coding.
-- Easy data extraction: Lazy Crawler makes it simple to extract and process data from websites, allowing you to focus on analysis and insights.
-- Includes utilities like finding emails, numbers, mentions, hashtags, links, and more.
-- Provides a pipeline for storing data in various formats such as CSV, JSON, Google Sheets, and Excel.
+</br>
 
-### Usage
+<!-- prettier-ignore-start -->
+<div align="center">
 
-### To use Lazy Crawler
+| **CI/CD** | | [![Build and Deploy](https://github.com/pradip-p/lazy-crawler/actions/workflows/build_and_deploy.yml/badge.svg?branch=main)](https://github.com/pradip-p/lazy-crawler/actions/workflows/build_and_deploy.yml?query=branch%3Amain) [![Publish Docs](https://github.com/pradip-p/lazy-crawler/actions/workflows/docs.yml/badge.svg?branch=main)](https://github.com/pradip-p/lazy-crawler/actions/workflows/docs.yml) |
+| :--- | :--- | :--- |
+| **Tech Stack** | | ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) ![Scrapy](https://img.shields.io/badge/Scrapy-100000?style=for-the-badge&logo=scrapy&logoColor=white) |
+| **Code Style** | | [![PEP8 Style](https://img.shields.io/badge/code%20style-pep8-blue)](https://www.python.org/dev/peps/pep-0008/) [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://pre-commit.com) |
+| **Community** | | [![Join Slack](https://img.shields.io/badge/Slack-Join%20our%20community!-4A154B?style=for-the-badge&logo=slack&logoColor=white)](https://slack.yourcommunity.com) |
+| **Other Info** | | [![docs](https://img.shields.io/badge/docs-available-brightgreen)](https://pradip-p.github.io/lazy-crawler/) [![license](https://img.shields.io/github/license/pradip-p/lazy-crawler.svg)](https://github.com/pradip-p/lazy-crawler/blob/main/LICENSE.md) |
 
-##### make a python file for your project (example: `scrapy_example.py`)
+</div>
 
-```
+---
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+**Lazy Crawler** is a Python package that simplifies web scraping tasks. Built upon the powerful Scrapy framework, it provides additional utilities and features for easier data extraction. With Lazy Crawler, you can quickly set up and deploy web scraping projects, saving time and effort.
+
+## Features
+
+- **Simplified Setup**: Streamlines the process of setting up and configuring web scraping projects.
+- **Predefined Library**: Comes with a library of functions and utilities for common web scraping tasks, reducing the need for manual coding.
+- **Easy Data Extraction**: Simplifies extracting and processing data from websites, allowing you to focus on analysis and insights.
+- **Versatile Utilities**: Includes tools for finding emails, numbers, mentions, hashtags, links, and more.
+- **Flexible Data Storage**: Provides a pipeline for storing data in various formats such as CSV, JSON, Google Sheets, and Excel.
+
+## Getting Started
+
+To get started with Lazy Crawler:
+
+1. **Install**: Ensure Python and Scrapy are installed. Then, install Lazy Crawler via pip:
+   ```
+   pip install lazy-crawler
+   ```
+2. **Create a Project**: Create a Python file for your project (e.g., `scrapy_example.py`) and start coding.
+
+### Example Usage
+
+Here's an example of how to use Lazy Crawler in a project:
+
+```python
 import os
 import scrapy
 from scrapy.crawler import CrawlerProcess
-from scrapy.utils.project import get_project_settings
 from lazy_crawler.crawler.spiders.base_crawler import LazyBaseCrawler
-from lazy_crawler.lib.mylogger import Logger
 from lazy_crawler.lib.user_agent import get_user_agent
-from scrapy.exceptions import NotConfigured
-import logging
 
-# from lazy_crawler.puppeteer.puppeteer import browse
 class LazyCrawler(LazyBaseCrawler):
-
-    logging.basicConfig(
-    filename='log.txt',
-    format='%(levelname)s: %(message)s',
-    level=logging.INFO
-    )
-
+    name = "example"
     custom_settings = {
-        'DOWNLOAD_DELAY': 0,'LOG_LEVEL': 'DEBUG','CHANGE_PROXY_AFTER':1,'USE_PROXY':True,
-        'CONCURRENT_REQUESTS' : 126,'CONCURRENT_REQUESTS_PER_IP': 26,'CONCURRENT_REQUESTS_PER_DOMAIN': 2,
-        'JOBDIR': './crawls', 'RETRY_TIMES': 2, "COOKIES_ENABLED": True,'DOWNLOAD_TIMEOUT': 500,
+        'DOWNLOAD_DELAY': 0.5,
+        'CONCURRENT_REQUESTS': 32,
     }
-
-    name = "laptop"
-
-    settings = get_project_settings()
-
-    settings.set('LOG_FILE','Log.log',priority='cmdline')
-
-
-
     headers = get_user_agent('random')
 
-    def start_requests(self): #project start from here.
+    def start_requests(self):
+        url = 'https://example.com'
+        yield scrapy.Request(url, self.parse)
 
-        # for url in urls:
-        url = 'https://latop10.it/auto/'
-        yield scrapy.Request(url, self.parse_get_sub_categories, dont_filter=True, )
-
-
-
-    def parse_get_sub_categories(self, response):
-        # browse(response.url, False)
-        Logger()
-
-        sub_categories_urls = response.xpath('//main[@id="genesis-content"]/article/header[@class="entry-header"]/h2[@class="entry-title"]/a[@class="entry-title-link"]/@href').extract()
-
-        next_page_url = response.xpath('//div[@class="archive-pagination pagination"]/ul/li[@class="pagination-next"]/a/@href').extract_first()
-
-        for url in sub_categories_urls:
-
-            yield scrapy.Request(url, self.get_product_details, dont_filter=True,)
-
-        if next_page_url:
-            yield scrapy.Request(next_page_url, self.parse_get_sub_categories, dont_filter=True)
-
-    def get_product_details(self, response):
-        main_categories_name = response.xpath('//div[@class="content-sidebar-wrap"]/p[@id="breadcrumbs"]/span/span/span/a/text()').extract_first()
-        sub_categories_name = response.xpath('//div[@class="content-sidebar-wrap"]/p[@id="breadcrumbs"]/span/span/span/span/a/text()').extract_first()
-
-        product_url = response.xpath('//link[@rel="canonical"]/@href').extract_first()
-        try:
-            title = response.xpath('//main[@id="genesis-content"]/article/header[@class="entry-header"]/h1[@class="entry-title"]/text()').extract_first()
-        except Exception:
-            NotConfigured("")
-        yield{
-            'Title':title,
-            'URL': product_url,
-            'Category 1': main_categories_name,
-            'Category 2': sub_categories_name
-        }
-
-
-
+    def parse(self, response):
+        title = response.xpath('//title/text()').get()
+        yield {'Title': title}
 
 settings_file_path = 'lazy_crawler.crawler.settings'
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
-process = CrawlerProcess(get_project_settings())
+process = CrawlerProcess()
 process.crawl(LazyCrawler)
-process.start() # the script will block here until the crawling is finished
+process.start()
 ```
 
-## Further resources
+## Further Resources
 
-For more information and examples of how to use Lazy Crawler, see the project documentation.
+For more information and examples of how to use Lazy Crawler, see the [project documentation](https://pradip-p.github.io/lazy-crawler/).
 
 ## Credits
 
-Lazy Crawler was created by Pradip p.
+Lazy Crawler was created by Pradip P.
 
 ## License
 
-Lazy Crawler is released under the MIT License.
+Lazy Crawler is released under the [MIT License](https://github.com/pradip-p/lazy-crawler/blob/main/LICENSE.md).

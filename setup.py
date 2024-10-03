@@ -9,7 +9,7 @@ with open('requirements.txt') as f:
 
 setup(
     name='lazy_crawler',
-    version='0.15',
+    version='0.2.0',
     description='Lazy Crawler is a Python package that simplifies web scraping tasks. It builds upon Scrapy, a powerful web crawling and scraping framework, providing additional utilities and features for easier data extraction. With Lazy Crawler, you can quickly set up and deploy web scraping projects, saving time and effort.',
     long_description=README,
     long_description_content_type='text/markdown',

@@ -12,11 +12,10 @@
 <!-- prettier-ignore-start -->
 <div align="center">
 
-| **CI/CD** | | [![Build and Deploy](https://github.com/pradip-p/lazy-crawler/actions/workflows/build_and_deploy.yml/badge.svg?branch=main)](https://github.com/pradip-p/lazy-crawler/actions/workflows/build_and_deploy.yml?query=branch%3Amain) [![Publish Docs](https://github.com/pradip-p/lazy-crawler/actions/workflows/docs.yml/badge.svg?branch=main)](https://github.com/pradip-p/lazy-crawler/actions/workflows/docs.yml) |
+| **CI/CD** | | N/A|
 | :--- | :--- | :--- |
 | **Tech Stack** | | ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) ![Scrapy](https://img.shields.io/badge/Scrapy-100000?style=for-the-badge&logo=scrapy&logoColor=white) |
 | **Code Style** | | [![PEP8 Style](https://img.shields.io/badge/code%20style-pep8-blue)](https://www.python.org/dev/peps/pep-0008/) [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://pre-commit.com) |
-| **Community** | | [![Join Slack](https://img.shields.io/badge/Slack-Join%20our%20community!-4A154B?style=for-the-badge&logo=slack&logoColor=white)](https://slack.yourcommunity.com) |
 | **Other Info** | | [![docs](https://img.shields.io/badge/docs-available-brightgreen)](https://pradip-p.github.io/lazy-crawler/) [![license](https://img.shields.io/github/license/pradip-p/lazy-crawler.svg)](https://github.com/pradip-p/lazy-crawler/blob/main/LICENSE.md) |
 
 </div>

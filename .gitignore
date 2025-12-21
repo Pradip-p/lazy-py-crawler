@@ -138,7 +138,9 @@ dmypy.json
 *.xlsm
 *.xlsb
 *.xml
+!sitemap.xml
 lazy
 test_p.py
 *.txt
+!robots.txt
 crawls/

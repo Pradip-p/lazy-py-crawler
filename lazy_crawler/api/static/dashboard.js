@@ -236,11 +236,48 @@ const closeChatBtn = document.getElementById('close-chat');
 const chatForm = document.getElementById('chat-form');
 const chatInput = document.getElementById('chat-input');
 const chatMessages = document.getElementById('chat-messages');
+const ollamaSettings = document.getElementById('ollama-settings');
+const ollamaTemperature = document.getElementById('ollama-temperature');
+const temperatureValue = document.getElementById('temperature-value');
+const ollamaStreaming = document.getElementById('ollama-streaming');
+const checkOllamaHealthBtn = document.getElementById('check-ollama-health');
+const chatStatus = document.getElementById('chat-status');
+const chatSubmitBtn = document.getElementById('chat-submit-btn');
 
 const visualizeBtn = document.getElementById('visualize-btn');
 const chartContainer = document.getElementById('chart-container');
 const closeChartBtn = document.getElementById('close-chart');
 let currentChart = null;
+
+// Update temperature display
+ollamaTemperature.addEventListener('input', (e) => {
+    temperatureValue.textContent = parseFloat(e.target.value).toFixed(1);
+});
+
+// Check Ollama Health
+checkOllamaHealthBtn.onclick = async () => {
+    checkOllamaHealthBtn.disabled = true;
+    checkOllamaHealthBtn.textContent = '⏳...';
+
+    try {
+        const res = await fetch('/api/ai/ollama/health');
+        const data = await res.json();
+
+        if (data.healthy) {
+            chatStatus.style.color = 'var(--slack-green)';
+            chatStatus.textContent = '✓ Ollama is healthy and ready';
+        } else {
+            chatStatus.style.color = '#ff6b6b';
+            chatStatus.textContent = '✗ Ollama is offline';
+        }
+    } catch (err) {
+        chatStatus.style.color = '#ff6b6b';
+        chatStatus.textContent = '✗ Cannot connect to Ollama';
+    } finally {
+        checkOllamaHealthBtn.disabled = false;
+        checkOllamaHealthBtn.textContent = 'Check';
+    }
+};
 
 // Chat UI Toggles
 chatToggleBtn.onclick = () => {
@@ -251,12 +288,13 @@ closeChatBtn.onclick = () => {
 };
 
 // Add Message to Chat
-function addMessage(text, isUser = false) {
+function addMessage(text, isUser = false, isStreaming = false) {
     const div = document.createElement('div');
     div.style.padding = '0.8rem';
     div.style.borderRadius = '8px';
     div.style.maxWidth = '80%';
     div.style.wordWrap = 'break-word';
+    div.style.lineHeight = '1.4';
 
     if (isUser) {
         div.style.alignSelf = 'flex-end';
@@ -266,13 +304,17 @@ function addMessage(text, isUser = false) {
         div.style.alignSelf = 'flex-start';
         div.style.background = '#e0e0e0';
         div.style.color = 'black';
+        if (isStreaming) {
+            div.id = 'streaming-message';
+        }
     }
     div.textContent = text;
     chatMessages.appendChild(div);
     chatMessages.scrollTop = chatMessages.scrollHeight;
+    return div;
 }
 
-// Chat Submission
+// Chat Submission - Ollama API
 chatForm.onsubmit = async (e) => {
     e.preventDefault();
     const msg = chatInput.value.trim();
@@ -280,23 +322,77 @@ chatForm.onsubmit = async (e) => {
 
     addMessage(msg, true);
     chatInput.value = '';
-
-    // Context: Visible data
-    // We can't access `items` from `fetchData` easily unless we store them globally.
-    // Let's rely on what's in the DOM table or modify renderTable to update a global var.
-    const context = `User is looking at collection: ${currentCollection}. Query: ${document.getElementById('search-input').value}.`;
+    chatSubmitBtn.disabled = true;
 
     try {
-        const res = await fetch('/api/ai/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: msg, context: context }),
-            credentials: 'include'
-        });
-        const data = await res.json();
-        addMessage(data.response || "Sorry, I couldn't process that.");
+        const temperature = parseFloat(ollamaTemperature.value);
+        const stream = ollamaStreaming.checked;
+
+        // Create response message div
+        let responseDiv = addMessage('', false);
+
+        if (stream) {
+            // Streaming response
+            const res = await fetch('/api/ai/ollama/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    prompt: msg,
+                    temperature: temperature,
+                    stream: true
+                }),
+                credentials: 'include'
+            });
+
+            const reader = res.body.getReader();
+            const decoder = new TextDecoder();
+            let fullResponse = '';
+
+            while (true) {
+                const {done, value} = await reader.read();
+                if (done) break;
+
+                const text = decoder.decode(value);
+                const lines = text.split('\n');
+
+                for (const line of lines) {
+                    if (line.trim()) {
+                        try {
+                            const data = JSON.parse(line);
+                            if (data.token) {
+                                fullResponse += data.token;
+                                responseDiv.textContent = fullResponse;
+                                chatMessages.scrollTop = chatMessages.scrollHeight;
+                            } else if (data.error) {
+                                responseDiv.textContent = `Error: ${data.error}`;
+                                responseDiv.style.background = '#ffebee';
+                            }
+                        } catch (e) {
+                            // Ignore parsing errors
+                        }
+                    }
+                }
+            }
+        } else {
+            // Non-streaming response
+            const res = await fetch('/api/ai/ollama/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    prompt: msg,
+                    temperature: temperature,
+                    stream: false
+                }),
+                credentials: 'include'
+            });
+
+            const data = await res.json();
+            responseDiv.textContent = data.response || "Sorry, I couldn't process that.";
+        }
     } catch (err) {
-        addMessage("Error communicating with AI.");
+        addMessage(`Error: ${err.message || 'Failed to get response'}`);
+    } finally {
+        chatSubmitBtn.disabled = false;
     }
 };
 
@@ -337,16 +433,43 @@ visualizeBtn.onclick = async () => {
     const dataSummary = `Headers: ${headers.join(', ')}. Sample Data (first 10 rows): ${JSON.stringify(sampleData)}`;
 
     try {
-        const res = await fetch('/api/ai/chart', {
+        // Use Ollama to generate chart description
+        const chartDescriptionPrompt = `Based on the following data, suggest a Chart.js configuration for: "${description}"
+
+Data Summary:
+${dataSummary}
+
+Respond ONLY with a valid JSON object following this structure (replace X with actual labels/data):
+{
+  "type": "bar|line|pie|doughnut",
+  "data": {
+    "labels": ["X", "Y", ...],
+    "datasets": [{"label": "Dataset 1", "data": [X, Y, ...], "backgroundColor": ["#FF6384", ...], ...}]
+  },
+  "options": {"responsive": true, "plugins": {"title": {"text": "Chart Title", "display": true}}}
+}`;
+
+        const res = await fetch('/api/ai/ollama/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ description: description, data_summary: dataSummary }),
+            body: JSON.stringify({
+                prompt: chartDescriptionPrompt,
+                temperature: 0.3,
+                stream: false
+            }),
             credentials: 'include'
         });
-        const config = await res.json();
 
-        if (config.error) {
-            alert(config.error);
+        const data = await res.json();
+        let config;
+
+        try {
+            // Extract JSON from response (in case there's extra text)
+            const jsonMatch = data.response.match(/\{[\s\S]*\}/);
+            config = JSON.parse(jsonMatch ? jsonMatch[0] : data.response);
+        } catch (e) {
+            alert("Failed to parse chart configuration from Ollama. Please try again.");
+            chartContainer.style.display = 'none';
             return;
         }
 

@@ -434,24 +434,58 @@
 
 <!-- Chat Window -->
 <div id="chat-window"
-    style="display: none; position: fixed; bottom: 6rem; right: 2rem; width: 350px; height: 500px; background: white; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); border: 1px solid var(--border-color); z-index: 1000; flex-direction: column; overflow: hidden;">
+    style="display: none; position: fixed; bottom: 6rem; right: 2rem; width: 380px; height: 550px; background: white; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); border: 1px solid var(--border-color); z-index: 1000; flex-direction: column; overflow: hidden;">
     <div
         style="background: var(--slack-purple); color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
-        <h3 style="margin: 0; font-size: 1rem;">AI Assistant</h3>
-        <button id="close-chat" style="background: none; border: none; color: white; cursor: pointer;">&times;</button>
+        <h3 style="margin: 0; font-size: 1rem;">🤖 AI Assistant</h3>
+        <button id="close-chat" style="background: none; border: none; color: white; cursor: pointer; font-size: 1.2rem;">&times;</button>
     </div>
+
+    <!-- Ollama Model Badge & Controls -->
+    <div style="padding: 0.75rem 1rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-bottom: 1px solid var(--border-color); display: flex; gap: 0.5rem; align-items: center; justify-content: space-between; color: white;">
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <span style="font-size: 1rem;">⚡</span>
+            <div>
+                <div style="font-weight: 600; font-size: 0.9rem;">Ollama AI (Local)</div>
+                <div style="font-size: 0.75rem; opacity: 0.9;">qwen2.5 • Fast & Private</div>
+            </div>
+        </div>
+        <button id="check-ollama-health"
+            style="padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.25); color: white; border: 1px solid rgba(255,255,255,0.4); border-radius: 4px; font-size: 0.75rem; cursor: pointer; font-weight: 500;">Health</button>
+    </div>
+
+    <!-- Ollama Settings -->
+    <div id="ollama-settings"
+        style="padding: 0.75rem 1rem; background: #f9f9f9; border-bottom: 1px solid var(--border-color); font-size: 0.85rem;">
+        <div style="margin-bottom: 0.5rem; display: flex; gap: 0.5rem; align-items: center;">
+            <label for="ollama-temperature" style="min-width: 100px;">Temperature:</label>
+            <input type="range" id="ollama-temperature" min="0" max="1" step="0.1" value="0.7"
+                style="flex: 1; cursor: pointer;">
+            <span id="temperature-value" style="min-width: 30px;">0.7</span>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <label for="ollama-streaming" style="min-width: 100px;">Streaming:</label>
+            <input type="checkbox" id="ollama-streaming" checked style="cursor: pointer;">
+            <span style="color: var(--text-muted);">Real-time responses</span>
+        </div>
+    </div>
+
+    <!-- Chat Messages -->
     <div id="chat-messages"
         style="flex: 1; padding: 1rem; overflow-y: auto; background: #f9f9f9; display: flex; flex-direction: column; gap: 0.8rem;">
-        <div style="align-self: flex-start; background: #e0e0e0; padding: 0.8rem; border-radius: 8px; max-width: 80%;">
-            Hi! I can help you analyze your data. Ask me anything!</div>
+        <div style="align-self: flex-start; background: #e0e0e0; padding: 0.8rem; border-radius: 8px; max-width: 80%; word-wrap: break-word;">
+            Hi! I can help you analyze your data. Choose a model above and ask me anything!</div>
     </div>
+
+    <!-- Chat Input -->
     <div style="padding: 1rem; border-top: 1px solid var(--border-color); background: white;">
         <form id="chat-form" style="display: flex; gap: 0.5rem;">
             <input type="text" id="chat-input" placeholder="Ask a question..."
-                style="flex: 1; padding: 0.8rem; border: 1px solid var(--border-color); border-radius: 4px; outline: none;">
-            <button type="submit"
-                style="background: var(--slack-purple); color: white; border: none; padding: 0.8rem 1.2rem; border-radius: 4px; cursor: pointer;">➤</button>
+                style="flex: 1; padding: 0.8rem; border: 1px solid var(--border-color); border-radius: 4px; outline: none; font-size: 0.9rem;">
+            <button type="submit" id="chat-submit-btn"
+                style="background: var(--slack-purple); color: white; border: none; padding: 0.8rem 1.2rem; border-radius: 4px; cursor: pointer; font-weight: 600;">➤</button>
         </form>
+        <div id="chat-status" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.3rem; text-align: center;"></div>
     </div>
 </div>
 {% endblock %}

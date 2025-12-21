@@ -53,6 +53,20 @@ def read_dashboard(
     )
 
 
+@router.get("/ai-assistant")
+def read_ai_assistant(
+    request: Request, current_user: Optional[User] = Depends(get_current_user_optional)
+):
+    """AI Assistant page with Ollama and Gemini integration"""
+    if not current_user:
+        return RedirectResponse(url="/login")
+
+    return templates.TemplateResponse(
+        "ai_assistant.html",
+        {"request": request, "active_page": "ai-assistant", "user": current_user},
+    )
+
+
 @router.get("/about")
 def read_about(
     request: Request, current_user: Optional[User] = Depends(get_current_user_optional)

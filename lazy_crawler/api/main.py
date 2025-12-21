@@ -1,7 +1,7 @@
 from lazy_crawler.api.db import init_db, engine
 from sqlalchemy import text
 from lazy_crawler.api.auth import get_current_user_optional
-from lazy_crawler.api.routers import auth, ai
+from lazy_crawler.api.routers import auth, ai, ds
 from lazy_crawler.api.models import User
 from fastapi import FastAPI, HTTPException, Query, Request, Depends
 from fastapi.staticfiles import StaticFiles
@@ -31,6 +31,7 @@ async def on_startup():
 # Include Routers
 app.include_router(auth.router)
 app.include_router(ai.router)
+app.include_router(ds.router)
 
 # Template Engine
 templates_dir = os.path.join(os.path.dirname(__file__), "templates")

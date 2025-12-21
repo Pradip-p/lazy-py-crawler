@@ -8,6 +8,7 @@ services:
     depends_on:
       - mongodb
       - postgres
+      - ollama
     volumes:
       - .:/app
     restart: unless-stopped
@@ -53,9 +54,22 @@ services:
     networks:
       - lazy-crawler-network
 
+  ollama:
+    image: ollama/ollama:latest
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+      - ./pull-and-serve.sh:/pull-and-serve.sh
+    entrypoint: ["/bin/sh", "/pull-and-serve.sh"]
+    networks:
+      - lazy-crawler-network
+
 volumes:
   mongodb_data:
   postgres_data:
+  ollama_data:
 
 networks:
   lazy-crawler-network:

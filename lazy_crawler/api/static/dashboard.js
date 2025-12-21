@@ -236,7 +236,6 @@ const closeChatBtn = document.getElementById('close-chat');
 const chatForm = document.getElementById('chat-form');
 const chatInput = document.getElementById('chat-input');
 const chatMessages = document.getElementById('chat-messages');
-const aiModelSelector = document.getElementById('ai-model-selector');
 const ollamaSettings = document.getElementById('ollama-settings');
 const ollamaTemperature = document.getElementById('ollama-temperature');
 const temperatureValue = document.getElementById('temperature-value');
@@ -249,18 +248,10 @@ const visualizeBtn = document.getElementById('visualize-btn');
 const chartContainer = document.getElementById('chart-container');
 const closeChartBtn = document.getElementById('close-chart');
 let currentChart = null;
-let selectedAIModel = 'gemini';
 
 // Update temperature display
 ollamaTemperature.addEventListener('input', (e) => {
     temperatureValue.textContent = parseFloat(e.target.value).toFixed(1);
-});
-
-// AI Model Selector
-aiModelSelector.addEventListener('change', (e) => {
-    selectedAIModel = e.target.value;
-    ollamaSettings.style.display = selectedAIModel === 'ollama' ? 'block' : 'none';
-    chatStatus.textContent = '';
 });
 
 // Check Ollama Health
@@ -323,7 +314,7 @@ function addMessage(text, isUser = false, isStreaming = false) {
     return div;
 }
 
-// Chat Submission with Ollama Support
+// Chat Submission - Ollama API
 chatForm.onsubmit = async (e) => {
     e.preventDefault();
     const msg = chatInput.value.trim();
@@ -333,85 +324,70 @@ chatForm.onsubmit = async (e) => {
     chatInput.value = '';
     chatSubmitBtn.disabled = true;
 
-    const context = `User is looking at collection: ${currentCollection}. Query: ${document.getElementById('search-input').value}.`;
-
     try {
-        if (selectedAIModel === 'ollama') {
-            // Use Ollama API
-            const temperature = parseFloat(ollamaTemperature.value);
-            const stream = ollamaStreaming.checked;
+        const temperature = parseFloat(ollamaTemperature.value);
+        const stream = ollamaStreaming.checked;
 
-            // Add streaming indicator
-            let responseDiv = addMessage('', false);
+        // Create response message div
+        let responseDiv = addMessage('', false);
 
-            if (stream) {
-                // Streaming response
-                const res = await fetch('/api/ai/ollama/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        prompt: msg,
-                        temperature: temperature,
-                        stream: true
-                    }),
-                    credentials: 'include'
-                });
+        if (stream) {
+            // Streaming response
+            const res = await fetch('/api/ai/ollama/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    prompt: msg,
+                    temperature: temperature,
+                    stream: true
+                }),
+                credentials: 'include'
+            });
 
-                const reader = res.body.getReader();
-                const decoder = new TextDecoder();
-                let fullResponse = '';
+            const reader = res.body.getReader();
+            const decoder = new TextDecoder();
+            let fullResponse = '';
 
-                while (true) {
-                    const {done, value} = await reader.read();
-                    if (done) break;
+            while (true) {
+                const {done, value} = await reader.read();
+                if (done) break;
 
-                    const text = decoder.decode(value);
-                    const lines = text.split('\n');
+                const text = decoder.decode(value);
+                const lines = text.split('\n');
 
-                    for (const line of lines) {
-                        if (line.trim()) {
-                            try {
-                                const data = JSON.parse(line);
-                                if (data.token) {
-                                    fullResponse += data.token;
-                                    responseDiv.textContent = fullResponse;
-                                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                                } else if (data.error) {
-                                    responseDiv.textContent = `Error: ${data.error}`;
-                                    responseDiv.style.background = '#ffebee';
-                                }
-                            } catch (e) {
-                                // Ignore parsing errors
+                for (const line of lines) {
+                    if (line.trim()) {
+                        try {
+                            const data = JSON.parse(line);
+                            if (data.token) {
+                                fullResponse += data.token;
+                                responseDiv.textContent = fullResponse;
+                                chatMessages.scrollTop = chatMessages.scrollHeight;
+                            } else if (data.error) {
+                                responseDiv.textContent = `Error: ${data.error}`;
+                                responseDiv.style.background = '#ffebee';
                             }
+                        } catch (e) {
+                            // Ignore parsing errors
                         }
                     }
                 }
-            } else {
-                // Non-streaming response
-                const res = await fetch('/api/ai/ollama/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        prompt: msg,
-                        temperature: temperature,
-                        stream: false
-                    }),
-                    credentials: 'include'
-                });
-
-                const data = await res.json();
-                responseDiv.textContent = data.response || "Sorry, I couldn't process that.";
             }
         } else {
-            // Use Gemini API (existing)
-            const res = await fetch('/api/ai/chat', {
+            // Non-streaming response
+            const res = await fetch('/api/ai/ollama/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: msg, context: context }),
+                body: JSON.stringify({
+                    prompt: msg,
+                    temperature: temperature,
+                    stream: false
+                }),
                 credentials: 'include'
             });
+
             const data = await res.json();
-            addMessage(data.response || "Sorry, I couldn't process that.");
+            responseDiv.textContent = data.response || "Sorry, I couldn't process that.";
         }
     } catch (err) {
         addMessage(`Error: ${err.message || 'Failed to get response'}`);
@@ -457,9 +433,8 @@ visualizeBtn.onclick = async () => {
     const dataSummary = `Headers: ${headers.join(', ')}. Sample Data (first 10 rows): ${JSON.stringify(sampleData)}`;
 
     try {
-        if (selectedAIModel === 'ollama') {
-            // Use Ollama to generate chart description first
-            const chartDescriptionPrompt = `Based on the following data, suggest a Chart.js configuration for: "${description}"
+        // Use Ollama to generate chart description
+        const chartDescriptionPrompt = `Based on the following data, suggest a Chart.js configuration for: "${description}"
 
 Data Summary:
 ${dataSummary}
@@ -474,52 +449,33 @@ Respond ONLY with a valid JSON object following this structure (replace X with a
   "options": {"responsive": true, "plugins": {"title": {"text": "Chart Title", "display": true}}}
 }`;
 
-            const res = await fetch('/api/ai/ollama/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    prompt: chartDescriptionPrompt,
-                    temperature: 0.3,
-                    stream: false
-                }),
-                credentials: 'include'
-            });
+        const res = await fetch('/api/ai/ollama/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                prompt: chartDescriptionPrompt,
+                temperature: 0.3,
+                stream: false
+            }),
+            credentials: 'include'
+        });
 
-            const data = await res.json();
-            let config;
+        const data = await res.json();
+        let config;
 
-            try {
-                // Extract JSON from response (in case there's extra text)
-                const jsonMatch = data.response.match(/\{[\s\S]*\}/);
-                config = JSON.parse(jsonMatch ? jsonMatch[0] : data.response);
-            } catch (e) {
-                alert("Failed to parse chart configuration from Ollama. Please try again.");
-                chartContainer.style.display = 'none';
-                return;
-            }
-
-            const ctx = document.getElementById('dataChart').getContext('2d');
-            if (currentChart) currentChart.destroy();
-            currentChart = new Chart(ctx, config);
-        } else {
-            // Use Gemini API (existing)
-            const res = await fetch('/api/ai/chart', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ description: description, data_summary: dataSummary }),
-                credentials: 'include'
-            });
-            const config = await res.json();
-
-            if (config.error) {
-                alert(config.error);
-                return;
-            }
-
-            const ctx = document.getElementById('dataChart').getContext('2d');
-            if (currentChart) currentChart.destroy();
-            currentChart = new Chart(ctx, config);
+        try {
+            // Extract JSON from response (in case there's extra text)
+            const jsonMatch = data.response.match(/\{[\s\S]*\}/);
+            config = JSON.parse(jsonMatch ? jsonMatch[0] : data.response);
+        } catch (e) {
+            alert("Failed to parse chart configuration from Ollama. Please try again.");
+            chartContainer.style.display = 'none';
+            return;
         }
+
+        const ctx = document.getElementById('dataChart').getContext('2d');
+        if (currentChart) currentChart.destroy();
+        currentChart = new Chart(ctx, config);
 
     } catch (err) {
         console.error(err);

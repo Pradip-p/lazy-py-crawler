@@ -1,16 +1,52 @@
 {% extends "base.html" %}
 
-{% block title %}Lazy Crawler | Enterprise-Grade Data Extractions{% endblock %}
+{% block title %}Crawlio Intelligence | Enterprise-Grade Market Insights{% endblock %}
+
+{% block head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Crawlio Intelligence",
+  "operatingSystem": "Linux, Windows, macOS",
+  "applicationCategory": "BusinessApplication",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "ratingCount": "150"
+  },
+  "description": "Premium market intelligence platform providing automated business data extraction and AI-powered insights."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Crawlio Intelligence",
+  "url": "https://pradipthapa.info.np",
+  "logo": "https://pradipthapa.info.np/static/images/logo.png",
+  "sameAs": [
+    "https://github.com/pradip-p/lazy-py-crawler"
+  ]
+}
+</script>
+{% endblock %}
 
 {% block content %}
 <section class="hero">
     <div class="container text-center">
-        <h1>Great teamwork starts<br>with great data.</h1>
-        <p>Lazy Crawler brings all your target data into one place. From job listings to real estate, get the
-            competitive edge you deserve.</p>
-        <a href="/dashboard" class="btn-white">Launch Dashboard</a>
+        <h1>Transform raw data into<br>strategic intelligence.</h1>
+        <p>Crawlio Intelligence centralizes your critical market data. From industry trends to competitor movements, get
+            the intelligence your strategy deserves.</p>
+        <a href="/dashboard" class="btn-white">Explore the Intelligence Hub</a>
     </div>
 </section>
+
 
 <section class="section stats-bg">
     <div class="container stats-grid">
@@ -31,86 +67,88 @@
 
 <section class="section offers-section" id="offers">
     <div class="container">
-        <h2 class="section-title">What We Offer</h2>
-        <p class="section-subtitle">Enterprise-grade data extraction across multiple industries</p>
+        <h2 class="section-title">Comprehensive Intelligence Solutions</h2>
+        <p class="section-subtitle">Empowering enterprises with actionable data across diverse sectors</p>
         <div class="offers-grid">
             <div class="offer-card">
                 <div class="icon-wrapper" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
                     <span class="icon">💼</span>
                 </div>
-                <h3>Job Market Data</h3>
-                <p>Track hiring trends, salary benchmarks, and talent movement across LinkedIn, Indeed, and Glassdoor.
+                <h3>Human Capital Insights</h3>
+                <p>Monitor global hiring velocity, salary shifts, and talent migration across major professional
+                    networks.
                 </p>
                 <ul class="feature-list">
-                    <li>Real-time job postings</li>
-                    <li>Salary analytics</li>
-                    <li>Company insights</li>
+                    <li>Workforce dynamic tracking</li>
+                    <li>Compensation benchmarking</li>
+                    <li>Industry talent flow</li>
                 </ul>
             </div>
             <div class="offer-card">
                 <div class="icon-wrapper" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
                     <span class="icon">🏠</span>
                 </div>
-                <h3>Real Estate Intelligence</h3>
-                <p>Scrape Zillow, Redfin, and Realtor.com for live property listings, price history, and market
-                    analytics.</p>
+                <h3>Real Estate Analytics</h3>
+                <p>Gain a granular view of market inventory, pricing volatility, and emerging property trends
+                    nationwide.</p>
                 <ul class="feature-list">
-                    <li>Property valuations</li>
-                    <li>Market trends</li>
-                    <li>Historical data</li>
+                    <li>Dynamic portfolio valuation</li>
+                    <li>Regional growth forecasting</li>
+                    <li>Historical market shifts</li>
                 </ul>
             </div>
             <div class="offer-card">
                 <div class="icon-wrapper" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
                     <span class="icon">🛒</span>
                 </div>
-                <h3>E-commerce & Retail</h3>
-                <p>Monitor pricing on Walmart, Amazon, and Target. Keep your competitive edge with real-time stock
-                    alerts.</p>
+                <h3>Retail & E-commerce Intel</h3>
+                <p>Stay ahead with real-time pricing intelligence, inventory monitoring, and digital shelf analytics.
+                </p>
                 <ul class="feature-list">
-                    <li>Price monitoring</li>
-                    <li>Stock tracking</li>
-                    <li>Competitor analysis</li>
+                    <li>Price elasticity monitoring</li>
+                    <li>Stock availability alerts</li>
+                    <li>Digital market share analysis</li>
                 </ul>
             </div>
             <div class="offer-card">
                 <div class="icon-wrapper" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
                     <span class="icon">📰</span>
                 </div>
-                <h3>Media & News</h3>
-                <p>Aggregate news from globally trusted sources. Sentiment analysis ready data for your next AI project.
+                <h3>Global Media Monitoring</h3>
+                <p>Aggregate critical news flow and industry sentiment. Power your strategic models with high-fidelity
+                    text data.
                 </p>
                 <ul class="feature-list">
-                    <li>News aggregation</li>
-                    <li>Sentiment analysis</li>
-                    <li>Topic clustering</li>
+                    <li>Trend velocity tracking</li>
+                    <li>Cross-lingual sentiment</li>
+                    <li>Narrative clustering</li>
                 </ul>
             </div>
             <div class="offer-card">
                 <div class="icon-wrapper" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
                     <span class="icon">📱</span>
                 </div>
-                <h3>Social Media & LinkedIn Data</h3>
-                <p>Extract profile insights, engagement metrics, and network data from LinkedIn, Twitter, and Instagram
-                    for lead generation.</p>
+                <h3>Social & Digital Signals</h3>
+                <p>Capture critical engagement signals and behavioral trends from major social ecosystems for strategic
+                    outreach.</p>
                 <ul class="feature-list">
-                    <li>Profile scraping</li>
-                    <li>Engagement metrics</li>
-                    <li>Network analysis</li>
+                    <li>Brand sentiment tracking</li>
+                    <li>Digital influence metrics</li>
+                    <li>Emerging trend detection</li>
                 </ul>
             </div>
             <div class="offer-card featured">
-                <div class="featured-badge">Most Popular</div>
+                <div class="featured-badge">Premium Offering</div>
                 <div class="icon-wrapper" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
                     <span class="icon">📊</span>
                 </div>
-                <h3>AI-Powered Business Analytics</h3>
-                <p>Transform raw data into actionable insights. Generate interactive charts, trend analysis, and
-                    AI-driven reports.</p>
+                <h3>AI-Driven Strategic Insights</h3>
+                <p>Move beyond raw data. Our AI models identify hidden opportunities and provide predictive market
+                    intelligence.</p>
                 <ul class="feature-list">
-                    <li>AI chart generation</li>
-                    <li>Trend forecasting</li>
-                    <li>Custom dashboards</li>
+                    <li>Predictive trend modeling</li>
+                    <li>Automated executive summaries</li>
+                    <li>Strategic opportunity alerts</li>
                 </ul>
             </div>
         </div>
@@ -182,7 +220,8 @@
                 <div class="testimonial-rating">
                     <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
                 </div>
-                <p class="testimonial-text">"Lazy Crawler transformed how we collect market data. The AI analytics
+                <p class="testimonial-text">"Crawlio Intelligence transformed how we collect market data. The AI
+                    analytics
                     feature alone saved us 20 hours per week. Absolutely worth every penny!"</p>
                 <div class="testimonial-author">
                     <div class="author-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">SM

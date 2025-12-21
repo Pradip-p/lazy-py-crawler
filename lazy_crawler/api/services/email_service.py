@@ -10,7 +10,7 @@ EMAIL_HOST = os.getenv("EMAIL_HOST", "email-smtp.ap-south-1.amazonaws.com")
 EMAIL_PORT = int(os.getenv("EMAIL_PORT") or os.getenv("SMTP_PORT", "587"))
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
-EMAILS_FROM_NAME = os.getenv("EMAILS_FROM_NAME", "Lazy Crawler Support")
+EMAILS_FROM_NAME = os.getenv("EMAILS_FROM_NAME", "Crawlio Intelligence Support")
 EMAILS_FROM_EMAIL = os.getenv("EMAILS_FROM_EMAIL") or EMAIL_HOST_USER
 CONTACT_RECIPIENT_EMAIL = os.getenv("CONTACT_RECIPIENT_EMAIL")
 
@@ -51,7 +51,7 @@ async def send_contact_email(full_name: str, email: str, message: str):
                 {formatted_message}
             </div>
             <hr style="border: none; border-top: 1px solid #eee; margin-top: 20px;">
-            <p style="font-size: 0.8rem; color: #888;">Sent from Lazy Crawler Notification System</p>
+            <p style="font-size: 0.8rem; color: #888;">Sent from Crawlio Intelligence Notification System</p>
         </body>
     </html>
     """

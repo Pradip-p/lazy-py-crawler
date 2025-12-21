@@ -1,7 +1,7 @@
 [project]
-name = "lazy_crawler"
+name = "crawlio_intelligence"
 version = "0.2.0"
-description = "Lazy Crawler is a Python package that simplifies web scraping tasks. It builds upon Scrapy, providing additional utilities and features for easier data extraction."
+description = "Crawlio Intelligence is a premium market intelligence platform that simplifies business data extraction and provides AI-powered insights."
 readme = "README.md"
 authors = [
     { name = "Pradip Thapa", email = "thapapradip542@gmail.com" }

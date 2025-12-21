@@ -6,8 +6,9 @@ from lazy_crawler.api.models import User
 from fastapi import FastAPI, HTTPException, Query, Request, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from pymongo import MongoClient
 from typing import List, Optional
 from dotenv import load_dotenv
@@ -17,8 +18,8 @@ import os
 load_dotenv()
 
 app = FastAPI(
-    title="Lazy Crawler API",
-    description="API to access data scraped by Lazy Crawler",
+    title="Crawlio Intelligence API",
+    description="API for premium market intelligence and automated business data extraction",
     version="1.0.0",
 )
 
@@ -36,6 +37,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.add_middleware(GZipMiddleware, minimum_size=1000)
 
 
 # Initialize DB on Startup
@@ -75,6 +78,16 @@ def read_root(
     return templates.TemplateResponse(
         "index.html", {"request": request, "active_page": "home", "user": current_user}
     )
+
+
+@app.get("/sitemap.xml")
+def get_sitemap():
+    return FileResponse(os.path.join(static_dir, "sitemap.xml"))
+
+
+@app.get("/robots.txt")
+def get_robots():
+    return FileResponse(os.path.join(static_dir, "robots.txt"))
 
 
 @app.get("/login")

@@ -1,8 +1,10 @@
 #!/bin/sh
 # pull-and-serve.sh
+# Start Ollama server and pull required model
 
 # Start Ollama server in the background
 ollama serve &
+SERVER_PID=$!
 
 # Wait a few seconds for the server to initialize
 sleep 5
@@ -15,5 +17,5 @@ else
   echo "Model qwen2.5:0.5b already present."
 fi
 
-# Bring the server to the foreground so container stays alive
-fg %1
+# Keep the container alive by waiting for the background process
+wait $SERVER_PID

@@ -1,92 +1,132 @@
 <div align="center">
-    <h1>Lazy Py Crawler</h1>
-    <p>Simplify your web scraping tasks with ease.</p>
-    <p>Scrape smarter, not harder.</p>
+    <h1>🚀 Lazy Py Crawler</h1>
+    <p><strong>The ultimate Swiss Army knife for modern web scraping.</strong></p>
+    <p>Scrape smarter, not harder. Built on Scrapy, enhanced for developers.</p>
     <a href="https://github.com/pradip-p/lazy-crawler/releases">
         <img src="https://img.shields.io/github/v/release/pradip-p/lazy-crawler?logo=github" alt="Release Version" />
     </a>
 </div>
 
-</br>
+<br/>
 
-<!-- prettier-ignore-start -->
 <div align="center">
 
-| **CI/CD** | | N/A|
-| :--- | :--- | :--- |
-| **Tech Stack** | | ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) ![Scrapy](https://img.shields.io/badge/Scrapy-100000?style=for-the-badge&logo=scrapy&logoColor=white) |
-| **Code Style** | | [![PEP8 Style](https://img.shields.io/badge/code%20style-pep8-blue)](https://www.python.org/dev/peps/pep-0008/) [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://pre-commit.com) |
-| **Other Info** | | [![docs](https://img.shields.io/badge/docs-available-brightgreen)](https://pradip-p.github.io/lazy-crawler/) [![license](https://img.shields.io/github/license/pradip-p/lazy-crawler.svg)](https://github.com/pradip-p/lazy-crawler/blob/main/LICENSE.md) |
+| **Tech Stack** | ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) ![Scrapy](https://img.shields.io/badge/Scrapy-100000?style=for-the-badge&logo=scrapy&logoColor=white) ![Playwright](https://img.shields.io/badge/Playwright-2EAD33?style=for-the-badge&logo=playwright&logoColor=white) |
+| :------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Code Style** | [![PEP8 Style](https://img.shields.io/badge/code%20style-pep8-blue)](https://www.python.org/dev/peps/pep-0008/) [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://pre-commit.com)                                                                         |
+| **Status**     | [![docs](https://img.shields.io/badge/docs-available-brightgreen)](https://pradip-p.github.io/lazy-crawler/) [![license](https://img.shields.io/github/license/pradip-p/lazy-crawler.svg)](https://github.com/pradip-p/lazy-crawler/blob/main/LICENSE.md)                                                                     |
 
 </div>
 
 ---
 
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
+**Lazy Crawler** is a high-level Python framework designed to eliminate the boilerplate of web scraping. Built on top of the industry-standard **Scrapy**, it adds powerful utilities, pre-configured pipelines, and now **Playwright integration** to handle even the most complex JavaScript-heavy websites with ease.
 
-**Lazy Crawler** is a Python package that simplifies web scraping tasks. Built upon the powerful Scrapy framework, it provides additional utilities and features for easier data extraction. With Lazy Crawler, you can quickly set up and deploy web scraping projects, saving time and effort.
+## ✨ Key Features
 
-## Features
+- **⚡ Instant Setup**: Skip the tedious configuration. Get a production-ready crawler running in minutes.
+- **🎮 Dynamic Content**: Built-in support for **Playwright** to scrape React, Vue, and Angular applications seamlessly.
+- **🛠️ Utility Toolbox**: Ready-to-use helpers for extracting emails, phone numbers, social media handles, and more.
+- **💾 Battery-Included Storage**: Automated pipelines for exporting data directly to **CSV, JSON, Excel, and Google Sheets**.
+- **🕵️ Anti-Detection**: Pre-integrated user-agent rotation and proxy handling out of the box.
 
-- **Simplified Setup**: Streamlines the process of setting up and configuring web scraping projects.
-- **Predefined Library**: Comes with a library of functions and utilities for common web scraping tasks, reducing the need for manual coding.
-- **Easy Data Extraction**: Simplifies extracting and processing data from websites, allowing you to focus on analysis and insights.
-- **Versatile Utilities**: Includes tools for finding emails, numbers, mentions, hashtags, links, and more.
-- **Flexible Data Storage**: Provides a pipeline for storing data in various formats such as CSV, JSON, Google Sheets, and Excel.
+## 🚀 Quick Start
 
-## Getting Started
+### 1. Installation
 
-To get started with Lazy Crawler:
+This project is managed with **uv**. To get started, ensure you have [uv](https://github.com/astral-sh/uv) installed.
 
-1. **Install**: Ensure Python and Scrapy are installed. Then, install Lazy Crawler via pip:
-   ```
-   pip install lazy-crawler
-   ```
-2. **Create a Project**: Create a Python file for your project (e.g., `scrapy_example.py`) and start coding.
+To install the project and its dependencies:
 
-### Example Usage
+```bash
+uv pip install .
+```
 
-Here's an example of how to use Lazy Crawler in a project:
+For development:
+
+```bash
+uv init
+uv pip install -e .
+```
+
+> [!NOTE]
+> Don't forget to run `playwright install` after installation to set up the browser drivers.
+
+### 2. Basic Scraper (Static Sites)
+
+Create a file named `my_crawler.py`:
 
 ```python
-import os
 import scrapy
-from scrapy.crawler import CrawlerProcess
 from lazy_crawler.crawler.spiders.base_crawler import LazyBaseCrawler
-from lazy_crawler.lib.user_agent import get_user_agent
+from scrapy.crawler import CrawlerProcess
 
-class LazyCrawler(LazyBaseCrawler):
-    name = "example"
-    custom_settings = {
-        'DOWNLOAD_DELAY': 0.5,
-        'CONCURRENT_REQUESTS': 32,
-    }
-    headers = get_user_agent('random')
+class MyCrawler(LazyBaseCrawler):
+    name = "my_crawler"
 
     def start_requests(self):
-        url = 'https://example.com'
-        yield scrapy.Request(url, self.parse)
+        yield scrapy.Request("https://example.com", self.parse)
 
     def parse(self, response):
-        title = response.xpath('//title/text()').get()
-        yield {'Title': title}
+        yield {
+            "title": response.css("h1::text").get(),
+            "url": response.url
+        }
 
-settings_file_path = 'lazy_crawler.crawler.settings'
-os.environ.setdefault('SCRAPY_SETTINGS_MODULE', settings_file_path)
 process = CrawlerProcess()
-process.crawl(LazyCrawler)
+process.crawl(MyCrawler)
 process.start()
 ```
 
-## Further Resources
+### 3. Dynamic Scraper (JavaScript-heavy Sites)
 
-For more information and examples of how to use Lazy Crawler, see the [project documentation](https://pradip-p.github.io/lazy-crawler/).
+With Playwright integration, scraping dynamic sites is trivial:
 
-## Credits
+```python
+class DynamicCrawler(LazyBaseCrawler):
+    name = "dynamic"
 
-Lazy Crawler was created by Pradip P.
+    def start_requests(self):
+        yield scrapy.Request(
+            "https://dynamic-site.com",
+            meta={"playwright": True},
+            callback=self.parse
+        )
 
-## License
+    def parse(self, response):
+        # response now contains the fully rendered HTML
+        data = response.css(".rendered-content::text").get()
+        yield {"content": data}
+```
 
-Lazy Crawler is released under the [MIT License](https://github.com/pradip-p/lazy-crawler/blob/main/LICENSE.md).
+## 📚 Advanced Usage
+
+Lazy Crawler includes specialized libraries for advanced tasks:
+
+```python
+from lazy_crawler.lib.extractors import find_emails, find_phone_numbers
+
+def parse(self, response):
+    text = response.text
+    emails = find_emails(text)
+    phones = find_phone_numbers(text)
+    yield {"emails": emails, "phones": phones}
+```
+
+## 🛠️ Configuration
+
+Lazy Crawler reads from standard Scrapy settings but provides defaults that work for 90% of cases. You can easily override them in your spider's `custom_settings`.
+
+## 🤝 Contributing
+
+We welcome contributions! Please check out our [Contributing Guide](CONTRIBUTING.md) to get started.
+
+## 📜 License
+
+Lazy Crawler is licensed under the [MIT License](LICENSE).
+
+---
+
+<div align="center">
+    Created with ❤️ by <a href="https://github.com/pradip-p">Pradip P.</a>
+</div>

@@ -12,9 +12,19 @@ import scrapy
 
 
 class LazyBaseCrawler(scrapy.Spider):
+    """
+    Base crawler for Lazy Crawler projects.
+    Inherit from this class to benefit from pre-configured settings and utilities.
+    """
+
     name = "lazy_base_crawler"
+    allowed_domains = []
+    start_urls = []
 
-    allowed_domains = [""]
-
-    # START URLS for your project.
-    start_urls = [""]
+    def playwright_request(self, url, callback, **kwargs):
+        """
+        Helper to create a Playwright-enabled request.
+        """
+        meta = kwargs.get("meta", {})
+        meta["playwright"] = True
+        return scrapy.Request(url, callback=callback, meta=meta, **kwargs)

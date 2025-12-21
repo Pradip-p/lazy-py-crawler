@@ -1,0 +1,731 @@
+{% extends "base.html" %}
+
+{% block title %}AI Assistant | Crawlio Intelligence{% endblock %}
+
+{% block head %}
+<style>
+    .ai-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .ai-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .ai-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, var(--slack-blue), var(--slack-purple));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .ai-header p {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+    }
+
+    .ai-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .ai-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .ai-card:hover {
+        border-color: var(--slack-purple);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        transform: translateY(-4px);
+    }
+
+    .ai-card-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .ai-card h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+    }
+
+    .ai-card p {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
+    }
+
+    .model-selector {
+        background: white;
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .model-tabs {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .model-tab {
+        padding: 0.75rem 1.5rem;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        background: var(--bg-secondary);
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        color: var(--text-muted);
+    }
+
+    .model-tab.active {
+        border-color: var(--slack-purple);
+        background: var(--slack-purple);
+        color: white;
+    }
+
+    .model-info {
+        background: #f9f9f9;
+        border-left: 4px solid var(--slack-purple);
+        padding: 1rem;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+    }
+
+    .model-info h4 {
+        margin: 0 0 0.5rem 0;
+        color: var(--text-primary);
+    }
+
+    .model-info p {
+        margin: 0.25rem 0;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+    }
+
+    .chat-interface {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+        .chat-interface {
+            grid-template-columns: 1fr;
+        }
+
+        .ai-header h1 {
+            font-size: 2rem;
+        }
+
+        .model-tabs {
+            flex-direction: column;
+        }
+    }
+
+    .input-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .input-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+    }
+
+    .input-group textarea {
+        width: 100%;
+        padding: 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        font-family: inherit;
+        resize: vertical;
+        min-height: 150px;
+        outline: none;
+        transition: border-color 0.3s ease;
+    }
+
+    .input-group textarea:focus {
+        border-color: var(--slack-purple);
+    }
+
+    .controls {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.5rem;
+    }
+
+    .control-item {
+        flex: 1;
+        min-width: 150px;
+    }
+
+    .control-item label {
+        display: block;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+    }
+
+    .control-item input[type="range"] {
+        width: 100%;
+    }
+
+    .control-item select {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        outline: none;
+        cursor: pointer;
+    }
+
+    .response-box {
+        background: white;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1.5rem;
+        min-height: 300px;
+        overflow-y: auto;
+        font-family: 'Monaco', 'Menlo', monospace;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        color: var(--text-primary);
+    }
+
+    .response-box.loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .response-box.streaming {
+        animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { background-color: white; }
+        50% { background-color: #f9f9f9; }
+    }
+
+    .response-empty {
+        color: var(--text-muted);
+        text-align: center;
+        line-height: 1.6;
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .status-indicator {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+        background: #f0f0f0;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+    }
+
+    .status-indicator.healthy {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .status-indicator.error {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    .spinner {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        border: 2px solid #f3f3f3;
+        border-top: 2px solid var(--slack-purple);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .tabs-content {
+        display: none;
+    }
+
+    .tabs-content.active {
+        display: block;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="ai-container">
+    <!-- Header -->
+    <div class="ai-header">
+        <h1>🤖 AI Assistant Hub</h1>
+        <p>Analyze your data with Google Gemini or Local Ollama AI</p>
+    </div>
+
+    <!-- Model Selection -->
+    <div class="model-selector">
+        <div class="model-tabs">
+            <button class="model-tab active" data-model="gemini">
+                🌟 Google Gemini
+            </button>
+            <button class="model-tab" data-model="ollama">
+                ⚡ Ollama (Local)
+            </button>
+        </div>
+
+        <!-- Gemini Info -->
+        <div class="tabs-content active" data-content="gemini">
+            <div class="model-info">
+                <h4>🌟 Google Gemini (Cloud)</h4>
+                <p><strong>Speed:</strong> Ultra-fast cloud processing</p>
+                <p><strong>Accuracy:</strong> State-of-the-art intelligence</p>
+                <p><strong>Cost:</strong> Uses API quota</p>
+                <p><strong>Best for:</strong> Complex analysis, high-quality responses</p>
+            </div>
+        </div>
+
+        <!-- Ollama Info -->
+        <div class="tabs-content" data-content="ollama">
+            <div class="model-info">
+                <h4>⚡ Ollama (Local)</h4>
+                <p><strong>Speed:</strong> Fast local inference</p>
+                <p><strong>Accuracy:</strong> Good for general tasks</p>
+                <p><strong>Cost:</strong> Free (runs locally)</p>
+                <p><strong>Best for:</strong> Privacy, real-time streaming, cost-free inference</p>
+            </div>
+            <div id="ollama-status" class="status-indicator" style="margin-top: 1rem;">
+                <span class="spinner"></span> Checking Ollama status...
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Features Grid -->
+    <div class="ai-grid">
+        <div class="ai-card" onclick="scrollToSection('chat-section')">
+            <div class="ai-card-icon">💬</div>
+            <h3>Chat & Q&A</h3>
+            <p>Ask questions about your data and get instant answers</p>
+            <button class="btn-primary" style="width: 100%;">Open Chat →</button>
+        </div>
+
+        <div class="ai-card" onclick="scrollToSection('summarize-section')">
+            <div class="ai-card-icon">📝</div>
+            <h3>Summarize Text</h3>
+            <p>Extract key points from large documents</p>
+            <button class="btn-primary" style="width: 100%;">Open Summarizer →</button>
+        </div>
+
+        <div class="ai-card" onclick="scrollToSection('analyze-section')">
+            <div class="ai-card-icon">📊</div>
+            <h3>Data Analysis</h3>
+            <p>Get insights and patterns from your data</p>
+            <button class="btn-primary" style="width: 100%;">Open Analyzer →</button>
+        </div>
+    </div>
+
+    <!-- Chat Section -->
+    <section id="chat-section" class="chat-interface">
+        <div>
+            <h2>💬 Chat with AI</h2>
+            <div class="input-group">
+                <label for="chat-model">AI Model</label>
+                <select id="chat-model">
+                    <option value="gemini">🌟 Google Gemini</option>
+                    <option value="ollama">⚡ Ollama Local</option>
+                </select>
+            </div>
+
+            <div class="controls" id="ollama-chat-controls" style="display: none;">
+                <div class="control-item">
+                    <label for="chat-temperature">Temperature: <span id="chat-temp-value">0.7</span></label>
+                    <input type="range" id="chat-temperature" min="0" max="1" step="0.1" value="0.7">
+                </div>
+                <div class="control-item">
+                    <label>
+                        <input type="checkbox" id="chat-streaming" checked>
+                        Enable Streaming
+                    </label>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="chat-input">Your Question</label>
+                <textarea id="chat-input" placeholder="Ask me anything about your data..."></textarea>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn-primary" id="send-chat" style="flex: 1;">Send Message →</button>
+                <button class="btn-secondary" id="clear-chat" style="flex: 1;">Clear Chat</button>
+            </div>
+        </div>
+
+        <div>
+            <h2>Response</h2>
+            <div class="response-box" id="chat-response">
+                <div class="response-empty">Chat responses will appear here...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Summarize Section -->
+    <section id="summarize-section" class="chat-interface" style="margin-top: 4rem;">
+        <div>
+            <h2>📝 Summarize Text</h2>
+            <div class="input-group">
+                <label for="summary-model">AI Model</label>
+                <select id="summary-model">
+                    <option value="gemini">🌟 Google Gemini</option>
+                    <option value="ollama">⚡ Ollama Local</option>
+                </select>
+            </div>
+
+            <div class="controls" id="ollama-summary-controls" style="display: none;">
+                <div class="control-item">
+                    <label for="summary-length">Max Length (words):</label>
+                    <input type="number" id="summary-length" value="150" min="50" max="500">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="summary-input">Text to Summarize</label>
+                <textarea id="summary-input" placeholder="Paste your text here... We'll extract the key points."></textarea>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn-primary" id="summarize-btn" style="flex: 1;">Summarize →</button>
+                <button class="btn-secondary" id="clear-summary" style="flex: 1;">Clear</button>
+            </div>
+        </div>
+
+        <div>
+            <h2>Summary</h2>
+            <div class="response-box" id="summary-response">
+                <div class="response-empty">Summary will appear here...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analysis Section -->
+    <section id="analyze-section" class="chat-interface" style="margin-top: 4rem;">
+        <div>
+            <h2>📊 Data Analysis</h2>
+            <div class="input-group">
+                <label for="analyze-model">AI Model</label>
+                <select id="analyze-model">
+                    <option value="gemini">🌟 Google Gemini</option>
+                    <option value="ollama">⚡ Ollama Local</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="analyze-input">Your Data or Description</label>
+                <textarea id="analyze-input" placeholder="Paste your data or describe what you want to analyze..."></textarea>
+            </div>
+
+            <div class="input-group">
+                <label for="analyze-question">What would you like to know?</label>
+                <textarea id="analyze-question" placeholder="e.g., What are the trends? What patterns do you see?" style="min-height: 100px;"></textarea>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn-primary" id="analyze-btn" style="flex: 1;">Analyze →</button>
+                <button class="btn-secondary" id="clear-analysis" style="flex: 1;">Clear</button>
+            </div>
+        </div>
+
+        <div>
+            <h2>Analysis Results</h2>
+            <div class="response-box" id="analyze-response">
+                <div class="response-empty">Analysis results will appear here...</div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Model Tab Switching
+    document.querySelectorAll('.model-tab').forEach(tab => {
+        tab.addEventListener('click', (e) => {
+            document.querySelectorAll('.model-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tabs-content').forEach(c => c.classList.remove('active'));
+
+            e.target.classList.add('active');
+            const content = document.querySelector(`[data-content="${e.target.dataset.model}"]`);
+            if (content) content.classList.add('active');
+
+            // Check Ollama health if Ollama tab is selected
+            if (e.target.dataset.model === 'ollama') {
+                checkOllamaHealth();
+            }
+        });
+    });
+
+    // Check Ollama Health
+    async function checkOllamaHealth() {
+        const statusEl = document.getElementById('ollama-status');
+        try {
+            const res = await fetch('/api/ai/ollama/health');
+            const data = await res.json();
+
+            if (data.healthy) {
+                statusEl.className = 'status-indicator healthy';
+                statusEl.innerHTML = '✓ Ollama is healthy and ready';
+            } else {
+                statusEl.className = 'status-indicator error';
+                statusEl.innerHTML = '✗ Ollama is offline';
+            }
+        } catch (err) {
+            statusEl.className = 'status-indicator error';
+            statusEl.innerHTML = '✗ Cannot connect to Ollama';
+        }
+    }
+
+    // Model Selector Change Handlers
+    document.getElementById('chat-model').addEventListener('change', (e) => {
+        document.getElementById('ollama-chat-controls').style.display =
+            e.target.value === 'ollama' ? 'flex' : 'none';
+    });
+
+    document.getElementById('summary-model').addEventListener('change', (e) => {
+        document.getElementById('ollama-summary-controls').style.display =
+            e.target.value === 'ollama' ? 'flex' : 'none';
+    });
+
+    // Temperature Display
+    document.getElementById('chat-temperature').addEventListener('input', (e) => {
+        document.getElementById('chat-temp-value').textContent = parseFloat(e.target.value).toFixed(1);
+    });
+
+    // Scroll to Section
+    function scrollToSection(sectionId) {
+        document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Chat Handler
+    document.getElementById('send-chat').addEventListener('click', async () => {
+        const model = document.getElementById('chat-model').value;
+        const input = document.getElementById('chat-input').value.trim();
+        const responseEl = document.getElementById('chat-response');
+
+        if (!input) return;
+
+        responseEl.className = 'response-box loading';
+        responseEl.innerHTML = '<span class="spinner"></span>';
+
+        try {
+            if (model === 'ollama') {
+                const temp = parseFloat(document.getElementById('chat-temperature').value);
+                const stream = document.getElementById('chat-streaming').checked;
+
+                const res = await fetch('/api/ai/ollama/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        prompt: input,
+                        temperature: temp,
+                        stream: stream
+                    }),
+                    credentials: 'include'
+                });
+
+                if (stream) {
+                    responseEl.className = 'response-box streaming';
+                    responseEl.innerHTML = '';
+                    const reader = res.body.getReader();
+                    const decoder = new TextDecoder();
+                    let fullText = '';
+
+                    while (true) {
+                        const {done, value} = await reader.read();
+                        if (done) break;
+
+                        const text = decoder.decode(value);
+                        const lines = text.split('\n');
+
+                        for (const line of lines) {
+                            if (line.trim()) {
+                                try {
+                                    const data = JSON.parse(line);
+                                    if (data.token) {
+                                        fullText += data.token;
+                                        responseEl.textContent = fullText;
+                                        responseEl.scrollTop = responseEl.scrollHeight;
+                                    }
+                                } catch (e) { }
+                            }
+                        }
+                    }
+                    responseEl.className = 'response-box';
+                } else {
+                    const data = await res.json();
+                    responseEl.className = 'response-box';
+                    responseEl.textContent = data.response || 'No response';
+                }
+            } else {
+                const res = await fetch('/api/ai/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: input, context: '' }),
+                    credentials: 'include'
+                });
+                const data = await res.json();
+                responseEl.className = 'response-box';
+                responseEl.textContent = data.response || 'No response';
+            }
+        } catch (err) {
+            responseEl.className = 'response-box';
+            responseEl.textContent = `Error: ${err.message}`;
+        }
+    });
+
+    // Summarize Handler
+    document.getElementById('summarize-btn').addEventListener('click', async () => {
+        const model = document.getElementById('summary-model').value;
+        const text = document.getElementById('summary-input').value.trim();
+        const responseEl = document.getElementById('summary-response');
+
+        if (!text) return;
+
+        responseEl.className = 'response-box loading';
+        responseEl.innerHTML = '<span class="spinner"></span>';
+
+        try {
+            if (model === 'ollama') {
+                const maxLen = parseInt(document.getElementById('summary-length').value);
+
+                const res = await fetch('/api/ai/ollama/summarize', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        text: text,
+                        max_length: maxLen
+                    }),
+                    credentials: 'include'
+                });
+
+                const data = await res.json();
+                responseEl.className = 'response-box';
+                responseEl.textContent = data.summary || 'No summary generated';
+            } else {
+                // For Gemini, we can use the chat endpoint with a summary prompt
+                const res = await fetch('/api/ai/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: `Summarize this text in 150 words: ${text}`,
+                        context: ''
+                    }),
+                    credentials: 'include'
+                });
+                const data = await res.json();
+                responseEl.className = 'response-box';
+                responseEl.textContent = data.response || 'No summary generated';
+            }
+        } catch (err) {
+            responseEl.className = 'response-box';
+            responseEl.textContent = `Error: ${err.message}`;
+        }
+    });
+
+    // Analysis Handler
+    document.getElementById('analyze-btn').addEventListener('click', async () => {
+        const model = document.getElementById('analyze-model').value;
+        const data = document.getElementById('analyze-input').value.trim();
+        const question = document.getElementById('analyze-question').value.trim();
+        const responseEl = document.getElementById('analyze-response');
+
+        if (!data || !question) return;
+
+        responseEl.className = 'response-box loading';
+        responseEl.innerHTML = '<span class="spinner"></span>';
+
+        try {
+            if (model === 'ollama') {
+                const res = await fetch('/api/ai/ollama/answer', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        prompt: question,
+                        context: data
+                    }),
+                    credentials: 'include'
+                });
+
+                const result = await res.json();
+                responseEl.className = 'response-box';
+                responseEl.textContent = result.response || 'No analysis generated';
+            } else {
+                const res = await fetch('/api/ai/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: question,
+                        context: data
+                    }),
+                    credentials: 'include'
+                });
+                const result = await res.json();
+                responseEl.className = 'response-box';
+                responseEl.textContent = result.response || 'No analysis generated';
+            }
+        } catch (err) {
+            responseEl.className = 'response-box';
+            responseEl.textContent = `Error: ${err.message}`;
+        }
+    });
+
+    // Clear Buttons
+    document.getElementById('clear-chat').addEventListener('click', () => {
+        document.getElementById('chat-input').value = '';
+        document.getElementById('chat-response').innerHTML = '<div class="response-empty">Chat responses will appear here...</div>';
+    });
+
+    document.getElementById('clear-summary').addEventListener('click', () => {
+        document.getElementById('summary-input').value = '';
+        document.getElementById('summary-response').innerHTML = '<div class="response-empty">Summary will appear here...</div>';
+    });
+
+    document.getElementById('clear-analysis').addEventListener('click', () => {
+        document.getElementById('analyze-input').value = '';
+        document.getElementById('analyze-question').value = '';
+        document.getElementById('analyze-response').innerHTML = '<div class="response-empty">Analysis results will appear here...</div>';
+    });
+
+    // Check Ollama health on page load
+    checkOllamaHealth();
+</script>
+{% endblock %}

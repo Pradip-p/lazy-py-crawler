@@ -70,7 +70,7 @@ docker stop <container-name>
 #### Then deploy
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 ---
@@ -79,7 +79,7 @@ docker-compose up -d
 
 If you want to keep the existing service on port 80, you can run Lazy Py Crawler on different ports.
 
-Edit `docker-compose.yml`:
+Edit `docker compose.yml`:
 
 ```yaml
 services:
@@ -107,7 +107,7 @@ If you already have Nginx running on port 80, you can configure it to proxy to y
 
 #### 1. Keep your existing Nginx running
 
-#### 2. Modify `docker-compose.yml` to not expose ports 80/443
+#### 2. Modify `docker compose.yml` to not expose ports 80/443
 
 ```yaml
 services:
@@ -166,7 +166,7 @@ sudo systemctl stop apache2 nginx 2>/dev/null || true
 sudo systemctl disable apache2 nginx 2>/dev/null || true
 
 # Deploy
-docker-compose up -d
+docker compose up -d
 
 # Check status
 docker ps

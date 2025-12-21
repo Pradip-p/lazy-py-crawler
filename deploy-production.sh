@@ -15,12 +15,12 @@ DOMAIN="pradipthapa.info.np"
 SERVER_IP="170.64.181.240"
 
 # Detect docker compose command
-if command -v docker-compose &> /dev/null; then
-    DOCKER_COMPOSE="docker-compose"
+if command -v docker compose &> /dev/null; then
+    DOCKER_COMPOSE="docker compose"
 elif docker compose version &> /dev/null 2>&1; then
     DOCKER_COMPOSE="docker compose"
 else
-    echo "Error: Neither 'docker-compose' nor 'docker compose' is available"
+    echo "Error: Neither 'docker compose' nor 'docker compose' is available"
     exit 1
 fi
 

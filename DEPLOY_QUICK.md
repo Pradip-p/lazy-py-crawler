@@ -21,7 +21,7 @@ ssh root@170.64.181.240
 cd /root/lazy-py-crawler
 
 # Stop existing containers
-docker-compose down
+docker compose down
 
 # Deploy (HTTP only)
 ./deploy-production.sh
@@ -40,13 +40,13 @@ sudo ./setup-ssl-production.sh
 
 ```bash
 # View logs
-docker-compose logs -f
+docker compose logs -f
 
 # Restart
-docker-compose restart
+docker compose restart
 
 # Stop
-docker-compose down
+docker compose down
 
 # Check status
 docker ps

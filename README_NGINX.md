@@ -15,7 +15,7 @@ Internet → Nginx (Port 80/443) → FastAPI App (Port 8000) → MongoDB (Port 2
 The default configuration uses HTTP on port 80:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 Your application will be available at:
@@ -61,7 +61,7 @@ envsubst '${DOMAIN_NAME}' < nginx/conf.d/ssl.conf.template > nginx/conf.d/app.co
 5. **Restart containers**:
 
 ```bash
-docker-compose restart nginx
+docker compose restart nginx
 ```
 
 #### Option B: Using Self-Signed Certificates (Testing)
@@ -163,7 +163,7 @@ docker ps -a | grep lazy-py-crawler-app
 docker logs lazy-py-crawler-app
 
 # Restart app container
-docker-compose restart app
+docker compose restart app
 ```
 
 ### SSL Certificate Issues
@@ -188,7 +188,7 @@ If port 80 or 443 is already in use:
 sudo lsof -i :80
 sudo lsof -i :443
 
-# Stop the conflicting service or change Nginx ports in docker-compose.yml
+# Stop the conflicting service or change Nginx ports in docker compose.yml
 ```
 
 ## Maintenance
@@ -204,7 +204,7 @@ sudo cp /etc/letsencrypt/live/your-domain.com/fullchain.pem nginx/ssl/cert.pem
 sudo cp /etc/letsencrypt/live/your-domain.com/privkey.pem nginx/ssl/key.pem
 
 # Reload Nginx
-docker-compose restart nginx
+docker compose restart nginx
 ```
 
 ### Updating Configuration
@@ -219,7 +219,7 @@ docker exec lazy-py-crawler-nginx nginx -t
 docker exec lazy-py-crawler-nginx nginx -s reload
 
 # Or restart the container
-docker-compose restart nginx
+docker compose restart nginx
 ```
 
 ## Production Checklist

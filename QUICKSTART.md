@@ -31,43 +31,43 @@ That's it! Your application is now running at `http://your-server-ip/`
 ### Start the application
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 ### Stop the application
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ### View logs
 
 ```bash
 # All services
-docker-compose logs -f
+docker compose logs -f
 
 # Specific service
-docker-compose logs -f nginx
-docker-compose logs -f app
+docker compose logs -f nginx
+docker compose logs -f app
 ```
 
 ### Restart a service
 
 ```bash
-docker-compose restart nginx
-docker-compose restart app
+docker compose restart nginx
+docker compose restart app
 ```
 
 ### Check status
 
 ```bash
-docker-compose ps
+docker compose ps
 ```
 
 ### Rebuild after code changes
 
 ```bash
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 ## Access Points
@@ -84,13 +84,13 @@ docker-compose up -d --build
 
 ```bash
 # Check if app is running
-docker-compose ps
+docker compose ps
 
 # Restart app
-docker-compose restart app
+docker compose restart app
 
 # Check logs
-docker-compose logs app
+docker compose logs app
 ```
 
 ### Port Already in Use
@@ -99,7 +99,7 @@ docker-compose logs app
 # Find what's using port 80
 sudo lsof -i :80
 
-# Stop the service or change ports in docker-compose.yml
+# Stop the service or change ports in docker compose.yml
 ```
 
 ### SSL Certificate Issues
@@ -112,14 +112,14 @@ ls -la nginx/ssl/
 docker exec lazy-py-crawler-nginx nginx -t
 
 # Reload Nginx
-docker-compose restart nginx
+docker compose restart nginx
 ```
 
 ## File Structure
 
 ```
 lazy-py-crawler/
-├── docker-compose.yml          # Main orchestration file
+├── docker compose.yml          # Main orchestration file
 ├── Dockerfile                  # App container definition
 ├── deploy.sh                   # Automated deployment script
 ├── setup-ssl.sh               # SSL setup script

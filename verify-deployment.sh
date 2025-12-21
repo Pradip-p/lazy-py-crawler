@@ -44,7 +44,7 @@ if docker ps | grep -q "lazy-py-crawler"; then
     docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" | grep lazy-py-crawler
     print_message "Containers are running"
 else
-    print_error "No containers running! Run: docker-compose up -d"
+    print_error "No containers running! Run: docker compose up -d"
     exit 1
 fi
 echo ""
@@ -72,7 +72,7 @@ if curl -s -o /dev/null -w "%{http_code}" http://localhost/health | grep -q "200
     print_message "Local HTTP working (http://localhost/health)"
 else
     print_warning "Local HTTP not responding"
-    echo "  Check app container: docker-compose logs app"
+    echo "  Check app container: docker compose logs app"
 fi
 echo ""
 
@@ -186,7 +186,7 @@ fi
 
 if [ "$NEEDS_FIX" = true ]; then
     echo "❌ Containers not running properly"
-    echo "   Fix: docker-compose down && docker-compose up -d"
+    echo "   Fix: docker compose down && docker compose up -d"
     echo ""
 elif [ "$NEEDS_DNS" = true ]; then
     echo "⚠️  DNS Configuration Needed"
@@ -216,6 +216,6 @@ else
     fi
 fi
 
-echo "View logs: docker-compose logs -f"
-echo "Restart: docker-compose restart"
+echo "View logs: docker compose logs -f"
+echo "Restart: docker compose restart"
 echo ""

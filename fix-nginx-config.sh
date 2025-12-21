@@ -66,12 +66,12 @@ ls -la nginx/conf.d/*.conf 2>/dev/null || echo "  (none with .conf extension)"
 echo ""
 
 print_message "Restarting Nginx container..."
-docker-compose restart nginx
+docker compose restart nginx
 
 sleep 3
 
 print_message "Checking Nginx status..."
-docker-compose ps nginx
+docker compose ps nginx
 
 echo ""
 print_message "Testing configuration..."
@@ -79,7 +79,7 @@ if docker exec lazy-py-crawler-nginx nginx -t 2>&1; then
     print_message "✅ Nginx configuration is valid!"
 else
     print_warning "⚠️  Nginx configuration has errors. Check logs:"
-    echo "  docker-compose logs nginx"
+    echo "  docker compose logs nginx"
 fi
 
 echo ""

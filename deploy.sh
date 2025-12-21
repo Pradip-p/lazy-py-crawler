@@ -32,7 +32,7 @@ if ! command -v docker &> /dev/null; then
 fi
 
 # Check if Docker Compose is installed
-if ! command -v docker-compose &> /dev/null && ! docker compose version &> /dev/null; then
+if ! command -v docker compose &> /dev/null && ! docker compose version &> /dev/null; then
     print_error "Docker Compose is not installed. Please install Docker Compose first."
     exit 1
 fi
@@ -44,11 +44,11 @@ mkdir -p nginx/certbot
 
 # Stop existing containers
 print_message "Stopping existing containers..."
-docker-compose down || true
+docker compose down || true
 
 # Build and start containers
 print_message "Building and starting containers..."
-docker-compose up -d --build
+docker compose up -d --build
 
 # Wait for services to be healthy
 print_message "Waiting for services to start..."
@@ -56,7 +56,7 @@ sleep 10
 
 # Check container status
 print_message "Checking container status..."
-docker-compose ps
+docker compose ps
 
 # Test health endpoint
 print_message "Testing health endpoint..."
@@ -80,10 +80,10 @@ echo "  - ReDoc: http://localhost/redoc"
 echo "  - Health Check: http://localhost/health"
 echo ""
 print_message "View logs with:"
-echo "  docker-compose logs -f"
+echo "  docker compose logs -f"
 echo ""
 print_message "Stop the application with:"
-echo "  docker-compose down"
+echo "  docker compose down"
 echo ""
 
 # Check if SSL setup is needed
@@ -96,7 +96,7 @@ if [ ! -f "nginx/ssl/cert.pem" ] || [ ! -f "nginx/ssl/key.pem" ]; then
     echo "  1. Get SSL certificates (Let's Encrypt recommended)"
     echo "  2. Copy them to nginx/ssl/ directory"
     echo "  3. Update nginx/conf.d/app.conf with SSL configuration"
-    echo "  4. Restart Nginx: docker-compose restart nginx"
+    echo "  4. Restart Nginx: docker compose restart nginx"
     echo ""
     print_warning "See README_NGINX.md for detailed instructions."
     echo ""

@@ -49,7 +49,7 @@ fi
 # Stop Nginx to free port 80
 print_message "Stopping Nginx temporarily..."
 cd /root || cd /home/*/2025/upwork/lazy-py-crawler || cd $(dirname "$0")
-docker-compose stop nginx
+docker compose stop nginx
 
 # Get SSL certificate
 print_message "Obtaining SSL certificate from Let's Encrypt..."
@@ -80,7 +80,7 @@ print_message "✓ SSL configuration enabled"
 
 # Restart containers
 print_message "Restarting containers..."
-docker-compose up -d
+docker compose up -d
 
 # Wait for services
 sleep 10
@@ -91,7 +91,7 @@ if curl -k -f https://localhost/health > /dev/null 2>&1; then
     print_message "✅ SSL setup completed successfully!"
 else
     print_warning "⚠️  HTTPS health check failed. Checking logs..."
-    docker-compose logs --tail=20 nginx
+    docker compose logs --tail=20 nginx
 fi
 
 echo ""
@@ -104,7 +104,7 @@ echo "  - https://$DOMAIN/"
 echo ""
 print_message "Certificate Auto-Renewal:"
 echo "Add this to crontab for auto-renewal:"
-echo "  0 0 1 * * certbot renew --quiet && cp /etc/letsencrypt/live/$DOMAIN/*.pem $(pwd)/nginx/ssl/ && docker-compose restart nginx"
+echo "  0 0 1 * * certbot renew --quiet && cp /etc/letsencrypt/live/$DOMAIN/*.pem $(pwd)/nginx/ssl/ && docker compose restart nginx"
 echo ""
 print_message "Test auto-renewal with:"
 echo "  certbot renew --dry-run"

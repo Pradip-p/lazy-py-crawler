@@ -40,7 +40,7 @@ fi
 
 # Stop Nginx to free port 80
 print_message "Stopping Nginx temporarily..."
-docker-compose stop nginx
+docker compose stop nginx
 
 # Get SSL certificates
 print_message "Obtaining SSL certificates from Let's Encrypt..."
@@ -61,7 +61,7 @@ envsubst '${DOMAIN_NAME}' < nginx/conf.d/ssl.conf.template > nginx/conf.d/app.co
 
 # Restart containers
 print_message "Restarting containers..."
-docker-compose up -d
+docker compose up -d
 
 # Wait for services
 sleep 5

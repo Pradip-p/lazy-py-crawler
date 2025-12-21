@@ -79,7 +79,7 @@ mv nginx/conf.d/app.conf nginx/conf.d/app.conf.disabled
 # Keep only ssl-production.conf
 
 # Restart
-docker-compose restart nginx
+docker compose restart nginx
 ```
 
 ---
@@ -98,13 +98,13 @@ docker ps -a
 
 ```bash
 # Stop and remove all
-docker-compose down
+docker compose down
 
 # Rebuild and start
-docker-compose up -d --build
+docker compose up -d --build
 
 # Check logs
-docker-compose logs -f
+docker compose logs -f
 ```
 
 ---
@@ -167,7 +167,7 @@ curl http://pradipthapa.info.np/health
 
 ### Do You Need It?
 
-**No, it's optional** because environment variables are already in `docker-compose.yml`:
+**No, it's optional** because environment variables are already in `docker compose.yml`:
 
 ```yaml
 environment:
@@ -179,7 +179,7 @@ environment:
 
 Use `.env` if you want to:
 
-- Keep sensitive data out of `docker-compose.yml`
+- Keep sensitive data out of `docker compose.yml`
 - Easily change configuration without editing YAML
 - Have different configs for different environments
 
@@ -192,7 +192,7 @@ cd /root/lazy-py-crawler
 cp .env.production .env
 ```
 
-2. **Update docker-compose.yml** to use it:
+2. **Update docker compose.yml** to use it:
 
 ```yaml
 services:
@@ -205,8 +205,8 @@ services:
 3. **Restart**:
 
 ```bash
-docker-compose down
-docker-compose up -d
+docker compose down
+docker compose up -d
 ```
 
 ---
@@ -231,12 +231,12 @@ Run through this checklist:
 
 ```bash
 # All services
-docker-compose logs -f
+docker compose logs -f
 
 # Specific service
-docker-compose logs -f nginx
-docker-compose logs -f app
-docker-compose logs -f mongodb
+docker compose logs -f nginx
+docker compose logs -f app
+docker compose logs -f mongodb
 ```
 
 ### Check Nginx Error Logs
@@ -248,23 +248,23 @@ docker exec lazy-py-crawler-nginx cat /var/log/nginx/error.log
 ### Check App Logs
 
 ```bash
-docker-compose logs --tail=100 app
+docker compose logs --tail=100 app
 ```
 
 ### Full Reset
 
 ```bash
 # Stop everything
-docker-compose down -v
+docker compose down -v
 
 # Remove old images
 docker system prune -a
 
 # Rebuild from scratch
-docker-compose up -d --build
+docker compose up -d --build
 
 # Watch logs
-docker-compose logs -f
+docker compose logs -f
 ```
 
 ---

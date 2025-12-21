@@ -189,7 +189,7 @@ The easiest way to run Lazy Crawler with a database and dashboard is using **Doc
 Run the following command in the root directory:
 
 ```bash
-docker-compose up --build -d
+docker compose up --build -d
 ```
 
 #### 2. Access the Application
@@ -206,7 +206,7 @@ Once the containers are up, visit:
 You can execute your spiders inside the container:
 
 ```bash
-docker-compose exec app scrapy crawl my_spider
+docker compose exec app scrapy crawl my_spider
 ```
 
 ### Production Deployment with SSL

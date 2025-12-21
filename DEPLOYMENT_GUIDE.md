@@ -34,7 +34,7 @@ cd /root  # or wherever your project is
 
 # Stop all running containers
 docker ps -a
-docker-compose down
+docker compose down
 # or
 docker stop $(docker ps -aq)
 ```
@@ -123,7 +123,7 @@ sudo apt-get update
 sudo apt-get install -y certbot
 
 # 2. Stop Nginx
-docker-compose stop nginx
+docker compose stop nginx
 
 # 3. Get certificate
 sudo certbot certonly --standalone -d pradipthapa.info.np
@@ -137,7 +137,7 @@ sudo chmod 644 nginx/ssl/*.pem
 cp nginx/conf.d/ssl-production.conf nginx/conf.d/app.conf
 
 # 6. Restart
-docker-compose restart
+docker compose restart
 ```
 
 ---
@@ -163,32 +163,32 @@ xxxxxxxxxx     mongo:latest             Up (healthy)             0.0.0.0:27017->
 
 ```bash
 # All services
-docker-compose logs -f
+docker compose logs -f
 
 # Specific service
-docker-compose logs -f nginx
-docker-compose logs -f app
-docker-compose logs -f mongodb
+docker compose logs -f nginx
+docker compose logs -f app
+docker compose logs -f mongodb
 
 # Last 50 lines
-docker-compose logs --tail=50 app
+docker compose logs --tail=50 app
 ```
 
 ### Restart Services
 
 ```bash
 # Restart all
-docker-compose restart
+docker compose restart
 
 # Restart specific service
-docker-compose restart nginx
-docker-compose restart app
+docker compose restart nginx
+docker compose restart app
 ```
 
 ### Stop Application
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ### Update Application
@@ -198,7 +198,7 @@ docker-compose down
 git pull
 
 # Rebuild and restart
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 ---
@@ -240,7 +240,7 @@ Let's Encrypt certificates expire every 90 days. Set up auto-renewal:
 sudo crontab -e
 
 # Add this line (runs at 2 AM on the 1st of every month)
-0 2 1 * * certbot renew --quiet && cp /etc/letsencrypt/live/pradipthapa.info.np/*.pem /root/lazy-py-crawler/nginx/ssl/ && cd /root/lazy-py-crawler && docker-compose restart nginx
+0 2 1 * * certbot renew --quiet && cp /etc/letsencrypt/live/pradipthapa.info.np/*.pem /root/lazy-py-crawler/nginx/ssl/ && cd /root/lazy-py-crawler && docker compose restart nginx
 ```
 
 ### Option 2: Systemd Timer
@@ -258,13 +258,13 @@ sudo certbot renew --dry-run
 
 ```bash
 # Check if app is running
-docker-compose ps
+docker compose ps
 
 # Check app logs
-docker-compose logs app
+docker compose logs app
 
 # Restart app
-docker-compose restart app
+docker compose restart app
 ```
 
 ### Issue: SSL Certificate Error
@@ -277,7 +277,7 @@ ls -la nginx/ssl/
 docker exec lazy-py-crawler-nginx nginx -t
 
 # Reload Nginx
-docker-compose restart nginx
+docker compose restart nginx
 ```
 
 ### Issue: Port Already in Use
@@ -364,16 +364,16 @@ docker exec lazy-py-crawler-nginx tail -f /var/log/nginx/access.log
 sudo ./setup-ssl-production.sh
 
 # View logs
-docker-compose logs -f
+docker compose logs -f
 
 # Restart
-docker-compose restart
+docker compose restart
 
 # Stop
-docker-compose down
+docker compose down
 
 # Update & rebuild
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 ---

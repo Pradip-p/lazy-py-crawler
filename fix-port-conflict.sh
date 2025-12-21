@@ -108,7 +108,7 @@ echo "  Run the commands shown above to stop the service using port 80"
 echo ""
 
 echo "Option 2: Use different ports for Lazy Py Crawler"
-echo "  Edit docker-compose.yml and change:"
+echo "  Edit docker compose.yml and change:"
 echo "    ports:"
 echo "      - \"8080:80\"    # Use port 8080 instead of 80"
 echo "      - \"8443:443\"   # Use port 8443 instead of 443"
@@ -142,7 +142,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     
     echo ""
     print_message "Services stopped! You can now run:"
-    echo "  docker-compose up -d"
+    echo "  docker compose up -d"
     echo ""
 else
     print_message "No changes made. Please manually resolve the port conflict."

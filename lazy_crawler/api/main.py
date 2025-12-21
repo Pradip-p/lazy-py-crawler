@@ -7,6 +7,7 @@ from fastapi import FastAPI, HTTPException, Query, Request, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pymongo import MongoClient
 from typing import List, Optional
 from dotenv import load_dotenv
@@ -19,6 +20,20 @@ app = FastAPI(
     title="Lazy Crawler API",
     description="API to access data scraped by Lazy Crawler",
     version="1.0.0",
+)
+
+# Configure CORS to allow credentials
+# Read allowed origins from environment variable (comma-separated list)
+# Example: CORS_ORIGINS=https://pradipthapa.info.np,https://www.pradipthapa.info.np
+cors_origins_str = os.getenv("CORS_ORIGINS", "*")
+cors_origins = [origin.strip() for origin in cors_origins_str.split(",")] if cors_origins_str != "*" else ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=cors_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 

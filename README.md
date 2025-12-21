@@ -149,6 +149,55 @@ GOOGLE_SHEETS_SPREADSHEET_NAME=MyScrapeData
 GOOGLE_SHEETS_WORKSHEET_NAME=Sheet1
 ```
 
+## 🚀 Live Data Dashboard
+
+Lazy Crawler comes with a built-in, premium dashboard to visualize your scraped data in real-time.
+
+**Start the Dashboard**:
+
+```bash
+uv run python -m lazy_crawler.api.main
+```
+
+Then visit:
+
+- **Dashboard UI**: `http://localhost:8000/`
+- **Interactive API Docs**: `http://localhost:8000/docs`
+
+### Features
+
+- 📊 **Real-time Visualization**: See data as it arrives in MongoDB.
+- 🎨 **Modern Design**: Glassmorphism theme with dark mode support.
+- 🔍 **Live Search**: Quickly filter through thousands of records.
+- 📄 **Pagination**: Efficiently browse through large datasets.
+
+## 🐳 Running with Docker
+
+The easiest way to run Lazy Crawler with a database and dashboard is using **Docker Compose**.
+
+### 1. Launch everything
+
+Run the following command in the root directory:
+
+```bash
+docker-compose up --build
+```
+
+### 2. Access the Dashboard
+
+Once the containers are up, visit:
+
+- **Dashboard UI**: `http://localhost:8000/`
+- **MongoDB**: `localhost:27017`
+
+### 3. Run a Crawler in Docker
+
+You can execute your spiders inside the container:
+
+```bash
+docker-compose exec app scrapy crawl my_spider
+```
+
 ## 🛠️ Configuration
 
 Lazy Crawler reads from standard Scrapy settings but provides defaults that work for 90% of cases. You can easily override them in your spider's `custom_settings`.

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Lazy Crawler | Enterprise-Grade Data Extractions{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="container text-center">
+        <h1>Great teamwork starts<br>with great data.</h1>
+        <p>Lazy Crawler brings all your target data into one place. From job listings to real estate, get the
+            competitive edge you deserve.</p>
+        <a href="/dashboard" class="btn-white">Launch Dashboard</a>
+    </div>
+</section>
+
+<section class="section stats-bg">
+    <div class="container stats-grid">
+        <div class="stat-item">
+            <h2>150+</h2>
+            <p>Clients Empowered</p>
+        </div>
+        <div class="stat-item">
+            <h2>2.5B</h2>
+            <p>Data Points Extracted</p>
+        </div>
+        <div class="stat-item">
+            <h2>99.9%</h2>
+            <p>API Uptime</p>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="offers">
+    <div class="container">
+        <h2 class="section-title">What We Offer</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>💼 Job Market Data</h3>
+                <p>Track hiring trends, salary benchmarks, and talent movement across LinkedIn, Indeed, and glassdoor.
+                </p>
+            </div>
+            <div class="card">
+                <h3>🏠 Real Estate Intelligence</h3>
+                <p>Scrape Zillow, Redfin, and Realtor.com for live property listings, price history, and market
+                    analytics.</p>
+            </div>
+            <div class="card">
+                <h3>🛒 E-commerce & Retail</h3>
+                <p>Monitor pricing on Walmart, Amazon, and Target. Keep your competitive edge with real-time stock
+                    alerts.</p>
+            </div>
+            <div class="card">
+                <h3>📰 Media & News</h3>
+                <p>Aggregate news from globally trusted sources. Sentiment analysis ready data for your next AI project.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">One tool for all teams</h2>
+        <div class="grid">
+            <div class="card pricing-card">
+                <h3>Standard</h3>
+                <div class="price">$0<span>/mo</span></div>
+                <p>Perfect for open-source enthusiasts and small projects.</p>
+                <a href="https://github.com/pradip-p/lazy-py-crawler" class="btn-primary"
+                    style="display: block; margin-top: 2rem; text-decoration: none;">View on GitHub</a>
+            </div>
+            <div class="card pricing-card" style="border-top: 5px solid var(--slack-purple);">
+                <h3>Pro Dashboard</h3>
+                <div class="price">$49<span>/mo</span></div>
+                <p>Unlimited collections, live visualization, and premium support.</p>
+                <a href="/contact" class="btn-primary"
+                    style="display: block; margin-top: 2rem; text-decoration: none;">Get Started</a>
+            </div>
+            <div class="card pricing-card">
+                <h3>Enterprise</h3>
+                <div class="price">Custom</div>
+                <p>Dedicated proxies, custom pipelines, and SLA guarantees.</p>
+                <a href="/contact" class="btn-primary"
+                    style="display: block; margin-top: 2rem; text-decoration: none;">Talk to Sales</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

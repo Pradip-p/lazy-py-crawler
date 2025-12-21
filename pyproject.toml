@@ -36,6 +36,8 @@ dependencies = [
     "google-auth-oauthlib",
     "itsdangerous",
     "google-generativeai",
+    "aiosmtplib",
+    "pydantic[email]",
 ]
 
 [project.urls]

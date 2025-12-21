@@ -1,7 +1,7 @@
 from lazy_crawler.api.db import init_db, engine
 from sqlalchemy import text
 from lazy_crawler.api.auth import get_current_user_optional
-from lazy_crawler.api.routers import auth, ai, ds
+from lazy_crawler.api.routers import auth, ai, ds, contact
 from lazy_crawler.api.models import User
 from fastapi import FastAPI, HTTPException, Query, Request, Depends
 from fastapi.staticfiles import StaticFiles
@@ -22,9 +22,6 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# Configure CORS to allow credentials
-# Read allowed origins from environment variable (comma-separated list)
-# Example: CORS_ORIGINS=https://pradipthapa.info.np,https://www.pradipthapa.info.np
 cors_origins_str = os.getenv("CORS_ORIGINS", "*")
 cors_origins = (
     [origin.strip() for origin in cors_origins_str.split(",")]
@@ -51,6 +48,7 @@ async def on_startup():
 app.include_router(auth.router)
 app.include_router(ai.router)
 app.include_router(ds.router)
+app.include_router(contact.router)
 
 # Template Engine
 templates_dir = os.path.join(os.path.dirname(__file__), "templates")

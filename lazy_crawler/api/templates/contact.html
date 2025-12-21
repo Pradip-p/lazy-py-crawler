@@ -51,23 +51,65 @@
 <section class="section">
     <div class="container">
         <div class="contact-form">
-            <form onsubmit="event.preventDefault(); alert('We received your message!'); this.reset();">
+            <form id="contactForm">
                 <div class="form-group">
                     <label>Full Name</label>
-                    <input type="text" class="form-control" placeholder="John Slack" required>
+                    <input type="text" id="fullName" class="form-control" placeholder="John Slack" required>
                 </div>
                 <div class="form-group">
                     <label>Business Email</label>
-                    <input type="email" class="form-control" placeholder="john@company.com" required>
+                    <input type="email" id="email" class="form-control" placeholder="john@company.com" required>
                 </div>
                 <div class="form-group">
                     <label>Message</label>
-                    <textarea class="form-control" style="height: 150px;" placeholder="Tell us about your data needs..."
-                        required></textarea>
+                    <textarea id="message" class="form-control" style="height: 150px;"
+                        placeholder="Tell us about your data needs..." required></textarea>
                 </div>
-                <button type="submit" class="btn-primary" style="width: 100%;">Send Message</button>
+                <button type="submit" id="submitBtn" class="btn-primary" style="width: 100%;">Send Message</button>
             </form>
         </div>
     </div>
 </section>
+
+<script>
+    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = document.getElementById('submitBtn');
+        const originalText = submitBtn.innerText;
+
+        submitBtn.innerText = 'Sending...';
+        submitBtn.disabled = true;
+
+        const data = {
+            full_name: document.getElementById('fullName').value,
+            email: document.getElementById('email').value,
+            message: document.getElementById('message').value
+        };
+
+        try {
+            const response = await fetch('/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.message || 'Thank you! Your message has been sent.');
+                document.getElementById('contactForm').reset();
+            } else {
+                alert('Error: ' + (result.detail || 'Something went wrong. Please try again.'));
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to connect to the server. Please check your internet connection.');
+        } finally {
+            submitBtn.innerText = originalText;
+            submitBtn.disabled = false;
+        }
+    });
+</script>
 {% endblock %}

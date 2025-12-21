@@ -173,30 +173,52 @@ Then visit:
 
 ## 🐳 Running with Docker
 
-The easiest way to run Lazy Crawler with a database and dashboard is using **Docker Compose**.
+The easiest way to run Lazy Crawler with a database and dashboard is using **Docker Compose**. The setup now includes **Nginx** as a reverse proxy for production-ready deployment.
 
-### 1. Launch everything
+### Quick Deployment
+
+```bash
+# Automated deployment with health checks
+./deploy.sh
+```
+
+### Manual Deployment
+
+#### 1. Launch everything
 
 Run the following command in the root directory:
 
 ```bash
-docker-compose up --build
+docker-compose up --build -d
 ```
 
-### 2. Access the Dashboard
+#### 2. Access the Application
 
 Once the containers are up, visit:
 
-- **Dashboard UI**: `http://localhost:8000/`
+- **Dashboard UI**: `http://localhost/` (via Nginx)
+- **API Documentation**: `http://localhost/docs`
+- **Health Check**: `http://localhost/health`
 - **MongoDB**: `localhost:27017`
 
-### 3. Run a Crawler in Docker
+#### 3. Run a Crawler in Docker
 
 You can execute your spiders inside the container:
 
 ```bash
 docker-compose exec app scrapy crawl my_spider
 ```
+
+### Production Deployment with SSL
+
+For production deployment with HTTPS:
+
+```bash
+# Automated SSL setup with Let's Encrypt
+./setup-ssl.sh your-domain.com
+```
+
+See [QUICKSTART.md](QUICKSTART.md) for quick commands and [README_NGINX.md](README_NGINX.md) for detailed Nginx configuration.
 
 ## 🛠️ Configuration
 

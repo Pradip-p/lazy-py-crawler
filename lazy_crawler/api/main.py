@@ -68,6 +68,23 @@ def read_privacy(request: Request):
     )
 
 
+@app.get("/health")
+def health_check():
+    """
+    Health check endpoint for Docker and Nginx monitoring.
+    """
+    try:
+        # Check MongoDB connection
+        client.admin.command("ping")
+        return {
+            "status": "healthy",
+            "database": "connected",
+            "service": "lazy-crawler-api",
+        }
+    except Exception as e:
+        return {"status": "unhealthy", "database": "disconnected", "error": str(e)}
+
+
 @app.get("/collections")
 def list_collections():
     """

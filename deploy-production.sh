@@ -14,6 +14,16 @@ NC='\033[0m'
 DOMAIN="pradipthapa.info.np"
 SERVER_IP="170.64.181.240"
 
+# Detect docker compose command
+if command -v docker-compose &> /dev/null; then
+    DOCKER_COMPOSE="docker-compose"
+elif docker compose version &> /dev/null 2>&1; then
+    DOCKER_COMPOSE="docker compose"
+else
+    echo "Error: Neither 'docker-compose' nor 'docker compose' is available"
+    exit 1
+fi
+
 print_message() {
     echo -e "${GREEN}[INFO]${NC} $1"
 }
@@ -46,7 +56,7 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-if ! command -v docker-compose &> /dev/null && ! docker compose version &> /dev/null; then
+if ! command -v docker compose &> /dev/null && ! docker compose version &> /dev/null; then
     print_error "Docker Compose is not installed. Please install Docker Compose first."
     exit 1
 fi
@@ -55,7 +65,7 @@ print_message "✓ Docker and Docker Compose are installed"
 
 # Step 2: Stop existing containers
 print_step "2/6 Stopping existing containers..."
-docker-compose down || true
+$DOCKER_COMPOSE down || true
 print_message "✓ Existing containers stopped"
 
 # Step 3: Create necessary directories
@@ -89,7 +99,7 @@ fi
 
 # Step 5: Build and start containers
 print_step "5/6 Building and starting containers..."
-docker-compose up -d --build
+$DOCKER_COMPOSE up -d --build
 
 print_message "✓ Containers started"
 
@@ -99,7 +109,7 @@ sleep 15
 
 # Check container status
 print_message "Container status:"
-docker-compose ps
+$DOCKER_COMPOSE ps
 
 # Test health endpoint
 echo ""
@@ -110,7 +120,7 @@ if curl -f http://localhost/health > /dev/null 2>&1; then
     print_message "✅ Health check passed!"
 else
     print_warning "⚠️  Health check failed. Checking logs..."
-    docker-compose logs --tail=20 app
+    $DOCKER_COMPOSE logs --tail=20 app
 fi
 
 # Display results
@@ -133,7 +143,7 @@ if [ "$SSL_SETUP_NEEDED" = true ]; then
     echo "   sudo apt-get update && sudo apt-get install -y certbot"
     echo ""
     echo "2. Stop Nginx temporarily:"
-    echo "   docker-compose stop nginx"
+    echo "   $DOCKER_COMPOSE stop nginx"
     echo ""
     echo "3. Get SSL certificate:"
     echo "   sudo certbot certonly --standalone -d $DOMAIN"
@@ -147,7 +157,7 @@ if [ "$SSL_SETUP_NEEDED" = true ]; then
     echo "   cp nginx/conf.d/ssl-production.conf nginx/conf.d/app.conf"
     echo ""
     echo "6. Restart containers:"
-    echo "   docker-compose restart"
+    echo "   $DOCKER_COMPOSE restart"
     echo ""
 else
     print_message "✅ HTTPS ENABLED"
@@ -166,10 +176,10 @@ echo "  - Collections: /collections"
 echo ""
 
 print_message "Useful commands:"
-echo "  - View logs: docker-compose logs -f"
-echo "  - Restart: docker-compose restart"
-echo "  - Stop: docker-compose down"
-echo "  - Rebuild: docker-compose up -d --build"
+echo "  - View logs: $DOCKER_COMPOSE logs -f"
+echo "  - Restart: $DOCKER_COMPOSE restart"
+echo "  - Stop: $DOCKER_COMPOSE down"
+echo "  - Rebuild: $DOCKER_COMPOSE up -d --build"
 echo ""
 
 print_message "Deployment completed! 🚀"

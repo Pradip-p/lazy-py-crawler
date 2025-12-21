@@ -89,8 +89,8 @@ ITEM_PIPELINES = {
 
 RETRY_TIMES = 3
 
-# MONGO_URI = 'mongodb://localhost:27017'
-# MONGO_DATABASE = 'sivji-sandbox'
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
+MONGO_DATABASE = os.getenv("MONGO_DATABASE", "lazy_crawler")
 
 
 # Configure a delay for requests for the same website (default: 0)

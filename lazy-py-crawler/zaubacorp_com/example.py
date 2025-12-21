@@ -4,7 +4,7 @@ from scrapy.utils.project import get_project_settings
 import logging
 
 class QuotesCrawler(scrapy.Spider):
-    
+
     name = "quotes"
 
     # Configure logging
@@ -16,14 +16,14 @@ class QuotesCrawler(scrapy.Spider):
 
     # Custom settings
     custom_settings = {
-        'DOWNLOAD_DELAY': 2, 
-        'RANDOMIZE_DOWNLOAD_DELAY': False, 
-        'LOG_LEVEL': 'DEBUG', 
+        'DOWNLOAD_DELAY': 2,
+        'RANDOMIZE_DOWNLOAD_DELAY': False,
+        'LOG_LEVEL': 'DEBUG',
         'CONCURRENT_REQUESTS': 1,
         'CONCURRENT_REQUESTS_PER_IP': 1,
         'CONCURRENT_REQUESTS_PER_DOMAIN': 1,
-        'JOBDIR': './crawls', 
-        'RETRY_TIMES': 2, 
+        'JOBDIR': './crawls',
+        'RETRY_TIMES': 2,
         "COOKIES_ENABLED": False,
         'DOWNLOAD_TIMEOUT': 15,
     }
@@ -39,12 +39,12 @@ class QuotesCrawler(scrapy.Spider):
         for quote in quotes:
             text = quote.xpath('span[@class="text"]/text()').get()
             author = quote.xpath('span/small[@class="author"]/text()').get()
-            
+
             yield {
                 'quote': text,
                 'author': author,
             }
-        
+
         # Follow the "Next" button link to scrape subsequent pages
         next_page = response.xpath('//li[@class="next"]/a/@href').get()
         if next_page:

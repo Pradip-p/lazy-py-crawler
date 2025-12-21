@@ -1,7 +1,7 @@
 <div align="center">
-    <h1>🚀 Lazy Py Crawler</h1>
-    <p><strong>The ultimate Swiss Army knife for modern web scraping.</strong></p>
-    <p>Scrape smarter, not harder. Built on Scrapy, enhanced for developers.</p>
+    <h1>🚀 Crawlio Intelligence</h1>
+    <p><strong>Institutional-grade market intelligence powered by AI.</strong></p>
+    <p>Transform the web into a structured source of truth for strategic decision-making.</p>
     <a href="https://github.com/pradip-p/lazy-crawler/releases">
         <img src="https://img.shields.io/github/v/release/pradip-p/lazy-crawler?logo=github" alt="Release Version" />
     </a>
@@ -20,15 +20,15 @@
 
 ---
 
-**Lazy Crawler** is a high-level Python framework designed to eliminate the boilerplate of web scraping. Built on top of the industry-standard **Scrapy**, it adds powerful utilities, pre-configured pipelines, and now **Playwright integration** to handle even the most complex JavaScript-heavy websites with ease.
+**Crawlio Intelligence** is a premium market intelligence platform designed to democratize access to institutional-grade data. Built on a robust foundation of **Scrapy** and **Playwright**, it transforms complex web ecosystems into actionable strategic insights with precision and scale.
 
 ## ✨ Key Features
 
-- **⚡ Instant Setup**: Skip the tedious configuration. Get a production-ready crawler running in minutes.
-- **🎮 Dynamic Content**: Built-in support for **Playwright** to scrape React, Vue, and Angular applications seamlessly.
-- **🛠️ Utility Toolbox**: Ready-to-use helpers for extracting emails, phone numbers, social media handles, and more.
-- **💾 Battery-Included Storage**: Automated pipelines for exporting data directly to **CSV, JSON, Excel, and Google Sheets**.
-- **🕵️ Anti-Detection**: Pre-integrated user-agent rotation and proxy handling out of the box.
+- **⚡ Strategic Automation**: Deploy production-ready intelligence pipelines in minutes, not days.
+- **🧠 AI-Powered Synthesis**: Directly extract actionable insights without the overhead of manual data mapping.
+- **🎮 Dynamic Intelligence**: seamless handling of JavaScript-heavy environments (React, Vue, Angular) via advanced Playwright integration.
+- **💾 Unified Data Ecosystem**: Automated delivery to **MongoDB, PostgreSQL, CSV, JSON, and Google Sheets**.
+- **�️ Enterprise Reliability**: Built-in anti-detection, proxy rotation, and robust infrastructure scaling.
 
 ## 🚀 Quick Start
 
@@ -52,17 +52,17 @@ uv pip install -e .
 > [!NOTE]
 > Don't forget to run `playwright install` after installation to set up the browser drivers.
 
-### 2. Basic Scraper (Static Sites)
+### 2. Basic Intelligence Node (Static Sites)
 
-Create a file named `my_crawler.py`:
+Create a file named `my_agent.py`:
 
 ```python
 import scrapy
 from lazy_crawler.crawler.spiders.base_crawler import LazyBaseCrawler
 from scrapy.crawler import CrawlerProcess
 
-class MyCrawler(LazyBaseCrawler):
-    name = "my_crawler"
+class MyAgent(LazyBaseCrawler):
+    name = "my_agent"
 
     def start_requests(self):
         yield scrapy.Request("https://example.com", self.parse)
@@ -74,16 +74,16 @@ class MyCrawler(LazyBaseCrawler):
         }
 
 process = CrawlerProcess()
-process.crawl(MyCrawler)
+process.crawl(MyAgent)
 process.start()
 ```
 
-### 3. Dynamic Scraper (JavaScript-heavy Sites)
+### 3. Dynamic Intelligence Node (JavaScript-heavy Sites)
 
-With Playwright integration, scraping dynamic sites is trivial:
+With Playwright integration, handling dynamic environments is trivial:
 
 ```python
-class DynamicCrawler(LazyBaseCrawler):
+class DynamicAgent(LazyBaseCrawler):
     name = "dynamic"
 
     def start_requests(self):
@@ -101,7 +101,7 @@ class DynamicCrawler(LazyBaseCrawler):
 
 ## 📚 Advanced Usage
 
-Lazy Crawler includes specialized libraries for advanced tasks:
+Crawlio Intelligence includes specialized modules for high-fidelity data extraction:
 
 ```python
 from lazy_crawler.lib.extractors import find_emails, find_phone_numbers
@@ -113,23 +113,23 @@ def parse(self, response):
     yield {"emails": emails, "phones": phones}
 ```
 
-## 💾 Data Storage
+## 💾 Data Management
 
-Lazy Crawler supports multiple storage backends.
+Crawlio Intelligence supports institutional-grade storage backends.
 
-### 1. 🍃 MongoDB Storage
+### 1. 🍃 MongoDB Integration
 
-Directly store your scraped data into a MongoDB collection named after your spider.
+Directly store your intelligence datasets into MongoDB for high-performance retrieval.
 
 **Configuration in `.env`**:
 
 ```env
 MONGO_URI=mongodb://localhost:27017
-MONGO_DATABASE=my_scraping_db
+MONGO_DATABASE=crawlio_intelligence_db
 ```
 
 **Usage**:
-Enable the pipeline in your `settings.py` or spider's `custom_settings`:
+Enable the pipeline in your settings:
 
 ```python
 ITEM_PIPELINES = {
@@ -137,21 +137,21 @@ ITEM_PIPELINES = {
 }
 ```
 
-### 2. 📊 Google Sheets
+### 2. 📊 Google Sheets Delivery
 
-Stream data directly to a Google Sheet.
+Stream market data directly to shared Google Sheets for collaborative strategy.
 
 **Configuration in `.env`**:
 
 ```env
 GOOGLE_SHEETS_CREDS_FILE=creds.json
-GOOGLE_SHEETS_SPREADSHEET_NAME=MyScrapeData
-GOOGLE_SHEETS_WORKSHEET_NAME=Sheet1
+GOOGLE_SHEETS_SPREADSHEET_NAME=MarketIntelligenceData
+GOOGLE_SHEETS_WORKSHEET_NAME=LatestInsights
 ```
 
-## 🚀 Live Data Dashboard
+## 🚀 Live Intelligence Dashboard
 
-Lazy Crawler comes with a built-in, premium dashboard to visualize your scraped data in real-time.
+Crawlio Intelligence comes with a premium, decision-centric dashboard to visualize your data streams in real-time.
 
 **Start the Dashboard**:
 
@@ -162,18 +162,18 @@ uv run python -m lazy_crawler.api.main
 Then visit:
 
 - **Dashboard UI**: `http://localhost:8000/`
-- **Interactive API Docs**: `http://localhost:8000/docs`
+- **Market Intelligence API Docs**: `http://localhost:8000/docs`
 
 ### Features
 
-- 📊 **Real-time Visualization**: See data as it arrives in MongoDB.
-- 🎨 **Modern Design**: Glassmorphism theme with dark mode support.
-- 🔍 **Live Search**: Quickly filter through thousands of records.
-- 📄 **Pagination**: Efficiently browse through large datasets.
+- 📊 **Real-time Visualization**: Monitor data ingress as it happens.
+- 🎨 **Premium Aesthetics**: modern Slack-like design with high-fidelity UI components.
+- 🔍 **Global Intelligence Search**: Quickly filter through millions of records with ease.
+- 📄 **Advanced Data Exploration**: Efficiently navigate large datasets via intuitive pagination.
 
-## 🐳 Running with Docker
+## 🐳 Enterprise Deployment (Docker)
 
-The easiest way to run Lazy Crawler with a database and dashboard is using **Docker Compose**. The setup now includes **Nginx** as a reverse proxy for production-ready deployment.
+Deploy Crawlio Intelligence at scale using our production-grade Docker orchestration, including Nginx for secure, high-performance delivery.
 
 ### Quick Deployment
 
@@ -182,55 +182,48 @@ The easiest way to run Lazy Crawler with a database and dashboard is using **Doc
 ./deploy.sh
 ```
 
-### Manual Deployment
+### Manual Orchestration
 
-#### 1. Launch everything
-
-Run the following command in the root directory:
+#### 1. Initialize Stack
 
 ```bash
 docker compose up --build -d
 ```
 
-#### 2. Access the Application
-
-Once the containers are up, visit:
+#### 2. Access the Platform
 
 - **Dashboard UI**: `http://localhost/` (via Nginx)
 - **API Documentation**: `http://localhost/docs`
-- **Health Check**: `http://localhost/health`
-- **MongoDB**: `localhost:27017`
+- **Health Monitoring**: `http://localhost/health`
 
-#### 3. Run a Crawler in Docker
+#### 3. Execute Intelligence Agents
 
-You can execute your spiders inside the container:
+Run your agents directly within the containerized environment:
 
 ```bash
-docker compose exec app scrapy crawl my_spider
+docker compose exec app scrapy crawl my_agent
 ```
 
-### Production Deployment with SSL
-
-For production deployment with HTTPS:
+### Production Security (SSL)
 
 ```bash
 # Automated SSL setup with Let's Encrypt
 ./setup-ssl.sh your-domain.com
 ```
 
-See [QUICKSTART.md](QUICKSTART.md) for quick commands and [README_NGINX.md](README_NGINX.md) for detailed Nginx configuration.
+See [QUICKSTART.md](QUICKSTART.md) for quick commands and [README_NGINX.md](README_NGINX.md) for detailed configuration.
 
-## 🛠️ Configuration
+## 🛠️ Customization
 
-Lazy Crawler reads from standard Scrapy settings but provides defaults that work for 90% of cases. You can easily override them in your spider's `custom_settings`.
+Crawlio Intelligence is highly extensible, allowing you to override core logic to suit specific strategic needs while maintaining high-performance defaults.
 
-## 🤝 Contributing
+## 🤝 Collaboration
 
-We welcome contributions! Please check out our [Contributing Guide](CONTRIBUTING.md) to get started.
+We welcome contributions to the advancement of market intelligence! Please check our [Contributing Guide](CONTRIBUTING.md).
 
 ## 📜 License
 
-Lazy Crawler is licensed under the [MIT License](LICENSE).
+Crawlio Intelligence is licensed under the [MIT License](LICENSE).
 
 ---
 

@@ -9,7 +9,9 @@ async function fetchAllCollections() {
         const dataCol = await resCol.json();
 
         // Fetch user uploads
-        const resUp = await fetch('/datasets/list');
+        const resUp = await fetch('/datasets/list', {
+            credentials: 'include'
+        });
         const dataUp = await resUp.json();
 
         const uploadsList = document.getElementById('uploads-list');
@@ -193,7 +195,8 @@ fileInput.onchange = async () => {
     try {
         const res = await fetch('/datasets/upload', {
             method: 'POST',
-            body: formData
+            body: formData,
+            credentials: 'include'  // Include cookies for authentication
         });
         const data = await res.json();
 
@@ -208,11 +211,17 @@ fileInput.onchange = async () => {
                 selectCollection(data.collection_name, data.filename || data.collection_name);
             }
         } else {
+            // Check for authentication error
+            if (res.status === 401) {
+                alert('Your session has expired. Please log in again.');
+                window.location.href = '/login';
+                return;
+            }
             alert(`Error: ${data.detail || "Upload failed"}`);
         }
     } catch (err) {
         console.error("Upload error:", err);
-        alert("An unexpected error has occurred.");
+        alert("An unexpected error has occurred. Please check your connection and try again.");
     } finally {
         loader.style.display = 'none';
         document.getElementById('data-table-container').style.opacity = '1';
@@ -281,7 +290,8 @@ chatForm.onsubmit = async (e) => {
         const res = await fetch('/api/ai/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: msg, context: context })
+            body: JSON.stringify({ message: msg, context: context }),
+            credentials: 'include'
         });
         const data = await res.json();
         addMessage(data.response || "Sorry, I couldn't process that.");
@@ -330,7 +340,8 @@ visualizeBtn.onclick = async () => {
         const res = await fetch('/api/ai/chart', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ description: description, data_summary: dataSummary })
+            body: JSON.stringify({ description: description, data_summary: dataSummary }),
+            credentials: 'include'
         });
         const config = await res.json();
 

@@ -3,25 +3,19 @@ from fastapi.responses import RedirectResponse, JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select
-from lazy_crawler.api.db import get_session
-from lazy_crawler.api.models import User
+from lazy_crawler.api.database import get_session, User
 from lazy_crawler.api.auth import (
     get_password_hash,
     verify_password,
     create_access_token,
     get_current_user,
 )
-from datetime import timedelta
-import os
+from lazy_crawler.api import config
 import httpx
 from pydantic import BaseModel
+from datetime import timedelta
 
 router = APIRouter(prefix="/auth", tags=["authentication"])
-
-GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
-GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
-# For local dev, we might need https or handle callback properly
-GOOGLE_REDIRECT_URI = "http://localhost:8000/auth/google/callback"
 
 
 class UserCreate(BaseModel):
@@ -93,19 +87,39 @@ async def login_for_access_token(
 
 @router.get("/google")
 async def login_google():
-    return {
-        "url": f"https://accounts.google.com/o/oauth2/auth?response_type=code&client_id={GOOGLE_CLIENT_ID}&redirect_uri={GOOGLE_REDIRECT_URI}&scope=openid%20profile%20email&access_type=offline"
-    }
+    """Redirect to Google OAuth consent screen"""
+    if not config.GOOGLE_CLIENT_ID:
+        raise HTTPException(
+            status_code=500,
+            detail="Google OAuth is not configured. Please set GOOGLE_CLIENT_ID in environment variables.",
+        )
+
+    google_auth_url = (
+        f"https://accounts.google.com/o/oauth2/v2/auth"
+        f"?response_type=code"
+        f"&client_id={config.GOOGLE_CLIENT_ID}"
+        f"&redirect_uri={config.GOOGLE_REDIRECT_URI}"
+        f"&scope=openid%20profile%20email"
+        f"&access_type=offline"
+    )
+    return RedirectResponse(url=google_auth_url)
 
 
 @router.get("/google/callback")
 async def google_callback(code: str, session: AsyncSession = Depends(get_session)):
-    token_url = "https://accounts.google.com/o/oauth2/token"
+    """Handle Google OAuth callback and create/update user"""
+    if not config.GOOGLE_CLIENT_ID or not config.GOOGLE_CLIENT_SECRET:
+        raise HTTPException(
+            status_code=500,
+            detail="Google OAuth is not configured. Please set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET.",
+        )
+
+    token_url = "https://oauth2.googleapis.com/token"
     data = {
         "code": code,
-        "client_id": GOOGLE_CLIENT_ID,
-        "client_secret": GOOGLE_CLIENT_SECRET,
-        "redirect_uri": GOOGLE_REDIRECT_URI,
+        "client_id": config.GOOGLE_CLIENT_ID,
+        "client_secret": config.GOOGLE_CLIENT_SECRET,
+        "redirect_uri": config.GOOGLE_REDIRECT_URI,
         "grant_type": "authorization_code",
     }
 
@@ -121,14 +135,18 @@ async def google_callback(code: str, session: AsyncSession = Depends(get_session
 
         google_token = access_token_data["access_token"]
 
-        # Get user info
+        # Get user info from Google
         user_info_response = await client.get(
             "https://www.googleapis.com/oauth2/v2/userinfo",
             headers={"Authorization": f"Bearer {google_token}"},
         )
         user_info = user_info_response.json()
 
-    email = user_info["email"]
+    email = user_info.get("email")
+    if not email:
+        raise HTTPException(
+            status_code=400, detail="Could not get email from Google profile"
+        )
 
     # Check if user exists
     statement = select(User).where(User.email == email)
@@ -136,7 +154,7 @@ async def google_callback(code: str, session: AsyncSession = Depends(get_session
     user = result.first()
 
     if not user:
-        # Create user
+        # Create new user
         user = User(
             email=email,
             full_name=user_info.get("name"),
@@ -148,17 +166,20 @@ async def google_callback(code: str, session: AsyncSession = Depends(get_session
         await session.commit()
         await session.refresh(user)
 
-    # Create Local JWT
-    access_token_expires = timedelta(minutes=30)
+    # Create Local JWT token
+    access_token_expires = timedelta(minutes=config.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
 
-    # In a real app, you'd redirect to frontend with token in query params or cookie
-    # For now, we return a script to set cookie and redirect
+    # Redirect to dashboard with token in cookie
     response = RedirectResponse(url="/dashboard")
     response.set_cookie(
-        key="access_token", value=f"Bearer {access_token}", httponly=True
+        key="access_token",
+        value=f"Bearer {access_token}",
+        httponly=True,
+        secure=False,  # Set to True in production with HTTPS
+        samesite="lax",
     )
     return response
 

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
-from lazy_crawler.api.db import get_session
-from lazy_crawler.api.models import User, DatasetMetadata
+from lazy_crawler.api.database import get_session, User, DatasetMetadata
+from lazy_crawler.api import config
 from lazy_crawler.api.auth import get_current_user
 from sqlmodel.ext.asyncio.session import AsyncSession
 from pymongo import MongoClient
@@ -14,11 +14,9 @@ from typing import List
 
 router = APIRouter(prefix="/datasets", tags=["datasets"])
 
-# MongoDB Connection (reuse from main or create new client)
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-MONGO_DATABASE = os.getenv("MONGO_DATABASE", "lazy_crawler")
-client = MongoClient(MONGO_URI)
-db = client[MONGO_DATABASE]
+# MongoDB Connection
+client = MongoClient(config.MONGO_URI)
+db = client[config.MONGO_DATABASE]
 
 
 @router.get("/list", response_model=List[DatasetMetadata])

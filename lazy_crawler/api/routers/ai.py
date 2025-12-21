@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Body
-from lazy_crawler.api.models import User
+from lazy_crawler.api.database import User
 from lazy_crawler.api.auth import get_current_user
 from lazy_crawler.api.services.ai_service import chat_with_data, generate_chart_config
 from pydantic import BaseModel

@@ -2,32 +2,59 @@ let currentCollection = '';
 let currentPage = 1;
 const pageSize = 10;
 
-async function fetchCollections() {
+async function fetchAllCollections() {
     try {
-        const res = await fetch('/collections');
-        const data = await res.json();
-        const list = document.getElementById('collection-list');
-        list.innerHTML = '';
-        data.collections.forEach(col => {
+        // Fetch scraped collections
+        const resCol = await fetch('/collections');
+        const dataCol = await resCol.json();
+
+        // Fetch user uploads
+        const resUp = await fetch('/datasets/list');
+        const dataUp = await resUp.json();
+
+        const uploadsList = document.getElementById('uploads-list');
+        const collectionList = document.getElementById('collection-list');
+
+        uploadsList.innerHTML = '';
+        collectionList.innerHTML = '';
+
+        // Render Uploads
+        dataUp.forEach(dataset => {
+            const li = document.createElement('li');
+            li.className = 'collection-item';
+            li.textContent = dataset.filename;
+            li.dataset.collection = dataset.mongo_collection_name;
+            li.onclick = () => selectCollection(dataset.mongo_collection_name, dataset.filename);
+            uploadsList.appendChild(li);
+        });
+
+        // Render Scraped Collections
+        dataCol.collections.forEach(col => {
             const li = document.createElement('li');
             li.className = 'collection-item';
             li.textContent = col;
-            li.onclick = () => selectCollection(col);
-            list.appendChild(li);
+            li.dataset.collection = col;
+            li.onclick = () => selectCollection(col, col);
+            collectionList.appendChild(li);
         });
-        if (data.collections.length > 0 && !currentCollection) {
-            selectCollection(data.collections[0]);
+
+        if (!currentCollection) {
+            if (dataUp.length > 0) {
+                selectCollection(dataUp[0].mongo_collection_name, dataUp[0].filename);
+            } else if (dataCol.collections.length > 0) {
+                selectCollection(dataCol.collections[0], dataCol.collections[0]);
+            }
         }
     } catch (err) {
         console.error("Failed to fetch collections:", err);
     }
 }
 
-async function selectCollection(name) {
-    currentCollection = name;
+async function selectCollection(collectionName, displayName) {
+    currentCollection = collectionName;
     currentPage = 1;
     document.querySelectorAll('.collection-item').forEach(el => {
-        el.classList.toggle('active', el.textContent === name);
+        el.classList.toggle('active', el.dataset.collection === collectionName);
     });
     fetchData();
 }
@@ -116,7 +143,82 @@ document.getElementById('search-input').oninput = () => {
 };
 
 // Initial Load
-fetchCollections();
+fetchAllCollections();
+
+// --- Mobile Sidebar Toggle ---
+const sidebarToggle = document.getElementById('sidebar-toggle');
+const sidebar = document.getElementById('dashboard-sidebar');
+
+if (sidebarToggle && sidebar) {
+    sidebarToggle.onclick = () => {
+        sidebar.classList.toggle('active');
+    };
+
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768) {
+            if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        }
+    });
+
+    // Close sidebar when selecting a collection on mobile
+    document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768 && e.target.classList.contains('collection-item')) {
+            sidebar.classList.remove('active');
+        }
+    });
+}
+
+// --- File Upload ---
+const uploadBtn = document.getElementById('upload-btn');
+const fileInput = document.getElementById('file-upload');
+
+uploadBtn.onclick = () => {
+    fileInput.click();
+};
+
+fileInput.onchange = async () => {
+    if (fileInput.files.length === 0) return;
+
+    const file = fileInput.files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const loader = document.getElementById('loader');
+    loader.style.display = 'flex';
+    document.getElementById('data-table-container').style.opacity = '0.3';
+
+    try {
+        const res = await fetch('/datasets/upload', {
+            method: 'POST',
+            body: formData
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+            alert(`Success: ${data.message}`);
+            // Refresh collections
+            await fetchAllCollections();
+            // Select the new collection (first sheet if multiple)
+            if (data.datasets && data.datasets.length > 0) {
+                selectCollection(data.datasets[0].collection_name, data.datasets[0].filename);
+            } else if (data.collection_name) {
+                selectCollection(data.collection_name, data.filename || data.collection_name);
+            }
+        } else {
+            alert(`Error: ${data.detail || "Upload failed"}`);
+        }
+    } catch (err) {
+        console.error("Upload error:", err);
+        alert("An unexpected error has occurred.");
+    } finally {
+        loader.style.display = 'none';
+        document.getElementById('data-table-container').style.opacity = '1';
+        fileInput.value = ''; // Reset input
+    }
+};
 
 // --- AI Features ---
 const chatToggleBtn = document.getElementById('chat-toggle-btn');

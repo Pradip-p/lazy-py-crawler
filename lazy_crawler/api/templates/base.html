@@ -46,6 +46,7 @@
             {% block content %}{% endblock %}
         </main>
 
+        {% if active_page != 'dashboard' %}
         <footer>
             <div class="container text-center">
                 <div class="footer-logo">Lazy Crawler</div>
@@ -58,6 +59,7 @@
                 <p>&copy; 2025 Lazy Crawler. Built for data-driven teams.</p>
             </div>
         </footer>
+        {% endif %}
     </div>
 
     <script>

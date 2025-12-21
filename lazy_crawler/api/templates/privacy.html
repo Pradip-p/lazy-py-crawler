@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Privacy Policy | Lazy Crawler{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container" style="max-width: 800px;">
+        <h1 style="margin-bottom: 2rem;">Privacy Policy</h1>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;">Last updated: December 21, 2025</p>
+
+        <h2 style="margin: 2rem 0 1rem;">1. Data Ownership</h2>
+        <p style="margin-bottom: 1.5rem;">The data you scrape using Lazy Crawler is yours. We do not store or mirror
+            your scraped results unless you are explicitly using our managed Pro hosting. For open-source users, all
+            data remains in your local MongoDB instance.</p>
+
+        <h2 style="margin: 2rem 0 1rem;">2. Compliance</h2>
+        <p style="margin-bottom: 1.5rem;">Users are responsible for ensuring that their scraping activities comply with
+            the Target website's Terms of Service and local data protection laws (GDPR, CCPA, etc.).</p>
+
+        <h2 style="margin: 2rem 0 1rem;">3. Security</h2>
+        <p>We take the security of your scraping configurations seriously. API keys and credentials should be managed
+            via environment variables and are never stored in plain text by our system.</p>
+    </div>
+</section>
+{% endblock %}

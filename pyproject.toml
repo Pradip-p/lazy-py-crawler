@@ -1,0 +1,44 @@
+[project]
+name = "lazy_crawler"
+version = "0.2.0"
+description = "Lazy Crawler is a Python package that simplifies web scraping tasks. It builds upon Scrapy, providing additional utilities and features for easier data extraction."
+readme = "README.md"
+authors = [
+    { name = "Pradip Thapa", email = "thapapradip542@gmail.com" }
+]
+license = { text = "MIT" }
+requires-python = ">=3.9"
+dependencies = [
+    "Scrapy==2.11.2",
+    "ipdb==0.13.13",
+    "protobuf==5.27.0",
+    "ruamel.yaml==0.18.6",
+    "s3transfer==0.10.1",
+    "pillow==10.3.0",
+    "pandas==2.2.2",
+    "googletrans==3.0.0",
+    "pdfminer.six==20231228",
+    "PyYAML==6.0.1",
+    "openpyxl==3.1.3",
+    "gspread==6.1.2",
+    "oauth2client==4.1.3",
+    "playwright==1.44.0",
+    "scrapy-playwright==0.0.35",
+]
+
+[project.urls]
+Homepage = "https://github.com/Pradip-p/lazy-py-crawler"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["lazy_crawler"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "lazy_crawler",
+    "README.md",
+    "LICENSE",
+]

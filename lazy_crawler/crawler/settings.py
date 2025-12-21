@@ -178,6 +178,12 @@ DOWNLOADER_MIDDLEWARES = {
     # 'scrapy_proxies.RandomProxy': 80,
     # 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
 }
-# settings.py
+# Playwright settings
+DOWNLOAD_HANDLERS = {
+    "http": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
+    "https": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
+}
 
-# TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
+TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
+
+# settings.py

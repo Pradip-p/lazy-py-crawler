@@ -117,3 +117,141 @@ document.getElementById('search-input').oninput = () => {
 
 // Initial Load
 fetchCollections();
+
+// --- AI Features ---
+const chatToggleBtn = document.getElementById('chat-toggle-btn');
+const chatWindow = document.getElementById('chat-window');
+const closeChatBtn = document.getElementById('close-chat');
+const chatForm = document.getElementById('chat-form');
+const chatInput = document.getElementById('chat-input');
+const chatMessages = document.getElementById('chat-messages');
+
+const visualizeBtn = document.getElementById('visualize-btn');
+const chartContainer = document.getElementById('chart-container');
+const closeChartBtn = document.getElementById('close-chart');
+let currentChart = null;
+
+// Chat UI Toggles
+chatToggleBtn.onclick = () => {
+    chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
+};
+closeChatBtn.onclick = () => {
+    chatWindow.style.display = 'none';
+};
+
+// Add Message to Chat
+function addMessage(text, isUser = false) {
+    const div = document.createElement('div');
+    div.style.padding = '0.8rem';
+    div.style.borderRadius = '8px';
+    div.style.maxWidth = '80%';
+    div.style.wordWrap = 'break-word';
+
+    if (isUser) {
+        div.style.alignSelf = 'flex-end';
+        div.style.background = 'var(--slack-blue)';
+        div.style.color = 'white';
+    } else {
+        div.style.alignSelf = 'flex-start';
+        div.style.background = '#e0e0e0';
+        div.style.color = 'black';
+    }
+    div.textContent = text;
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Chat Submission
+chatForm.onsubmit = async (e) => {
+    e.preventDefault();
+    const msg = chatInput.value.trim();
+    if (!msg) return;
+
+    addMessage(msg, true);
+    chatInput.value = '';
+
+    // Context: Visible data
+    // We can't access `items` from `fetchData` easily unless we store them globally.
+    // Let's rely on what's in the DOM table or modify renderTable to update a global var.
+    const context = `User is looking at collection: ${currentCollection}. Query: ${document.getElementById('search-input').value}.`;
+
+    try {
+        const res = await fetch('/api/ai/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: msg, context: context })
+        });
+        const data = await res.json();
+        addMessage(data.response || "Sorry, I couldn't process that.");
+    } catch (err) {
+        addMessage("Error communicating with AI.");
+    }
+};
+
+// Chart Visualization
+visualizeBtn.onclick = async () => {
+    if (!currentCollection) {
+        alert("Please select a collection first.");
+        return;
+    }
+
+    const description = prompt("What would you like to visualize? (e.g., 'Bar chart of prices', 'Distribution of categories')");
+    if (!description) return;
+
+    chartContainer.style.display = 'block';
+
+    // Get visible rows data for context
+    const tableBody = document.getElementById('table-body');
+    const rows = Array.from(tableBody.querySelectorAll('tr'));
+
+    if (rows.length === 0 || rows[0].cells.length <= 1) {
+        alert("No data to visualize.");
+        chartContainer.style.display = 'none';
+        return;
+    }
+
+    // Extract headers
+    const head = document.getElementById('table-head');
+    const headers = Array.from(head.querySelectorAll('th')).map(th => th.textContent);
+
+    // Extract first 10 rows of data as sample
+    const sampleData = rows.slice(0, 10).map(tr => {
+        const cells = Array.from(tr.querySelectorAll('td'));
+        let obj = {};
+        headers.forEach((h, i) => obj[h] = cells[i]?.textContent);
+        return obj;
+    });
+
+    const dataSummary = `Headers: ${headers.join(', ')}. Sample Data (first 10 rows): ${JSON.stringify(sampleData)}`;
+
+    try {
+        const res = await fetch('/api/ai/chart', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ description: description, data_summary: dataSummary })
+        });
+        const config = await res.json();
+
+        if (config.error) {
+            alert(config.error);
+            return;
+        }
+
+        const ctx = document.getElementById('dataChart').getContext('2d');
+        if (currentChart) currentChart.destroy();
+        currentChart = new Chart(ctx, config);
+
+    } catch (err) {
+        console.error(err);
+        alert("Failed to generate chart.");
+        chartContainer.style.display = 'none';
+    }
+};
+
+closeChartBtn.onclick = () => {
+    chartContainer.style.display = 'none';
+    if (currentChart) {
+        currentChart.destroy();
+        currentChart = null;
+    }
+};

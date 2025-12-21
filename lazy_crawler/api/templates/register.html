@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Register | Lazy Crawler{% endblock %}
+
+{% block content %}
+<section class="hero" style="min-height: 80vh; display: flex; align-items: center; justify-content: center;">
+    <div class="container text-center"
+        style="max-width: 400px; padding: 2rem; background: var(--bg-card); border-radius: var(--border-radius); border: 1px solid var(--border-color);">
+        <h1 class="text-gradient">Create Account</h1>
+        <p class="mb-2">Join Lazy Crawler today</p>
+
+        <form id="registerForm" style="margin-top: 2rem; text-align: left;">
+            <div style="margin-bottom: 1rem;">
+                <label for="full_name" style="display: block; margin-bottom: 0.5rem;">Full Name</label>
+                <input type="text" id="full_name" name="full_name" required
+                    style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-main);">
+            </div>
+
+            <div style="margin-bottom: 1rem;">
+                <label for="email" style="display: block; margin-bottom: 0.5rem;">Email</label>
+                <input type="email" id="email" name="email" required
+                    style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-main);">
+            </div>
+
+            <div style="margin-bottom: 1.5rem;">
+                <label for="password" style="display: block; margin-bottom: 0.5rem;">Password</label>
+                <input type="password" id="password" name="password" required
+                    style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-main);">
+            </div>
+
+            <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">Sign Up</button>
+        </form>
+
+        <p class="text-sm" style="margin-top: 1.5rem;">Already have an account? <a href="/login"
+                style="color: var(--primary-color);">Sign in</a></p>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+            const response = await fetch('/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                // Store in cookie
+                document.cookie = `access_token=Bearer ${result.access_token}; path=/; max-age=1800; SameSite=Lax`;
+                window.location.href = '/dashboard';
+            } else {
+                const err = await response.json();
+                alert('Registration failed: ' + (err.detail || 'Unknown error'));
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        }
+    });
+</script>
+{% endblock %}

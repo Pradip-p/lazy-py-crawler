@@ -143,7 +143,18 @@
 
     <main class="dashboard-main">
         <div class="container">
-            <input type="text" class="search-input" id="search-input" placeholder="Search data in this collection...">
+            <div class="actions-bar" style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                <input type="text" class="search-input" id="search-input"
+                    placeholder="Search data in this collection..." style="margin-bottom: 0; flex: 1;">
+                <button class="btn-primary" id="visualize-btn" style="white-space: nowrap;">✨ Visualize Data</button>
+            </div>
+
+            <div id="chart-container"
+                style="display: none; margin-bottom: 2rem; padding: 1.5rem; background: var(--bg-card); border-radius: var(--border-radius); border: 1px solid var(--border-color); height: 400px; position: relative;">
+                <canvas id="dataChart"></canvas>
+                <button id="close-chart"
+                    style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted);">&times;</button>
+            </div>
 
             <div id="loader" class="loader"><span></span></div>
 
@@ -168,8 +179,38 @@
         </div>
     </main>
 </div>
+
+<!-- Floating Chat Button -->
+<button id="chat-toggle-btn"
+    style="position: fixed; bottom: 2rem; right: 2rem; width: 60px; height: 60px; border-radius: 50%; background: var(--slack-purple); color: white; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; z-index: 1000;">
+    💬
+</button>
+
+<!-- Chat Window -->
+<div id="chat-window"
+    style="display: none; position: fixed; bottom: 6rem; right: 2rem; width: 350px; height: 500px; background: white; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); border: 1px solid var(--border-color); z-index: 1000; flex-direction: column; overflow: hidden;">
+    <div
+        style="background: var(--slack-purple); color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="margin: 0; font-size: 1rem;">AI Assistant</h3>
+        <button id="close-chat" style="background: none; border: none; color: white; cursor: pointer;">&times;</button>
+    </div>
+    <div id="chat-messages"
+        style="flex: 1; padding: 1rem; overflow-y: auto; background: #f9f9f9; display: flex; flex-direction: column; gap: 0.8rem;">
+        <div style="align-self: flex-start; background: #e0e0e0; padding: 0.8rem; border-radius: 8px; max-width: 80%;">
+            Hi! I can help you analyze your data. Ask me anything!</div>
+    </div>
+    <div style="padding: 1rem; border-top: 1px solid var(--border-color); background: white;">
+        <form id="chat-form" style="display: flex; gap: 0.5rem;">
+            <input type="text" id="chat-input" placeholder="Ask a question..."
+                style="flex: 1; padding: 0.8rem; border: 1px solid var(--border-color); border-radius: 4px; outline: none;">
+            <button type="submit"
+                style="background: var(--slack-purple); color: white; border: none; padding: 0.8rem 1.2rem; border-radius: 4px; cursor: pointer;">➤</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{{ url_for('static', path='/dashboard.js') }}"></script>
 {% endblock %}

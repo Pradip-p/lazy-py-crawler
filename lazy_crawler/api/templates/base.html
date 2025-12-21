@@ -25,11 +25,19 @@
                 </button>
                 <ul class="nav-links">
                     <li><a href="/" class="{{ 'active' if active_page == 'home' else '' }}">Home</a></li>
+                    <li><a href="/about" class="{{ 'active' if active_page == 'about' else '' }}">About</a></li>
+
+                    {% if user %}
                     <li><a href="/dashboard" class="{{ 'active' if active_page == 'dashboard' else '' }}">Dashboard</a>
                     </li>
-                    <li><a href="/about" class="{{ 'active' if active_page == 'about' else '' }}">About</a></li>
+                    <li>
+                        <a href="/auth/logout" class="btn-primary"
+                            style="background-color: #dc3545; border-color: #dc3545;">Logout</a>
+                    </li>
+                    {% else %}
                     <li><a href="/contact" class="{{ 'active' if active_page == 'contact' else '' }}">Contact</a></li>
-                    <li><a href="/dashboard" class="btn-primary">Get Started</a></li>
+                    <li><a href="/register" class="btn-primary">Get Started</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>

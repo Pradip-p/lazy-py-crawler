@@ -5,8 +5,7 @@ from passlib.context import CryptContext
 from fastapi import Depends, HTTPException, status, Request
 from fastapi.security import OAuth2PasswordBearer
 from sqlmodel.ext.asyncio.session import AsyncSession
-from lazy_crawler.api.db import get_session
-from lazy_crawler.api.models import User
+from lazy_crawler.api.database import get_session, User
 from sqlmodel import select
 import os
 from dotenv import load_dotenv

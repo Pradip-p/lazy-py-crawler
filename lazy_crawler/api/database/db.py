@@ -2,17 +2,7 @@ from sqlmodel import SQLModel, create_engine
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.orm import sessionmaker
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-POSTGRES_USER = os.getenv("POSTGRES_USER", "postgres")
-POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "postgres")
-POSTGRES_SERVER = os.getenv("POSTGRES_SERVER", "postgres")
-POSTGRES_DB = os.getenv("POSTGRES_DB", "lazy_crawler")
-
-DATABASE_URL = f"postgresql+asyncpg://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}:5432/{POSTGRES_DB}"
+from lazy_crawler.api.config import DATABASE_URL
 
 engine = create_async_engine(DATABASE_URL, echo=True, future=True)
 

@@ -3,19 +3,19 @@ version: "3.8"
 services:
   app:
     build: .
-    container_name: lazy-py-crawler-app
+    # container_name: lazy-py-crawler-app  <-- Removed as requested
     ports:
       - "127.0.0.1:8001:8000"
-    environment:
-      - MONGO_URI=mongodb://mongodb:27017
-      - MONGO_DATABASE=lazy_crawler
+    env_file:
+      - .env
     depends_on:
       - mongodb
+      - postgres
     volumes:
       - .:/app
     restart: unless-stopped
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -23,16 +23,34 @@ services:
     networks:
       - lazy-crawler-network
 
+  postgres:
+    image: postgres:15
+    # container_name: lazy-py-crawler-postgres <-- Removed as requested
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - lazy-crawler-network
+
   mongodb:
     image: mongo:latest
-    container_name: lazy-py-crawler-mongodb
+    # container_name: lazy-py-crawler-mongodb <-- Removed as requested
     ports:
       - "27017:27017"
     volumes:
       - mongodb_data:/data/db
     restart: unless-stopped
     healthcheck:
-      test: [ "CMD", "mongosh", "--eval", "db.adminCommand('ping')" ]
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -42,7 +60,7 @@ services:
 
 volumes:
   mongodb_data:
-
+  postgres_data:
 
 networks:
   lazy-crawler-network:

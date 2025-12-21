@@ -1,10 +1,16 @@
-import os
-from fastapi import FastAPI, HTTPException, Query, Request
+from lazy_crawler.api.db import init_db, engine
+from sqlalchemy import text
+from lazy_crawler.api.auth import get_current_user_optional
+from lazy_crawler.api.routers import auth, ai
+from lazy_crawler.api.models import User
+from fastapi import FastAPI, HTTPException, Query, Request, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from fastapi.responses import RedirectResponse
 from pymongo import MongoClient
 from typing import List, Optional
 from dotenv import load_dotenv
+import os
 
 # Load environment variables
 load_dotenv()
@@ -14,6 +20,17 @@ app = FastAPI(
     description="API to access data scraped by Lazy Crawler",
     version="1.0.0",
 )
+
+
+# Initialize DB on Startup
+@app.on_event("startup")
+async def on_startup():
+    await init_db()
+
+
+# Include Routers
+app.include_router(auth.router)
+app.include_router(ai.router)
 
 # Template Engine
 templates_dir = os.path.join(os.path.dirname(__file__), "templates")
@@ -34,55 +51,90 @@ app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 
 @app.get("/")
-def read_root(request: Request):
+def read_root(
+    request: Request, current_user: Optional[User] = Depends(get_current_user_optional)
+):
     return templates.TemplateResponse(
-        "index.html", {"request": request, "active_page": "home"}
+        "index.html", {"request": request, "active_page": "home", "user": current_user}
     )
 
 
+@app.get("/login")
+def login_page(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request})
+
+
+@app.get("/register")
+def register_page(request: Request):
+    return templates.TemplateResponse("register.html", {"request": request})
+
+
 @app.get("/dashboard")
-def read_dashboard(request: Request):
+def read_dashboard(
+    request: Request, current_user: Optional[User] = Depends(get_current_user_optional)
+):
+    if not current_user:
+        return RedirectResponse(url="/login")
+
     return templates.TemplateResponse(
-        "dashboard.html", {"request": request, "active_page": "dashboard"}
+        "dashboard.html",
+        {"request": request, "active_page": "dashboard", "user": current_user},
     )
 
 
 @app.get("/about")
-def read_about(request: Request):
+def read_about(
+    request: Request, current_user: Optional[User] = Depends(get_current_user_optional)
+):
     return templates.TemplateResponse(
-        "about.html", {"request": request, "active_page": "about"}
+        "about.html", {"request": request, "active_page": "about", "user": current_user}
     )
 
 
 @app.get("/contact")
-def read_contact(request: Request):
+def read_contact(
+    request: Request, current_user: Optional[User] = Depends(get_current_user_optional)
+):
     return templates.TemplateResponse(
-        "contact.html", {"request": request, "active_page": "contact"}
+        "contact.html",
+        {"request": request, "active_page": "contact", "user": current_user},
     )
 
 
 @app.get("/privacy")
-def read_privacy(request: Request):
+def read_privacy(
+    request: Request, current_user: Optional[User] = Depends(get_current_user_optional)
+):
     return templates.TemplateResponse(
-        "privacy.html", {"request": request, "active_page": "privacy"}
+        "privacy.html",
+        {"request": request, "active_page": "privacy", "user": current_user},
     )
 
 
 @app.get("/health")
-def health_check():
+async def health_check():
     """
     Health check endpoint for Docker and Nginx monitoring.
     """
+    status = {"status": "healthy", "checks": {}}
     try:
         # Check MongoDB connection
         client.admin.command("ping")
-        return {
-            "status": "healthy",
-            "database": "connected",
-            "service": "lazy-crawler-api",
-        }
+        status["checks"]["mongodb"] = "connected"
     except Exception as e:
-        return {"status": "unhealthy", "database": "disconnected", "error": str(e)}
+        status["status"] = "unhealthy"
+        status["checks"]["mongodb"] = f"disconnected: {str(e)}"
+
+    try:
+        # Check Postgres connection
+        async with engine.connect() as conn:
+            await conn.execute(text("SELECT 1"))
+        status["checks"]["postgres"] = "connected"
+    except Exception as e:
+        status["status"] = "unhealthy"
+        status["checks"]["postgres"] = f"disconnected: {str(e)}"
+
+    return status
 
 
 @app.get("/collections")

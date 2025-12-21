@@ -27,6 +27,15 @@ dependencies = [
     "python-dotenv==1.0.1",
     "fastapi==0.111.0",
     "uvicorn==0.30.1",
+    "sqlmodel",
+    "asyncpg",
+    "passlib[bcrypt]",
+    "bcrypt==3.2.2",
+    "python-jose[cryptography]",
+    "httpx",
+    "google-auth-oauthlib",
+    "itsdangerous",
+    "google-generativeai",
 ]
 
 [project.urls]

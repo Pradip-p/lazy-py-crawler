@@ -1,6 +1,5 @@
 import aiosmtplib
-from email.mime.text import MIMEText
-from email.utils import formataddr
+from email.message import EmailMessage
 import os
 import logging
 
@@ -19,7 +18,7 @@ CONTACT_RECIPIENT_EMAIL = os.getenv("CONTACT_RECIPIENT_EMAIL")
 async def send_contact_email(full_name: str, email: str, message: str):
     """
     Sends an email notification for a contact form submission.
-    Follows the reference structure using aiosmtplib and MIMEText.
+    Uses official aiosmtplib.send() pattern with EmailMessage.
     """
     missing = [
         name
@@ -57,10 +56,11 @@ async def send_contact_email(full_name: str, email: str, message: str):
     </html>
     """
 
-    message_obj = MIMEText(html_content, "html")
+    message_obj = EmailMessage()
     message_obj["Subject"] = subject
-    message_obj["From"] = formataddr((EMAILS_FROM_NAME, EMAILS_FROM_EMAIL))
+    message_obj["From"] = f"{EMAILS_FROM_NAME} <{EMAILS_FROM_EMAIL}>"
     message_obj["To"] = CONTACT_RECIPIENT_EMAIL
+    message_obj.set_content(html_content, subtype="html")
 
     try:
         logger.debug(
@@ -72,8 +72,7 @@ async def send_contact_email(full_name: str, email: str, message: str):
             port=EMAIL_PORT,
             username=EMAIL_HOST_USER,
             password=EMAIL_HOST_PASSWORD,
-            use_tls=False if EMAIL_PORT == 587 else True,
-            start_tls=True if EMAIL_PORT == 587 else False,
+            start_tls=True,
         )
         logger.info(f"Email sent successfully to {CONTACT_RECIPIENT_EMAIL}")
     except Exception as e:

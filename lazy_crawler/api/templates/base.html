@@ -31,8 +31,7 @@
                     <li><a href="/dashboard" class="{{ 'active' if active_page == 'dashboard' else '' }}">Dashboard</a>
                     </li>
                     <li>
-                        <a href="/auth/logout" class="btn-primary"
-                            style="background-color: #dc3545; border-color: #dc3545;">Logout</a>
+                        <a href="/auth/logout" class="logout-link">Logout</a>
                     </li>
                     {% else %}
                     <li><a href="/contact" class="{{ 'active' if active_page == 'contact' else '' }}">Contact</a></li>

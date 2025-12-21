@@ -26,7 +26,11 @@ app = FastAPI(
 # Read allowed origins from environment variable (comma-separated list)
 # Example: CORS_ORIGINS=https://pradipthapa.info.np,https://www.pradipthapa.info.np
 cors_origins_str = os.getenv("CORS_ORIGINS", "*")
-cors_origins = [origin.strip() for origin in cors_origins_str.split(",")] if cors_origins_str != "*" else ["*"]
+cors_origins = (
+    [origin.strip() for origin in cors_origins_str.split(",")]
+    if cors_origins_str != "*"
+    else ["*"]
+)
 
 app.add_middleware(
     CORSMiddleware,

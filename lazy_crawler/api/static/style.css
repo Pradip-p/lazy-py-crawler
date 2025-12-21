@@ -130,6 +130,18 @@ nav {
     box-shadow: 0 4px 12px rgba(74, 21, 75, 0.3);
 }
 
+/* Logout Link - Subtle styling */
+.logout-link {
+    color: var(--text-muted) !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    transition: color 0.15s ease !important;
+}
+
+.logout-link:hover {
+    color: var(--slack-red) !important;
+}
+
 /* Hero */
 .hero {
     background: var(--slack-purple);

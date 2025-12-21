@@ -23,6 +23,7 @@ if __name__ == "__main__":
     # Ensure Scrapy settings are loaded
     os.environ.setdefault('SCRAPY_SETTINGS_MODULE', 'lazy_crawler.crawler.settings')
 
-    process = CrawlerProcess()
+    from scrapy.utils.project import get_project_settings
+    process = CrawlerProcess(get_project_settings())
     process.crawl(PlaywrightSpider)
     process.start()

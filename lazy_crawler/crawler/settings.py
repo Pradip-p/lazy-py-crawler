@@ -84,7 +84,8 @@ DEFAULT_REQUEST_HEADERS = {
 
 
 ITEM_PIPELINES = {
-    "lazy_crawler.crawler.pipelines.CSVPipeline": 300,
+    # "lazy_crawler.crawler.pipelines.CSVPipeline": 300,
+    "lazy_crawler.crawler.pipelines.MongoPipeline": 300,
 }
 
 RETRY_TIMES = 3

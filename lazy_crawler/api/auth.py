@@ -94,11 +94,31 @@ async def get_current_user(
 
 
 async def get_current_user_optional(
-    token: Optional[str] = None, session: AsyncSession = Depends(get_session)
+    request: Request,
+    token: Optional[str] = Depends(oauth2_scheme),
+    session: AsyncSession = Depends(get_session),
 ) -> Optional[User]:
+    # Check if token is in cookie if not in header
+    if not token and request:
+        cookie_auth = request.cookies.get("access_token")
+        if cookie_auth:
+            # Format: "Bearer <token>"
+            valid = cookie_auth.startswith("Bearer ")
+            if valid:
+                token = cookie_auth.split(" ")[1]
+
     if not token:
         return None
+
     try:
-        return await get_current_user(token, session)
-    except HTTPException:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        email: str = payload.get("sub")
+        if email is None:
+            return None
+    except JWTError:
         return None
+
+    statement = select(User).where(User.email == email)
+    result = await session.exec(statement)
+    user = result.first()
+    return user

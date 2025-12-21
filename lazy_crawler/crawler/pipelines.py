@@ -8,6 +8,12 @@ import datetime
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import time
+import pymongo
+from dotenv import load_dotenv
+import os
+
+# Load environment variables
+load_dotenv()
 
 
 class CSVPipeline(object):
@@ -64,16 +70,16 @@ class GoogleSheetsPipeline(object):
             "https://www.googleapis.com/auth/drive.file",
             "https://www.googleapis.com/auth/spreadsheets",
         ]
-        self.creds = ServiceAccountCredentials.from_json_keyfile_name(
-            "creds.json", scope
-        )
+        # Load from environment variable or default to creds.json
+        creds_file = os.getenv("GOOGLE_SHEETS_CREDS_FILE", "creds.json")
+        self.creds = ServiceAccountCredentials.from_json_keyfile_name(creds_file, scope)
 
         self.client = gspread.authorize(self.creds)
 
-        self.client = gspread.authorize(self.creds)
-        self.sheet = self.client.open("JobScrapeData").sheet1
-        self.spreadsheet_key = ""  # key can find on url sections
-        self.wks_name = "Sheet1"
+        # Spreadsheet name/key from environment variables
+        spreadsheet_name = os.getenv("GOOGLE_SHEETS_SPREADSHEET_NAME", "JobScrapeData")
+        self.sheet = self.client.open(spreadsheet_name).sheet1
+        self.wks_name = os.getenv("GOOGLE_SHEETS_WORKSHEET_NAME", "Sheet1")
 
     def _append_to_sheet(self, item):
         """Append item to spreadsheet"""
@@ -123,3 +129,32 @@ class ExcelWriterPipeline(object):
     def close_spider(self, spider):
         # self.wb.save(f"scraped_data_{self.created_time}.xlsx")  # save the workbook
         self.wb.save(f"scraped_data.xlsx")  # save the workbook
+
+
+class MongoPipeline(object):
+    """
+    Pipeline for storing items in MongoDB.
+    """
+
+    def __init__(self, mongo_uri, mongo_db):
+        self.mongo_uri = mongo_uri
+        self.mongo_db = mongo_db
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(
+            mongo_uri=crawler.settings.get("MONGO_URI", "mongodb://localhost:27017"),
+            mongo_db=crawler.settings.get("MONGO_DATABASE", "lazy_crawler"),
+        )
+
+    def open_spider(self, spider):
+        self.client = pymongo.MongoClient(self.mongo_uri)
+        self.db = self.client[self.mongo_db]
+
+    def close_spider(self, spider):
+        self.client.close()
+
+    def process_item(self, item, spider):
+        collection_name = spider.name
+        self.db[collection_name].insert_one(ItemAdapter(item).asdict())
+        return item

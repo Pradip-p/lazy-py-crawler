@@ -112,7 +112,7 @@ class LazyCrawler(scrapy.Spider):
         for coord in self.coordinates:
             # Define the URL for each coordinate
             url = f"https://www.eorc.jaxa.jp/ALOS/en/aw3d30/data/html_v2404/{coord.lower()}.htm"
-            
+
             # Set headers dynamically for each request
             headers = {
                 'authority': 'www.eorc.jaxa.jp',

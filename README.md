@@ -113,6 +113,42 @@ def parse(self, response):
     yield {"emails": emails, "phones": phones}
 ```
 
+## 💾 Data Storage
+
+Lazy Crawler supports multiple storage backends.
+
+### 1. 🍃 MongoDB Storage
+
+Directly store your scraped data into a MongoDB collection named after your spider.
+
+**Configuration in `.env`**:
+
+```env
+MONGO_URI=mongodb://localhost:27017
+MONGO_DATABASE=my_scraping_db
+```
+
+**Usage**:
+Enable the pipeline in your `settings.py` or spider's `custom_settings`:
+
+```python
+ITEM_PIPELINES = {
+    "lazy_crawler.crawler.pipelines.MongoPipeline": 400,
+}
+```
+
+### 2. 📊 Google Sheets
+
+Stream data directly to a Google Sheet.
+
+**Configuration in `.env`**:
+
+```env
+GOOGLE_SHEETS_CREDS_FILE=creds.json
+GOOGLE_SHEETS_SPREADSHEET_NAME=MyScrapeData
+GOOGLE_SHEETS_WORKSHEET_NAME=Sheet1
+```
+
 ## 🛠️ Configuration
 
 Lazy Crawler reads from standard Scrapy settings but provides defaults that work for 90% of cases. You can easily override them in your spider's `custom_settings`.

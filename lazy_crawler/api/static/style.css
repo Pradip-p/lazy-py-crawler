@@ -891,10 +891,10 @@ footer {
 }
 
 .footer-logo {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 800;
     color: var(--slack-purple);
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .footer-links {
@@ -906,13 +906,59 @@ footer {
 
 .footer-links a {
     text-decoration: none;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: var(--slack-purple);
+}
+
+.footer-resources {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.resource-label {
+    font-size: 0.8rem;
+    font-weight: 700;
     color: var(--text-muted);
-    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.resource-link {
+    display: flex;
+    align-items: center;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.resource-link:hover {
+    color: var(--slack-purple);
+}
+
+.resource-divider {
+    width: 4px;
+    height: 4px;
+    background-color: var(--border-color);
+    border-radius: 50%;
 }
 
 footer p {
     color: var(--text-muted);
     font-size: 0.85rem;
+    opacity: 0.8;
 }
 
 /* Responsive Design */

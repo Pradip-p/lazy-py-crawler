@@ -35,7 +35,6 @@ dependencies = [
     "httpx",
     "google-auth-oauthlib",
     "itsdangerous",
-    "google-generativeai",
     "aiosmtplib",
     "pydantic[email]",
     "brotli>=1.2.0",

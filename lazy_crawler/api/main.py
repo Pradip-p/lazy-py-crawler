@@ -12,15 +12,23 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 
 
+from contextlib import asynccontextmanager
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Initialize database on application startup"""
+    await init_db()
+    yield
+
+
 # Initialize FastAPI app
 app = FastAPI(
     title=config.API_TITLE,
     description=config.API_DESCRIPTION,
     version=config.API_VERSION,
+    lifespan=lifespan,
 )
-
-
-# Add Middlewares
 app.add_middleware(
     CORSMiddleware,
     allow_origins=config.CORS_ORIGINS,
@@ -30,13 +38,6 @@ app.add_middleware(
 )
 
 app.add_middleware(GZipMiddleware, minimum_size=config.GZIP_MIN_SIZE)
-
-
-# Initialize Database on Startup
-@app.on_event("startup")
-async def on_startup():
-    """Initialize database on application startup"""
-    await init_db()
 
 
 # Include all Routers

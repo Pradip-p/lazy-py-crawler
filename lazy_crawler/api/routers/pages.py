@@ -99,6 +99,16 @@ def read_privacy(
     )
 
 
+@router.get("/faq")
+def read_faq(
+    request: Request, current_user: Optional[User] = Depends(get_current_user_optional)
+):
+    """FAQ page"""
+    return templates.TemplateResponse(
+        "faq.html", {"request": request, "active_page": "faq", "user": current_user}
+    )
+
+
 @router.get("/sitemap.xml")
 def get_sitemap():
     """Sitemap for SEO"""

@@ -2,7 +2,6 @@ from fastapi import APIRouter, Depends, HTTPException, Body
 from fastapi.responses import StreamingResponse
 from lazy_crawler.api.database import User
 from lazy_crawler.api.auth import get_current_user
-from lazy_crawler.api.services.ai_service import chat_with_data, generate_chart_config
 from lazy_crawler.api.services.ollama_service import (
     chat_with_ollama,
     chat_stream_ollama,
@@ -41,25 +40,6 @@ class ChartRequest(BaseModel):
 class SummaryRequest(BaseModel):
     text: str
     max_length: int = 150
-
-
-@router.post("/chat")
-async def ai_chat(
-    request: ChatRequest,
-    #   current_user: User = Depends(get_current_user)
-):
-    """Chat using Google Gemini AI (requires API key)"""
-    response = await chat_with_data(request.message, request.context)
-    return {"response": response}
-
-
-@router.post("/chart")
-async def ai_chart(
-    request: ChartRequest, current_user: User = Depends(get_current_user)
-):
-    """Generate Chart.js configuration using Gemini"""
-    config = await generate_chart_config(request.description, request.data_summary)
-    return config
 
 
 @router.post("/ollama/chat")

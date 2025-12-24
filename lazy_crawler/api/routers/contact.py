@@ -1,6 +1,15 @@
-from fastapi import APIRouter, BackgroundTasks, HTTPException
+from fastapi import APIRouter, HTTPException, Depends, Request
+from lazy_crawler.api.database.models import ContactSubmission
 from pydantic import BaseModel, EmailStr
-from lazy_crawler.api.services.email_service import send_contact_email
+from lazy_crawler.api.limiter import limiter
+from fastapi import APIRouter, Request, Depends
+from lazy_crawler.api import config
+from lazy_crawler.api.database import User
+from typing import Optional
+import os
+from lazy_crawler.api.database import get_session, User
+from sqlmodel.ext.asyncio.session import AsyncSession
+
 
 router = APIRouter(prefix="/contact", tags=["contact"])
 
@@ -12,18 +21,27 @@ class ContactForm(BaseModel):
 
 
 @router.post("")
-async def submit_contact_form(form: ContactForm, background_tasks: BackgroundTasks):
+@limiter.limit("5/minute")
+async def submit_contact_form(
+    request: Request, form: ContactForm, session: AsyncSession = Depends(get_session)
+):
     """
-    Handles contact form submission and sends an email in the background.
+    Handles contact form submission and saves to database.
     """
     try:
-        print("Contact form submitted:", form)
-        background_tasks.add_task(
-            send_contact_email,
+        # Create new contact submission
+        contact = ContactSubmission(
             full_name=form.full_name,
             email=form.email,
             message=form.message,
         )
-        return {"message": "Thank you! Your message has been sent."}
+
+        # Save to database
+        session.add(contact)
+        await session.commit()
+        await session.refresh(contact)
+
+        return {"message": "Thank you! Your message has been received."}
     except Exception as e:
+        await session.rollback()
         raise HTTPException(status_code=500, detail=str(e))

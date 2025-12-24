@@ -109,6 +109,83 @@ def read_faq(
     )
 
 
+@router.get("/company")
+def read_company(
+    request: Request, current_user: Optional[User] = Depends(get_current_user_optional)
+):
+    """Company page (Teams + Careers)"""
+    team_members = [
+        {
+            "name": "Alex Morgan",
+            "role": "Founder & CEO",
+            "bio": "Visionary leader with 15+ years in data engineering and AI.",
+            "image": "https://ui-avatars.com/api/?name=Alex+Morgan&background=4a154b&color=fff",
+        },
+        {
+            "name": "Sarah Chen",
+            "role": "CTO",
+            "bio": "Architect of Crawlio's distributed extraction engine.",
+            "image": "https://ui-avatars.com/api/?name=Sarah+Chen&background=1264a3&color=fff",
+        },
+        {
+            "name": "James Wilson",
+            "role": "Head of Product",
+            "bio": "Focused on delivering intuitive and powerful user experiences.",
+            "image": "https://ui-avatars.com/api/?name=James+Wilson&background=2eb67d&color=fff",
+        },
+        {
+            "name": "Emily Rodriguez",
+            "role": "VP of Sales",
+            "bio": "Driving global growth and enterprise partnerships.",
+            "image": "https://ui-avatars.com/api/?name=Emily+R&background=e01e5a&color=fff",
+        },
+        {
+            "name": "James Wilson",
+            "role": "Data aquistion Lead",
+            "bio": "Focused on delivering intuitive and powerful user experiences.",
+            "image": "https://ui-avatars.com/api/?name=James+Wilson&background=2eb67d&color=fff",
+        },
+        {
+            "name": "William Lee",
+            "role": "Lead Data Scientist",
+            "bio": "Driving global growth and enterprise partnerships.",
+            "image": "https://ui-avatars.com/api/?name=Emily+R&background=e01e5a&color=fff",
+        },
+    ]
+
+    job_openings = [
+        {
+            "title": "Senior Python Engineer",
+            "department": "Engineering",
+            "location": "Remote (Global)",
+            "tags": ["Full-time", "Senior"],
+        },
+        {
+            "title": "Data Solutions Architect",
+            "department": "Solutions",
+            "location": "Sydney / Remote",
+            "tags": ["Full-time", "Mid-Senior"],
+        },
+        {
+            "title": "Product Designer (UI/UX)",
+            "department": "Design",
+            "location": "New York / Remote",
+            "tags": ["Contract", "Mid-Level"],
+        },
+    ]
+
+    return templates.TemplateResponse(
+        "company.html",
+        {
+            "request": request,
+            "active_page": "company",
+            "user": current_user,
+            "team_members": team_members,
+            "job_openings": job_openings,
+        },
+    )
+
+
 @router.get("/sitemap.xml")
 def get_sitemap():
     """Sitemap for SEO"""

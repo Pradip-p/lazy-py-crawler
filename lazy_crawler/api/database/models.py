@@ -23,3 +23,13 @@ class DatasetMetadata(SQLModel, table=True):
     mongo_collection_name: str
     created_at: datetime = Field(default_factory=datetime.utcnow)
     user_id: Optional[int] = Field(default=None, foreign_key="user.id")
+
+
+class ContactSubmission(SQLModel, table=True):
+    __tablename__ = "contact_us"
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    full_name: str
+    email: str = Field(index=True)
+    message: str
+    created_at: datetime = Field(default_factory=datetime.utcnow)

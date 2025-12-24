@@ -36,6 +36,54 @@
     .form-control:focus {
         border-color: var(--slack-purple);
     }
+
+    /* Toast Notification */
+    #toast-container {
+        position: fixed;
+        top: 90px;
+        right: 24px;
+        z-index: 2000;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .toast {
+        min-width: 300px;
+        background: #fff;
+        border-radius: 8px;
+        padding: 16px 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transform: translateX(120%);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        border-left: 4px solid;
+    }
+
+    .toast.show {
+        transform: translateX(0);
+    }
+
+    .toast-success {
+        border-left-color: var(--slack-green);
+    }
+
+    .toast-error {
+        border-left-color: var(--slack-red);
+    }
+
+    .toast-icon {
+        font-size: 1.2rem;
+    }
+
+    .toast-message {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--text-dark);
+        margin: 0;
+    }
 </style>
 {% endblock %}
 
@@ -54,7 +102,7 @@
             <form id="contactForm">
                 <div class="form-group">
                     <label>Full Name</label>
-                    <input type="text" id="fullName" class="form-control" placeholder="John Slack" required>
+                    <input type="text" id="fullName" class="form-control" placeholder="John" required>
                 </div>
                 <div class="form-group">
                     <label>Business Email</label>
@@ -71,7 +119,38 @@
     </div>
 </section>
 
+<!-- Toast Container -->
+<div id="toast-container"></div>
+
 <script>
+    function showToast(message, type = 'success') {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+
+        const icon = type === 'success' ? '✅' : '❌';
+
+        toast.innerHTML = `
+            <div class="toast-icon">${icon}</div>
+            <p class="toast-message">${message}</p>
+        `;
+
+        container.appendChild(toast);
+
+        // Trigger animation
+        requestAnimationFrame(() => {
+            toast.classList.add('show');
+        });
+
+        // Remove after 3 seconds
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                container.removeChild(toast);
+            }, 300);
+        }, 3000);
+    }
+
     document.getElementById('contactForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const submitBtn = document.getElementById('submitBtn');
@@ -98,14 +177,14 @@
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.message || 'Thank you! Your message has been sent.');
+                showToast(result.message || 'Thank you! Your message has been sent.', 'success');
                 document.getElementById('contactForm').reset();
             } else {
-                alert('Error: ' + (result.detail || 'Something went wrong. Please try again.'));
+                showToast('Error: ' + (result.detail || 'Something went wrong. Please try again.'), 'error');
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('Failed to connect to the server. Please check your internet connection.');
+            showToast('Failed to connect to the server. Please check your internet connection.', 'error');
         } finally {
             submitBtn.innerText = originalText;
             submitBtn.disabled = false;

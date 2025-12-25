@@ -38,6 +38,7 @@ dependencies = [
     "aiosmtplib",
     "pydantic[email]",
     "brotli>=1.2.0",
+    "slowapi==0.1.9",
 ]
 
 [project.urls]

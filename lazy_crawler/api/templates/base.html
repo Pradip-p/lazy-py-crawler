@@ -38,11 +38,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/cookies.css') }}">
     {% block head %}{% endblock %}
 </head>
 
 <body>
     <div class="page-wrapper">
+        <div class="announcement-bar">
+            <div class="container announcement-container">
+                <span class="announcement-text">
+                    <strong>New Amazon API:</strong> We've just released a brand new way to scrape Amazon at scale
+                </span>
+                <a href="/register" class="announcement-btn">Start Free Trial 🐝</a>
+            </div>
+        </div>
         <nav>
             <div class="container nav-container">
                 <a href="/" class="logo">Crawlio Intelligence</a>
@@ -128,6 +137,8 @@
         });
     </script>
 
+    {% include 'includes/cookie_consent.html' %}
+    <script src="{{ url_for('static', path='/cookies.js') }}"></script>
     {% block scripts %}{% endblock %}
 </body>
 

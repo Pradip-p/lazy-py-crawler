@@ -1,5 +1,4 @@
 <div align="center">
-    <img src="static/lazy_crawler_hero.png" alt="Lazy Crawler Hero" width="600px" />
     <h1>Lazy Crawler</h1>
     <p><strong>Extensible web crawling and data extraction framework.</strong></p>
     <p>A technical foundation for building scalable data pipelines using Scrapy and Playwright.</p>
@@ -37,7 +36,7 @@ graph TD
 
 **Lazy Crawler** is an extensible web crawling framework designed for both developers and organizations that need robust data extraction pipelines. It combines the speed of **Scrapy** with the dynamic rendering capabilities of **Playwright** to handle modern websites that use heavy JavaScript.
 
-## 🌟 What is Lazy Crawler?
+## What is Lazy Crawler?
 
 If you need to collect data from websites—whether it's product prices, news articles, or social media updates—Lazy Crawler handles the hard parts for you:
 
@@ -63,14 +62,18 @@ If you need to collect data from websites—whether it's product prices, news ar
 This project uses **uv** for dependency management.
 
 ```bash
-uv pip install .
+# Install from PyPI
+pip install lazy-crawler
+
+# OR install locally with uv
+uv add lazy-crawler
 ```
 
 For development:
 
 ```bash
-# Initialize and install in editable mode
-uv pip install -e .
+# Initialize and sync dependencies
+uv sync
 ```
 
 > [!NOTE]
@@ -152,6 +155,34 @@ GOOGLE_SHEETS_SPREADSHEET_NAME=CrawlData
 GOOGLE_SHEETS_WORKSHEET_NAME=Results
 ```
 
+### 3. JSON & CSV Export
+
+Enable the built-in pipelines to save to local files:
+
+```python
+custom_settings = {
+    "ITEM_PIPELINES": {
+        # Export to scraped_data.json
+        "lazy_crawler.crawler.pipelines.JsonWriterPipeline": 300,
+
+        # Export to scraped_data_{timestamp}.csv
+        "lazy_crawler.crawler.pipelines.CSVPipeline": 301,
+    }
+}
+```
+
+### 4. Excel Export
+
+Enable the Excel pipeline to save data as `.xlsx`:
+
+```python
+custom_settings = {
+    "ITEM_PIPELINES": {
+        "lazy_crawler.crawler.pipelines.ExcelWriterPipeline": 302,
+    }
+}
+```
+
 ## Dashboard & API
 
 The project includes a dashboard for monitoring crawl progress and exploring extracted data.
@@ -170,9 +201,6 @@ uv run python -m lazy_crawler.app.main
 Deploy using the provided orchestration files:
 
 ```bash
-# Quick deployment
-./deploy.sh
-
 # Manual startup
 docker compose up --build -d
 ```
@@ -187,7 +215,7 @@ The framework is designed to be modified. You can extend `LazyBaseCrawler` or im
 
 ## Contributing
 
-Technical contributions and bug reports are welcome. Please refer to [CONTRIBUTING.md](CONTRIBUTING.md).
+Technical contributions and bug reports are welcome.
 
 ## License
 

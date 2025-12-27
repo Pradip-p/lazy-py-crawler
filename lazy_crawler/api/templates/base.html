@@ -65,10 +65,11 @@
                     <li><a href="/about" class="{{ 'active' if active_page == 'about' else '' }}">About</a></li>
 
                     {% if user %}
+                    {% if user.is_superuser %}
+                    <li><a href="/admin/contacts" class="{{ 'active' if active_page == 'admin_contacts' else '' }}">📬
+                            Contacts</a></li>
+                    {% endif %}
                     <li><a href="/dashboard" class="{{ 'active' if active_page == 'dashboard' else '' }}">Dashboard</a>
-                    </li>
-                    <li><a href="/ai-assistant" class="{{ 'active' if active_page == 'ai-assistant' else '' }}">🤖 AI
-                            Assistant</a>
                     </li>
                     <li>
                         <a href="/auth/logout" class="logout-link">Logout</a>

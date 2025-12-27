@@ -5,7 +5,7 @@ Minimal configuration - all routes and settings are modularized
 
 from lazy_crawler.api.database import init_db
 from lazy_crawler.api import config
-from lazy_crawler.api.routers import auth, ai, ds, contact, pages, data, health
+from lazy_crawler.api.routers import auth, ds, contact, pages, data, health, admin
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -50,12 +50,12 @@ app.add_middleware(SlowAPIMiddleware)
 
 # Include all Routers
 app.include_router(auth.router)
-app.include_router(ai.router)
 app.include_router(ds.router)
 app.include_router(contact.router)
 app.include_router(pages.router)
 app.include_router(data.router)
 app.include_router(health.router)
+app.include_router(admin.router)
 
 
 # Mount Static Files

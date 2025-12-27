@@ -13,7 +13,6 @@ from lazy_crawler.app.routers import (
     data,
     health,
     admin,
-    crawler,
 )
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles

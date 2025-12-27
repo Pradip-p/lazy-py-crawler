@@ -13,7 +13,15 @@ def get_playwright_proxy() -> Optional[Dict[str, str]]:
         return None
 
     parsed = urlparse(proxy_url)
-    proxy_dict = {"server": f"{parsed.scheme}://{parsed.hostname}:{parsed.port}"}
+
+    # For Playwright, the 'server' should not contain credentials if they are passed separately.
+    # However, many proxies work fine if you just pass the full URL as 'server'.
+    # We'll try to pass it as just the server and credentials separately for better compatibility.
+    server = f"{parsed.scheme}://{parsed.hostname}"
+    if parsed.port:
+        server += f":{parsed.port}"
+
+    proxy_dict = {"server": server}
 
     if parsed.username:
         proxy_dict["username"] = parsed.username

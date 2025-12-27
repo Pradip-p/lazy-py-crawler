@@ -11,6 +11,8 @@ import time
 from scrapy.exceptions import IgnoreRequest
 from scrapy.downloadermiddlewares.retry import RetryMiddleware
 from scrapy.utils.response import response_status_message
+import random
+import asyncio
 
 
 class CrawlerSpiderMiddleware:
@@ -116,3 +118,25 @@ class CustomRetryMiddleware(RetryMiddleware):
         retryreq.meta["retry_times"] = request.meta.get("retry_times", 0) + 1
         retryreq.dont_filter = True
         return retryreq
+
+
+class HumanBehaviorMiddleware:
+    """
+    Middleware to simulate human behavior by adding random delays and jitter.
+    """
+
+    def __init__(self, min_delay=1, max_delay=3):
+        self.min_delay = min_delay
+        self.max_delay = max_delay
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        min_delay = crawler.settings.getfloat("HUMAN_MIN_DELAY", 1.0)
+        max_delay = crawler.settings.getfloat("HUMAN_MAX_DELAY", 3.0)
+        return cls(min_delay=min_delay, max_delay=max_delay)
+
+    async def process_request(self, request, spider):
+        delay = random.uniform(self.min_delay, self.max_delay)
+        spider.logger.debug(f"Simulating human behavior: Sleeping for {delay:.2f}s")
+        await asyncio.sleep(delay)
+        return None

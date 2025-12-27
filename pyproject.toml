@@ -40,6 +40,7 @@ dependencies = [
     "brotli>=1.2.0",
     "slowapi==0.1.9",
     "alembic==1.17.2",
+    "playwright-stealth==2.0.0",
 ]
 
 [project.urls]

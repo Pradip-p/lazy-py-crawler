@@ -33,6 +33,13 @@ class LazyBaseCrawler(scrapy.Spider):
         # Inject proxy context if configured
         proxy_context = get_playwright_proxy()
         if proxy_context:
-            meta["playwright_context"] = {"proxy": proxy_context}
+            # Use unique context name for different proxies to ensure rotation
+            import hashlib
+
+            proxy_id = hashlib.md5(str(proxy_context).encode()).hexdigest()
+            meta["playwright_context"] = f"proxy-{proxy_id}"
+            meta["playwright_context_kwargs"] = {"proxy": proxy_context}
+            # Ensure we don't have a conflicting 'proxy' key in meta
+            meta.pop("proxy", None)
 
         return scrapy.Request(url, callback=callback, meta=meta, **kwargs)

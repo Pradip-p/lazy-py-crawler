@@ -25,6 +25,15 @@ class EnhancedProxyMiddleware:
         return cls(rotation_strategy=strategy)
 
     def process_request(self, request, spider):
+        # Skip if this is a Playwright request that already has a context/proxy configured
+        if request.meta.get("playwright_context") or request.meta.get(
+            "playwright_context_kwargs"
+        ):
+            logger.debug(
+                f"Skipping proxy middleware for Playwright request: {request.url}"
+            )
+            return None
+
         proxy_url = proxy_manager.get_proxy(strategy=self.strategy)
         if proxy_url:
             request.meta["proxy"] = proxy_url

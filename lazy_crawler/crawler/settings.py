@@ -50,7 +50,7 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 256
 CONCURRENT_REQUESTS_PER_IP = 256
 
 # Disable cookies (enabled by default)
-COOKIES_ENABLED = False
+COOKIES_ENABLED = True
 
 # Disable Telnet Console (enabled by default)
 TELNETCONSOLE_ENABLED = True
@@ -168,6 +168,7 @@ USER_AGENT = get_user_agent("random")
 DOWNLOADER_MIDDLEWARES = {
     "lazy_crawler.crawler.proxymiddleware.EnhancedProxyMiddleware": 410,
     "lazy_crawler.crawler.middlewares.CrawlerSpiderMiddleware": 400,
+    "lazy_crawler.crawler.middlewares.HumanBehaviorMiddleware": 350,
     "lazy_crawler.crawler.middlewares.RandomUserAgentMiddleware": 120,
     "scrapy.spidermiddlewares.referer.RefererMiddleware": 80,
     "scrapy.downloadermiddlewares.retry.RetryMiddleware": 90,
@@ -189,5 +190,33 @@ DOWNLOAD_HANDLERS = {
 }
 
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
+
+# Playwright Context and Stealth Settings
+PLAYWRIGHT_LAUNCH_OPTIONS = {
+    "headless": True,
+    "args": [
+        "--disable-blink-features=AutomationControlled",
+        "--font-render-hinting=none",
+    ],
+}
+
+PLAYWRIGHT_DEFAULT_NAVIGATION_TIMEOUT = 60000
+
+PLAYWRIGHT_BROWSER_TYPE = "chromium"
+
+PLAYWRIGHT_CONTEXT_ARGS = {
+    "viewport": {"width": 1920, "height": 1080},
+    "user_agent": get_user_agent("random"),
+    "java_script_enabled": True,
+    "ignore_https_errors": True,
+}
+
+# Human Behavior Settings
+HUMAN_MIN_DELAY = 1.0
+HUMAN_MAX_DELAY = 5.0
+
+# Stealth settings
+PLAYWRIGHT_STEALTH_ENABLED = True
+PLAYWRIGHT_PAGE_INIT_CALLBACK = "lazy_crawler.lib.playwright_utils.init_page"
 
 # settings.py

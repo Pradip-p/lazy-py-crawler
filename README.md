@@ -116,7 +116,7 @@ class DynamicAgent(LazyBaseCrawler):
 
     def start_requests(self):
         yield scrapy.Request(
-            "https://dynamic-site.com",
+            "https://example.com",
             meta={"playwright": True},
             callback=self.parse
         )
@@ -212,6 +212,14 @@ docker compose up --build -d
 ## Customization
 
 The framework is designed to be modified. You can extend `LazyBaseCrawler` or implement custom pipelines to handle specific data requirements.
+
+## Commercial Support
+
+Need help building complex spiders? We offer expert integration services.
+
+- **Custom Spider Development**: We build the scraper for you.
+- **Enterprise SLA**: Guaranteed support and maintenance.
+- [**Hire an Expert**](mailto:thapapradip542@gmail.com)
 
 ## Contributing
 

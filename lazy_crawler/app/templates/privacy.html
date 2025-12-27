@@ -4,39 +4,50 @@
 
 {% block content %}
 <section class="section">
-    <div class="container" style="max-width: 800px;">
-        <h1 style="margin-bottom: 2rem;">Privacy Policy</h1>
-        <p style="color: var(--text-muted); margin-bottom: 2rem;">Last updated: December 21, 2025</p>
+    <div class="container" style="max-width: 900px; padding: 4rem 1rem;">
+        <h1 style="margin-bottom: 2rem; color: var(--slack-purple);">Privacy Policy</h1>
+        <p style="color: var(--text-muted); margin-bottom: 3rem; font-style: italic;">Last updated: December 27, 2025</p>
 
-        <h2 style="margin: 2rem 0 1rem;">1. Data Ownership & Privacy</h2>
-        <p style="margin-bottom: 1.5rem;">The data processed through Crawlio Intelligence remains your exclusive
-            property. We do not store, mirror, or commercialize your extracted insights. For self-hosted instances, all
-            data remains within your local infrastructure. Enterprise-tier data is processed via secure, isolated
-            environments.</p>
+        <div class="privacy-content" style="line-height: 1.8; color: #444;">
+            <h2 style="margin: 2rem 0 1rem; color: #222;">1. Introduction</h2>
+            <p style="margin-bottom: 1.5rem;">Crawlio Intelligence ("we", "us", or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard information when you use our web scraping platform and services, particularly for our clients in Australia, the United States, and globally.</p>
 
-        <h2 style="margin: 2rem 0 1rem;">2. Responsible Usage & Compliance</h2>
-        <p style="margin-bottom: 1.5rem;">Users are responsible for ensuring that their data acquisition activities
-            align with target websites' terms, robots.txt protocols, and global regulations such as GDPR and CCPA.
-            Crawlio Intelligence provides the tools for ethical data collection, but final implementation is the user's
-            responsibility.</p>
+            <h2 style="margin: 2rem 0 1rem; color: #222;">2. Information We Collect</h2>
+            <p style="margin-bottom: 1.5rem;">We collect information that you provide directly to us when you register for an account, request a consultation, or use our services. This may include:</p>
+            <ul style="margin-bottom: 1.5rem; padding-left: 1.5rem;">
+                <li><strong>Account Information:</strong> Name, professional email address, company name, and contact details.</li>
+                <li><strong>Technical Data:</strong> IP addresses, browser type, and usage patterns when accessing our dashboard.</li>
+                <li><strong>Service Data:</strong> Configurations, target URLs, and metadata related to your scraping projects.</li>
+            </ul>
 
-        <h2 style="margin: 2rem 0 1rem;">3. Data Security</h2>
-        <p style="margin-bottom: 1.5rem;">We employ advanced security protocols to safeguard your configurations and
-            credentials. API keys and connection strings are encrypted and managed strictly through secure environment
-            variables.</p>
+            <h2 style="margin: 2rem 0 1rem; color: #222;">3. Data Ownership & Processing</h2>
+            <p style="margin-bottom: 1.5rem;"><strong>Your Data is Yours.</strong> Any data extracted or processed through Crawlio Intelligence remains your exclusive property. We do NOT:</p>
+            <ul style="margin-bottom: 1.5rem; padding-left: 1.5rem;">
+                <li>Sell or commercialize your extracted insights.</li>
+                <li>Mirror your data for our own use.</li>
+                <li>Use your proprietary data to train AI models without explicit consent.</li>
+            </ul>
 
-        <h2 style="margin: 2rem 0 1rem;">4. AI Processing Privacy</h2>
-        <p style="margin-bottom: 1.5rem;">Data analysis performed through our AI modules uses secure, state-of-the-art
-            models. Your proprietary data is never used for training external models without explicit authorization.</p>
+            <h2 style="margin: 2rem 0 1rem; color: #222;">4. International Compliance</h2>
+            <p style="margin-bottom: 1rem;">We adhere to the highest global standards for data protection:</p>
+            <ul style="margin-bottom: 1.5rem; padding-left: 1.5rem;">
+                <li><strong>Australia:</strong> We comply with the <em>Australian Privacy Act 1988</em> and the Australian Privacy Principles (APPs).</li>
+                <li><strong>USA:</strong> we adhere to state-specific regulations including the <em>California Consumer Privacy Act (CCPA)</em>.</li>
+                <li><strong>EU/UK:</strong> We maintain <em>GDPR</em> readiness for all data related to residents of the European Economic Area.</li>
+            </ul>
 
-        <h2 style="margin: 2rem 0 1rem;">5. Data Retention</h2>
-        <p style="margin-bottom: 1.5rem;">Account-level information is retained while your platform access is active.
-            Data deletion requests are processed promptly. Backup cycles for managed instances follow a strict 30-day
-            rotation before final erasure.</p>
+            <h2 style="margin: 2rem 0 1rem; color: #222;">5. Data Security</h2>
+            <p style="margin-bottom: 1.5rem;">We employ SOC 2 Type II compliant security protocols. This includes end-to-end encryption for data in transit and at rest, regular penetration testing, and strict access controls via encrypted environment variables.</p>
 
-        <h2 style="margin: 2rem 0 1rem;">6. Policy Iteration</h2>
-        <p>This policy may be refined to reflect evolving regulatory landscapes. Active users will be notified of
-            material changes through standard communication channels.</p>
+            <h2 style="margin: 2rem 0 1rem; color: #222;">6. Cookies and Tracking</h2>
+            <p style="margin-bottom: 1.5rem;">We use functional cookies to maintain your session and analyze dashboard performance. You can manage your cookie preferences through your browser settings.</p>
+
+            <h2 style="margin: 2rem 0 1rem; color: #222;">7. Your Rights</h2>
+            <p style="margin-bottom: 1.5rem;">You have the right to access, correct, or delete your personal information. To exercise these rights, or if you have questions about our Australian Privacy Act compliance, please contact our Data Protection Officer.</p>
+
+            <h2 style="margin: 2rem 0 1rem; color: #222;">8. Contact Us</h2>
+            <p style="margin-bottom: 1.5rem;">For privacy-related inquiries, please email: <a href="mailto:lazycrawler@gmail.com" style="color: var(--slack-purple);">lazycrawler@gmail.com</a></p>
+        </div>
     </div>
 </section>
 {% endblock %}

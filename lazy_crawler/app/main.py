@@ -5,7 +5,16 @@ Minimal configuration - all routes and settings are modularized
 
 from lazy_crawler.app.database import init_db
 from lazy_crawler.app import config
-from lazy_crawler.app.routers import auth, ds, contact, pages, data, health, admin
+from lazy_crawler.app.routers import (
+    auth,
+    ds,
+    contact,
+    pages,
+    data,
+    health,
+    admin,
+    crawler,
+)
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -56,7 +65,6 @@ app.include_router(pages.router)
 app.include_router(data.router)
 app.include_router(health.router)
 app.include_router(admin.router)
-
 
 # Mount Static Files
 app.mount("/static", StaticFiles(directory=config.STATIC_DIR), name="static")

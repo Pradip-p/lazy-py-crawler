@@ -3,10 +3,10 @@ Health check and system monitoring endpoints
 """
 
 from fastapi import APIRouter
-from lazy_crawler.api.database import engine
+from lazy_crawler.app.database import engine
 from sqlalchemy import text
 from pymongo import MongoClient
-from lazy_crawler.api import config
+from lazy_crawler.app import config
 
 router = APIRouter(tags=["health"])
 

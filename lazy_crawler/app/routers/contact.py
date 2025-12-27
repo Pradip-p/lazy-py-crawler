@@ -1,13 +1,13 @@
 from fastapi import APIRouter, HTTPException, Depends, Request
-from lazy_crawler.api.database.models import ContactSubmission
+from lazy_crawler.app.database.models import ContactSubmission
 from pydantic import BaseModel, EmailStr
-from lazy_crawler.api.limiter import limiter
+from lazy_crawler.app.limiter import limiter
 from fastapi import APIRouter, Request, Depends
-from lazy_crawler.api import config
-from lazy_crawler.api.database import User
+from lazy_crawler.app import config
+from lazy_crawler.app.database import User
 from typing import Optional
 import os
-from lazy_crawler.api.database import get_session, User
+from lazy_crawler.app.database import get_session, User
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 

@@ -5,9 +5,9 @@ Page routes - template rendering for web pages
 from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse, FileResponse
-from lazy_crawler.api import config
-from lazy_crawler.api.auth import get_current_user_optional
-from lazy_crawler.api.database import User
+from lazy_crawler.app import config
+from lazy_crawler.app.auth import get_current_user_optional
+from lazy_crawler.app.database import User
 from typing import Optional
 import os
 

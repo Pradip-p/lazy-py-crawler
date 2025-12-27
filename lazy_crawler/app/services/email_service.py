@@ -1,6 +1,6 @@
 import aiosmtplib
 from email.message import EmailMessage
-from lazy_crawler.api import config
+from lazy_crawler.app import config
 import logging
 
 logger = logging.getLogger(__name__)

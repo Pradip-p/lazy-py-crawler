@@ -7,7 +7,7 @@ authors = [
     { name = "Pradip Thapa", email = "thapapradip542@gmail.com" }
 ]
 license = { text = "MIT" }
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "scrapy>=2.13.4",
     "ipdb==0.13.13",
@@ -27,18 +27,19 @@ dependencies = [
     "python-dotenv==1.0.1",
     "fastapi==0.111.0",
     "uvicorn==0.30.1",
-    "sqlmodel",
-    "asyncpg",
-    "passlib[bcrypt]",
+    "sqlmodel==0.0.30",
+    "asyncpg==0.31.0",
+    "passlib[bcrypt]==1.7.4",
     "bcrypt==3.2.2",
-    "python-jose[cryptography]",
-    "httpx",
-    "google-auth-oauthlib",
-    "itsdangerous",
-    "aiosmtplib",
-    "pydantic[email]",
+    "python-jose[cryptography]==3.5.0",
+    "httpx==0.28.1",
+    "google-auth-oauthlib==1.2.3",
+    "itsdangerous==2.2.0",
+    "aiosmtplib==5.0.0",
+    "pydantic[email]==2.12.5",
     "brotli>=1.2.0",
     "slowapi==0.1.9",
+    "alembic==1.17.2",
 ]
 
 [project.urls]

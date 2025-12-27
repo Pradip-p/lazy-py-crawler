@@ -30,7 +30,7 @@ MONGO_DATABASE = os.getenv("MONGO_DATABASE", "lazy_crawler")
 # FASTAPI CONFIGURATION
 # ============================================================================
 
-API_TITLE = "Crawlio Intelligence API"
+APP_TITLE = "Crawlio Intelligence App"
 API_DESCRIPTION = (
     "API for premium market intelligence and automated business data extraction"
 )
@@ -89,9 +89,9 @@ UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "uploads")
 # APPLICATION PATHS
 # ============================================================================
 
-API_DIR = os.path.dirname(__file__)
-TEMPLATES_DIR = os.path.join(API_DIR, "templates")
-STATIC_DIR = os.path.join(API_DIR, "static")
+APP_DIR = os.path.dirname(__file__)
+TEMPLATES_DIR = os.path.join(APP_DIR, "templates")
+STATIC_DIR = os.path.join(APP_DIR, "static")
 
 # Create directories if they don't exist
 os.makedirs(TEMPLATES_DIR, exist_ok=True)

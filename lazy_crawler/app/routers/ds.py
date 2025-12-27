@@ -1,7 +1,7 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
-from lazy_crawler.api.database import get_session, User, DatasetMetadata
-from lazy_crawler.api import config
-from lazy_crawler.api.auth import get_current_user
+from lazy_crawler.app.database import get_session, User, DatasetMetadata
+from lazy_crawler.app import config
+from lazy_crawler.app.auth import get_current_user
 from sqlmodel.ext.asyncio.session import AsyncSession
 from pymongo import MongoClient
 import pandas as pd

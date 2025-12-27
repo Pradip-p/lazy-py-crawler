@@ -228,5 +228,3 @@ fileInput.onchange = async () => {
         fileInput.value = ''; // Reset input
     }
 };
-
-

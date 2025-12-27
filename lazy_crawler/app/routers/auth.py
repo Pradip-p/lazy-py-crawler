@@ -3,14 +3,14 @@ from fastapi.responses import RedirectResponse, JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select
-from lazy_crawler.api.database import get_session, User
-from lazy_crawler.api.auth import (
+from lazy_crawler.app.database import get_session, User
+from lazy_crawler.app.auth import (
     get_password_hash,
     verify_password,
     create_access_token,
     get_current_user,
 )
-from lazy_crawler.api import config
+from lazy_crawler.app import config
 import httpx
 from pydantic import BaseModel
 from datetime import timedelta

@@ -3,7 +3,7 @@ Data routes - MongoDB collections and data endpoints
 """
 
 from fastapi import APIRouter, HTTPException, Query
-from lazy_crawler.api import config
+from lazy_crawler.app import config
 from pymongo import MongoClient
 from typing import Optional
 

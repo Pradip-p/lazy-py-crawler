@@ -156,7 +156,7 @@ Crawlio Intelligence comes with a premium, decision-centric dashboard to visuali
 **Start the Dashboard**:
 
 ```bash
-uv run python -m lazy_crawler.api.main
+uv run python -m lazy_crawler.app.main
 ```
 
 Then visit:

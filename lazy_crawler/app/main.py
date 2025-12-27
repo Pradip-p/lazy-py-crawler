@@ -3,9 +3,9 @@ FastAPI Application Entry Point
 Minimal configuration - all routes and settings are modularized
 """
 
-from lazy_crawler.api.database import init_db
-from lazy_crawler.api import config
-from lazy_crawler.api.routers import auth, ds, contact, pages, data, health, admin
+from lazy_crawler.app.database import init_db
+from lazy_crawler.app import config
+from lazy_crawler.app.routers import auth, ds, contact, pages, data, health, admin
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,7 +13,7 @@ from fastapi.middleware.gzip import GZipMiddleware
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
-from lazy_crawler.api.limiter import limiter
+from lazy_crawler.app.limiter import limiter
 
 
 from contextlib import asynccontextmanager
@@ -28,7 +28,7 @@ async def lifespan(app: FastAPI):
 
 # Initialize FastAPI app
 app = FastAPI(
-    title=config.API_TITLE,
+    title=config.APP_TITLE,
     description=config.API_DESCRIPTION,
     version=config.API_VERSION,
     lifespan=lifespan,

@@ -1,4 +1,5 @@
 <div align="center">
+    <img src="/home/pradip/.gemini/antigravity/brain/4d803152-c141-4aa9-93ff-3ddf17062616/lazy_crawler_hero_1766838635858.png" alt="Lazy Crawler Hero" width="600px" />
     <h1>Lazy Crawler</h1>
     <p><strong>Extensible web crawling and data extraction framework.</strong></p>
     <p>A technical foundation for building scalable data pipelines using Scrapy and Playwright.</p>
@@ -6,6 +7,20 @@
         <img src="https://img.shields.io/github/v/release/pradip-p/lazy-crawler?logo=github" alt="Release Version" />
     </a>
 </div>
+
+## 🌐 Architecture Overview
+
+```mermaid
+graph TD
+    A[Target Website] -->|Spider Scans| B(Lazy Crawler Core)
+    B -->|Dynamic Rendering| C{Playwright}
+    C -->|Rendered HTML| B
+    B -->|Extracted Data| D{Data Pipelines}
+    D -->|Export| E[Google Sheets]
+    D -->|Export| F[PostgreSQL / MongoDB]
+    D -->|Export| G[JSON / CSV]
+    H[Admin Dashboard] -->|Monitor| B
+```
 
 <br/>
 
@@ -20,15 +35,26 @@
 
 ---
 
-**Lazy Crawler** is an extensible web crawling framework designed for developers who need to build high-performance data extraction pipelines. It combines the speed of **Scrapy** with the dynamic rendering capabilities of **Playwright** to handle complex web environments.
+**Lazy Crawler** is an extensible web crawling framework designed for both developers and organizations that need robust data extraction pipelines. It combines the speed of **Scrapy** with the dynamic rendering capabilities of **Playwright** to handle modern websites that use heavy JavaScript.
+
+## 🌟 What is Lazy Crawler?
+
+If you need to collect data from websites—whether it's product prices, news articles, or social media updates—Lazy Crawler handles the hard parts for you:
+
+- **Automatic Scrolling & Clicking**: It can "browse" like a human to see content that only appears when you scroll or click.
+- **Multiple Save Locations**: Send your data directly to Excel (CSV), Google Sheets, or professional databases (PostgreSQL/MongoDB).
+- **Security & Reliability**: Built-in protection against being blocked, including smart rate limiting and proxy support.
+- **Easy Dashboard**: A simple web interface to see how your data collection is going in real-time.
 
 ## Features
 
-- **Automated Workflows**: Streamlined project structure for rapid deployment of new spiders.
-- **Dynamic Content Support**: Built-in Playwright integration for rendering JavaScript-heavy applications.
-- **Multi-backend Support**: Native export functionality for **MongoDB, PostgreSQL, CSV, JSON, and Google Sheets**.
-- **Developer First**: Focuses on clean abstractions and extensibility over rigid configurations.
-- **Resilient Extraction**: Integrated support for proxy rotation and anti-detection measures.
+- **Automated Workflows**: Fast setup for new data collection tasks ("spiders").
+- **Modern Web Support**: Built-in Playwright integration for sites like Amazon, Twitter, or React apps.
+- **Google Sheets Integration**: Push data directly to your spreadsheets for easy sharing.
+- **Smart Rate Limiting (Enhanced)**: Protects the application and target websites from abuse by ensuring fair usage, now with advanced IP and user identification that cannot be easily bypassed.
+- **Integrated Proxy Manager**: Built-in system for automatic proxy rotation and health checks, compatible with both Scrapy and Playwright.
+- **Developer First**: Clean, modular code that is easy to extend.
+- **Production Ready**: Full Docker support for stable, long-running deployments.
 
 ## Quick Start
 

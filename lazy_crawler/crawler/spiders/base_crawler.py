@@ -23,8 +23,16 @@ class LazyBaseCrawler(scrapy.Spider):
 
     def playwright_request(self, url, callback, **kwargs):
         """
-        Helper to create a Playwright-enabled request.
+        Helper to create a Playwright-enabled request with proxy support.
         """
+        from lazy_crawler.lib.playwright_proxy import get_playwright_proxy
+
         meta = kwargs.get("meta", {})
         meta["playwright"] = True
+
+        # Inject proxy context if configured
+        proxy_context = get_playwright_proxy()
+        if proxy_context:
+            meta["playwright_context"] = {"proxy": proxy_context}
+
         return scrapy.Request(url, callback=callback, meta=meta, **kwargs)

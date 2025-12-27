@@ -166,7 +166,7 @@ USER_AGENT = get_user_agent("random")
 # CHANGE_PROXY_AFTER = 10
 
 DOWNLOADER_MIDDLEWARES = {
-    # 'lazy_crawler.crawler.proxymiddleware.ProxyMiddleware': 543,
+    "lazy_crawler.crawler.proxymiddleware.EnhancedProxyMiddleware": 410,
     "lazy_crawler.crawler.middlewares.CrawlerSpiderMiddleware": 400,
     "lazy_crawler.crawler.middlewares.RandomUserAgentMiddleware": 120,
     "scrapy.spidermiddlewares.referer.RefererMiddleware": 80,
@@ -174,11 +174,14 @@ DOWNLOADER_MIDDLEWARES = {
     "scrapy.downloadermiddlewares.cookies.CookiesMiddleware": 130,
     "scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware": 810,
     "scrapy.downloadermiddlewares.redirect.RedirectMiddleware": 900,
-    # 'scraper.middlewares.ScraperDownloaderMiddleware': 1000
-    # 'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
-    # 'scrapy_proxies.RandomProxy': 80,
-    # 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
 }
+
+# Proxy Rotation Configuration
+PROXY_LIST = [
+    # Format: http://user:pass@host:port or http://host:port
+    f"http://{PROXY_USERNAME}:{PROXY_PASSWORD}@{PROXY_SERVER}",
+]
+PROXY_ROTATION_STRATEGY = "random"  # or "round_robin"
 # Playwright settings
 DOWNLOAD_HANDLERS = {
     "http": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",

@@ -1,6 +1,6 @@
 [project]
 name = "lazy-crawler"
-version = "0.2.0"
+version = "0.1.0"
 description = "A powerful and extensible web crawling framework built with Scrapy and Playwright."
 readme = "README.md"
 authors = [

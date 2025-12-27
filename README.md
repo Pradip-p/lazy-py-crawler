@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="/home/pradip/.gemini/antigravity/brain/4d803152-c141-4aa9-93ff-3ddf17062616/lazy_crawler_hero_1766838635858.png" alt="Lazy Crawler Hero" width="600px" />
+    <img src="static/lazy_crawler_hero.png" alt="Lazy Crawler Hero" width="600px" />
     <h1>Lazy Crawler</h1>
     <p><strong>Extensible web crawling and data extraction framework.</strong></p>
     <p>A technical foundation for building scalable data pipelines using Scrapy and Playwright.</p>

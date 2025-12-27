@@ -2,6 +2,6 @@
 API Routers package
 """
 
-from lazy_crawler.api.routers import auth, ai, ds, contact, pages, data, health
+from lazy_crawler.api.routers import auth, ds, contact, pages, data, health, admin
 
-__all__ = ["auth", "ai", "ds", "contact", "pages", "data", "health"]
+__all__ = ["auth", "ds", "contact", "pages", "data", "health", "admin"]

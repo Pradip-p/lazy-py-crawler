@@ -122,9 +122,9 @@ def read_company(
     """Company page (Teams + Careers)"""
     team_members = [
         {
-            "name": "Alex Morgan",
+            "name": "Tilak Pathak",
             "role": "Founder & CEO",
-            "image": "https://ui-avatars.com/api/?name=Alex+Morgan&background=4a154b&color=fff",
+            "image": "https://ui-avatars.com/api/?name=Tilak+Pathak&background=4a154b&color=fff",
         },
         {
             "name": "Sarah Chen",

@@ -190,14 +190,14 @@
         margin-bottom: 0.5rem;
         padding-bottom: 0.5rem;
     }
-    
+
     .dropdown-item {
         padding: 0.5rem 0;
         color: var(--text-muted) !important;
         text-align: center; /* Center sub-items */
         font-size: 0.9rem !important;
     }
-    
+
     .dropdown-item:hover {
         background: transparent;
         color: var(--slack-purple) !important;

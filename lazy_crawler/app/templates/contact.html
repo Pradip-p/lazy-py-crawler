@@ -39,7 +39,25 @@
 </style>
 {% endblock %}
 
+
 {% block content %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://pradipthapa.info.np"
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Contact",
+    "item": "https://pradipthapa.info.np/contact"
+  }]
+}
+</script>
 <section class="hero" style="padding-bottom: 8rem;">
     <div class="container">
         <h1>Connect with us</h1>

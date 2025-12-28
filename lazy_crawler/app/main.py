@@ -67,7 +67,21 @@ app.include_router(health.router)
 app.include_router(admin.router)
 app.include_router(blog.router)
 
-# Mount Static Files
+from starlette.exceptions import HTTPException as StarletteHTTPException
+from fastapi import Request
+
+
+@app.exception_handler(StarletteHTTPException)
+async def custom_http_exception_handler(request: Request, exc: StarletteHTTPException):
+    if exc.status_code == 404:
+        from lazy_crawler.app.routers.pages import templates
+
+        return templates.TemplateResponse(
+            "404.html", {"request": request}, status_code=404
+        )
+    return await _rate_limit_exceeded_handler(request, exc)
+
+
 app.mount("/static", StaticFiles(directory=config.STATIC_DIR), name="static")
 
 

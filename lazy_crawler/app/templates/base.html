@@ -4,32 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Crawlio  | Premium Market  Platform{% endblock %}</title>
+    <title>{% block title %}Crawlio | Enterprise Web Scraping & Data Extraction Services{% endblock %}</title>
     <meta name="description"
-        content="{% block description %}Crawlio : Access the world's data with our premium market  platform. Automate business data extraction and unlock AI-powered insights for a competitive edge.{% endblock %}">
+        content="{% block description %}Automated web scraping and data extraction services. Get clean, structured data from any website. Trusted by enterprises for market intelligence and lead generation.{% endblock %}">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', path='/favicon_io/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', path='/favicon_io/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', path='/favicon_io/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', path='/favicon_io/site.webmanifest') }}">
 
     <!-- SEO Meta Tags -->
+    <meta name="google-site-verification" content="YOUR_VERIFICATION_TOKEN" />
     <meta name="keywords"
-        content="market , business data extraction, AI data insights, competitive monitoring, automated web data, lead generation data, market research tools, business  automation, USA market data, Australia data extraction, Nepal business ">
-    <meta name="author" content="Crawlio  Team">
+        content="web scraping service, data extraction API, automated scraping, enterprise crawler, python web scraper, google search scraping, market intelligence, business data extraction, AI data insights, competitive monitoring, automated web data, lead generation data, market research tools, business automation, USA market data, Australia data extraction">
+    <meta name="author" content="Crawlio Team">
     <link rel="canonical" href="https://pradipthapa.info.np{{ request.url.path }}">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://pradipthapa.info.np{{ request.url.path }}">
     <meta property="og:title"
-        content="{% block og_title %}Crawlio  | Enterprise-Grade Market Insights{% endblock %}">
+        content="{% block og_title %}Crawlio | Enterprise Web Scraping & Data Extraction Services{% endblock %}">
     <meta property="og:description"
-        content="{% block og_description %}Unleash the power of data with Crawlio . Automated extraction for strategic business decisions.{% endblock %}">
+        content="{% block og_description %}Automated web scraping and data extraction services. Get clean, structured data from any website. Trusted by enterprises for market intelligence and lead generation.{% endblock %}">
     <meta property="og:image" content="https://pradipthapa.info.np/static/images/og-image.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://pradipthapa.info.np{{ request.url.path }}">
     <meta property="twitter:title"
-        content="{% block twitter_title %}Crawlio  | Enterprise-Grade Market Insights{% endblock %}">
+        content="{% block twitter_title %}Crawlio | Enterprise Web Scraping & Data Extraction Services{% endblock %}">
     <meta property="twitter:description"
-        content="{% block twitter_description %}Unleash the power of data with Crawlio . Automated extraction for strategic business decisions.{% endblock %}">
+        content="{% block twitter_description %}Automated web scraping and data extraction services. Get clean, structured data from any website. Trusted by enterprises for market intelligence and lead generation.{% endblock %}">
     <meta property="twitter:image" content="https://pradipthapa.info.np/static/images/og-image.jpg">
 
     <!-- Fonts -->

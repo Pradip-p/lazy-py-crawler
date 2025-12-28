@@ -6,6 +6,69 @@
 services.{% endblock %}
 
 {% block content %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What's included in each pricing tier?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The Standard (free) tier includes basic web scraping, community support, and open-source access. Pro Dashboard ($49/mo) adds unlimited collections, AI-powered analytics, live visualization, and priority support. Enterprise tier includes dedicated infrastructure, custom integrations, 99.9% SLA, and 24/7 dedicated support."
+    }
+  }, {
+    "@type": "Question",
+    "name": "How do you handle JavaScript-heavy websites?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "We use advanced Playwright integration to render JavaScript-heavy sites (React, Vue, Angular) in real browsers. This ensures we capture fully rendered content handling dynamic loading, infinite scroll, and complex interactions seamlessly."
+    }
+  }, {
+    "@type": "Question",
+    "name": "Is Crawlio compliant with Australian Privacy Act and CCPA/GDPR?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, absolutely. We're fully compliant with the Australian Privacy Act 1988, CCPA, and GDPR. Our infrastructure is SOC 2 Type II certified, and we only collect publicly available data."
+    }
+  }, {
+    "@type": "Question",
+    "name": "What data formats do you support?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "We deliver data in CSV, Excel, JSON, Google Sheets, and via webhooks/APIs. You can also integrate directly with your database (MongoDB, PostgreSQL) or data warehouse (Snowflake, BigQuery)."
+    }
+  }, {
+    "@type": "Question",
+    "name": "Do you have local teams in Australia and USA?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes! We have dedicated support teams operating in Australian (AEST/AEDT) and US (EST/PST) time zones suitable for your business hours."
+    }
+  }, {
+    "@type": "Question",
+    "name": "How quickly can I start collecting data?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "For standard use cases, you can start immediately with our open-source tool. For custom enterprise solutions, we typically deliver first data samples within 48 hours. Full production deployment usually takes 3-5 business days."
+    }
+  }, {
+    "@type": "Question",
+    "name": "Do you offer free trials for the Pro Dashboard?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes! Contact us for a 14-day free trial of the Pro Dashboard. For Enterprise customers, we offer a 30-day pilot program."
+    }
+  }, {
+    "@type": "Question",
+    "name": "What makes Crawlio different from other scraping services?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Unlike basic scraping tools, Crawlio combines automation, AI, and human expertise. We deliver structured, validated, production-ready data with predictive insights and anomaly detection."
+    }
+  }]
+}
+</script>
 <section class="section hero" style="padding: 4rem 0 6rem 0;">
     <div class="container text-center">
         <h1 style="font-size: 3rem;">Frequently Asked Questions</h1>

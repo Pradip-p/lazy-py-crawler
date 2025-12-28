@@ -3,6 +3,23 @@
 {% block title %}Blog | Crawlio {% endblock %}
 
 {% block content %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://pradipthapa.info.np"
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Blog",
+    "item": "https://pradipthapa.info.np/blog"
+  }]
+}
+</script>
 <section class="section" style="padding-top: 4rem;">
     <div class="container">
         <h1 class="section-title text-center" style="margin-bottom: 1rem;">Latest Updates</h1>
@@ -12,7 +29,7 @@
             {% for post in posts %}
             <div class="card" style="display: flex; flex-direction: column;">
                 {% if post.image_url %}
-                <img src="{{ post.image_url }}" alt="{{ post.title }}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0; margin: -2rem -2rem 1.5rem -2rem; width: calc(100% + 4rem);">
+                <img src="{{ post.image_url }}" alt="{{ post.title }}" height="200" loading="lazy" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0; margin: -2rem -2rem 1.5rem -2rem; width: calc(100% + 4rem);">
                 {% endif %}
                 <div style="flex-grow: 1;">
                     <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">

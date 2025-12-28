@@ -40,10 +40,14 @@
     <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', path='/cookies.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', path='/blog.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/toast.css') }}">
     {% block head %}{% endblock %}
 </head>
 
 <body>
+    <!-- Global Toast Container -->
+    <div id="toast-container"></div>
+
     <div class="page-wrapper">
         <div class="announcement-bar">
             <div class="container announcement-container">
@@ -55,7 +59,7 @@
         </div>
         <nav>
             <div class="container nav-container">
-                <a href="/" class="logo">Crawlio </a>
+                <a href="/" class="logo">crawlio </a>
                 <button class="mobile-menu-toggle" aria-label="Toggle menu">
                     <span></span>
                     <span></span>
@@ -157,6 +161,7 @@
 
     {% include 'includes/cookie_consent.html' %}
     <script src="{{ url_for('static', path='/cookies.js') }}"></script>
+    <script src="{{ url_for('static', path='/toast.js') }}"></script>
     {% block scripts %}{% endblock %}
 </body>
 

@@ -55,11 +55,18 @@
 </section>
 {% endblock %}
 
+
+{% block scripts %}
 {% block scripts %}
 <script>
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
+
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerText;
+        submitBtn.innerText = 'Signing In...';
+        submitBtn.disabled = true;
 
         try {
             const response = await fetch('/auth/token', {
@@ -71,21 +78,21 @@
                 const data = await response.json();
                 // Store in cookie
                 document.cookie = `access_token=Bearer ${data.access_token}; path=/; max-age=1800; SameSite=Lax`;
-                window.location.href = '/dashboard';
+                showToast('Login successful! Redirecting...', 'success');
+                setTimeout(() => {
+                    window.location.href = '/dashboard';
+                }, 800);
             } else {
-                alert('Login failed. Please check your credentials.');
+                showToast('Login failed. Please check your credentials.', 'error');
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('An error occurred. Please try again.');
+            showToast('An error occurred. Please try again.', 'error');
+        } finally {
+            submitBtn.innerText = originalText;
+            submitBtn.disabled = false;
         }
     });
-
-    // Check for logout message
-    const urlParams = new URLSearchParams(window.location.search);
-    const message = urlParams.get('message');
-    if (message) {
-        alert(message);
-    }
 </script>
+{% endblock %}
 {% endblock %}

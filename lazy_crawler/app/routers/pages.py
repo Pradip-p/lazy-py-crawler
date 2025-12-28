@@ -196,3 +196,9 @@ def get_sitemap():
 def get_robots():
     """Robots.txt for search engines"""
     return FileResponse(os.path.join(config.STATIC_DIR, "robots.txt"))
+
+
+@router.get("/ads.txt")
+def get_ads():
+    """Google AdSense ads.txt"""
+    return FileResponse(os.path.join(config.STATIC_DIR, "ads.txt"))

@@ -143,4 +143,5 @@ lazy
 test_p.py
 *.txt
 !robots.txt
+!ads.txt
 crawls/

@@ -37,16 +37,16 @@ graph TD
 
     Browser -->|HTTP/HTTPS| API
     Admin -->|Manage| API
-    
+
     API --> Routers
     Routers --> Auth
     Routers --> Templates
     Routers --> Core
-    
+
     Core --> Scrapy
     Core --> Playwright
     Core --> Ollama
-    
+
     API --> DB
     Core --> DB
     Core --> Redis

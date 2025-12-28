@@ -1324,7 +1324,7 @@ footer p {
         right: 0;
         flex-direction: column;
         background-color: var(--white);
-        padding: 2rem 0;
+        padding: 1rem 0; /* Reduced from 2rem */
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         transform: translateY(-100%);
         opacity: 0;
@@ -1342,7 +1342,7 @@ footer p {
     .nav-links li {
         width: 100%;
         text-align: center;
-        padding: 0.5rem 0;
+        padding: 0.25rem 0; /* Reduced from 0.5rem */
     }
 
     .nav-links a {

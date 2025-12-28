@@ -11,14 +11,45 @@
 
 ```mermaid
 graph TD
-    A[Target Website] -->|Spider Scans| B(Lazy Crawler Core)
-    B -->|Dynamic Rendering| C{Playwright}
-    C -->|Rendered HTML| B
-    B -->|Extracted Data| D{Data Pipelines}
-    D -->|Export| E[Google Sheets]
-    D -->|Export| F[PostgreSQL / MongoDB]
-    D -->|Export| G[JSON / CSV]
-    H[Admin Dashboard] -->|Monitor| B
+    subgraph Client Layer
+        Browser[Web Browser]
+        Admin[Admin Dashboard]
+    end
+
+    subgraph "Application Layer (FastAPI)"
+        API[FastAPI Backend]
+        Auth[Auth Service]
+        Routers[API Routers]
+        Templates[Jinja2 Templates]
+    end
+
+    subgraph "Data Layer"
+        DB[(PostgreSQL/SQLite)]
+        Redis[(Redis Cache)]
+    end
+
+    subgraph "Crawling Layer"
+        Core[Lazy Core]
+        Scrapy[Scrapy Engine]
+        Playwright[Playwright Renderer]
+        Ollama[Ollama AI Service]
+    end
+
+    Browser -->|HTTP/HTTPS| API
+    Admin -->|Manage| API
+    
+    API --> Routers
+    Routers --> Auth
+    Routers --> Templates
+    Routers --> Core
+    
+    Core --> Scrapy
+    Core --> Playwright
+    Core --> Ollama
+    
+    API --> DB
+    Core --> DB
+    Core --> Redis
 ```
 
 <br/>

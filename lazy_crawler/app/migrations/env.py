@@ -18,6 +18,7 @@ if config.config_file_name is not None:
 # add your model's MetaData object here
 # for 'autogenerate' support
 from lazy_crawler.app.database.models import SQLModel
+
 target_metadata = SQLModel.metadata
 
 # other values from the config, defined by the needs of env.py,
@@ -26,6 +27,7 @@ target_metadata = SQLModel.metadata
 # ... etc.
 
 from lazy_crawler.app.config import DATABASE_URL
+
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.

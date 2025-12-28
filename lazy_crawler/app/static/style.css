@@ -841,7 +841,7 @@ nav:hover {
 /* Testimonials Section - Luxury Feel */
 .testimonials-section {
     background: #fbfbfb;
-    padding: 7rem 0;
+    padding: 5rem 0 3rem 0;
 }
 
 .testimonials-grid {
@@ -1009,7 +1009,7 @@ nav:hover {
 /* Trust Badges Section */
 .trust-badges-section {
     background: #f8f8f8;
-    padding: 2.5rem 0;
+    padding: 1rem 0 2.5rem 0;
     border-top: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
 }

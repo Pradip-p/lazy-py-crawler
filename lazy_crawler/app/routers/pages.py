@@ -7,7 +7,9 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse, FileResponse
 from lazy_crawler.app import config
 from lazy_crawler.app.auth import get_current_user_optional
-from lazy_crawler.app.database import User
+from lazy_crawler.app.database import User, get_session, BlogPost
+from sqlmodel.ext.asyncio.session import AsyncSession
+from sqlmodel import select
 from typing import Optional
 import os
 
@@ -18,12 +20,30 @@ templates = Jinja2Templates(directory=config.TEMPLATES_DIR)
 
 
 @router.get("/")
-def read_root(
-    request: Request, current_user: Optional[User] = Depends(get_current_user_optional)
+async def read_root(
+    request: Request,
+    current_user: Optional[User] = Depends(get_current_user_optional),
+    session: AsyncSession = Depends(get_session),
 ):
     """Home page"""
+    # Fetch latest 3 published blog posts
+    statement = (
+        select(BlogPost)
+        .where(BlogPost.published == True)
+        .order_by(BlogPost.created_at.desc())
+        .limit(3)
+    )
+    results = await session.exec(statement)
+    latest_posts = results.all()
+
     return templates.TemplateResponse(
-        "index.html", {"request": request, "active_page": "home", "user": current_user}
+        "index.html",
+        {
+            "request": request,
+            "active_page": "home",
+            "user": current_user,
+            "latest_posts": latest_posts,
+        },
     )
 
 

@@ -30,10 +30,8 @@ MONGO_DATABASE = os.getenv("MONGO_DATABASE", "lazy_crawler")
 # FASTAPI CONFIGURATION
 # ============================================================================
 
-APP_TITLE = "Crawlio Intelligence App"
-API_DESCRIPTION = (
-    "API for premium market intelligence and automated business data extraction"
-)
+APP_TITLE = "Crawlio  App"
+API_DESCRIPTION = "API for premium market  and automated business data extraction"
 API_VERSION = "1.0.0"
 
 # CORS Configuration

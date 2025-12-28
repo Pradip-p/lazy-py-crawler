@@ -42,7 +42,7 @@ async def send_contact_email(full_name: str, email: str, message: str):
                 {formatted_message}
             </div>
             <hr style="border: none; border-top: 1px solid #eee; margin-top: 20px;">
-            <p style="font-size: 0.8rem; color: #888;">Sent from Crawlio Intelligence Notification System</p>
+            <p style="font-size: 0.8rem; color: #888;">Sent from Crawlio  Notification System</p>
         </body>
     </html>
     """

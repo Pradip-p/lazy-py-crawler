@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}Company | Crawlio Intelligence{% endblock %}
+{% block title %}Company | Crawlio {% endblock %}
 
 {% block content %}
 <!-- Curved Hero Section -->
 <section class="hero" style="padding-bottom: 8rem;">
     <div class="container">
         <h1>About Our Company</h1>
-        <p>Building the future of data intelligence with a world-class team.</p>
+        <p>Building the future of data  with a world-class team.</p>
     </div>
 </section>
 
@@ -67,7 +67,7 @@
                         <div class="job-info">
                             <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">{{ job.title }}</h3>
                             <p style="color: var(--text-muted); margin-bottom: 0.75rem; font-size: 0.95rem;">{{
-                                job.department }} • {{ job.location }}</p>
+                                job.department }} - {{ job.location }}</p>
                             <div style="display: flex; gap: 0.5rem;">
                                 {% for tag in job.tags %}
                                 <span

@@ -34,3 +34,17 @@ class ContactSubmission(SQLModel, table=True):
     email: str = Field(index=True)
     message: str
     created_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class BlogPost(SQLModel, table=True):
+    __tablename__ = "blog_posts"
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    title: str = Field(index=True)
+    slug: str = Field(index=True, unique=True)
+    content: str  # Markdown or HTML content
+    excerpt: str = Field(max_length=500)
+    image_url: Optional[str] = None
+    published: bool = Field(default=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    user_id: Optional[int] = Field(default=None, foreign_key="user.id")

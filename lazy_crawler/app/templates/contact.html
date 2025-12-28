@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Contact Support | Crawlio Intelligence{% endblock %}
+{% block title %}Contact Support | Crawlio {% endblock %}
 
 {% block head %}
 <style>
@@ -128,7 +128,7 @@
         const toast = document.createElement('div');
         toast.className = `toast toast-${type}`;
 
-        const icon = type === 'success' ? '✅' : '❌';
+        const icon = type === 'success' ? '' : '';
 
         toast.innerHTML = `
             <div class="toast-icon">${icon}</div>

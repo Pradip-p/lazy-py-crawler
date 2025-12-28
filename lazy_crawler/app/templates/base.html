@@ -4,32 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Crawlio Intelligence | Premium Market Intelligence Platform{% endblock %}</title>
+    <title>{% block title %}Crawlio  | Premium Market  Platform{% endblock %}</title>
     <meta name="description"
-        content="{% block description %}Crawlio Intelligence: Access the world's data with our premium market intelligence platform. Automate business data extraction and unlock AI-powered insights for a competitive edge.{% endblock %}">
+        content="{% block description %}Crawlio : Access the world's data with our premium market  platform. Automate business data extraction and unlock AI-powered insights for a competitive edge.{% endblock %}">
 
     <!-- SEO Meta Tags -->
     <meta name="keywords"
-        content="market intelligence, business data extraction, AI data insights, competitive monitoring, automated web data, lead generation data, market research tools, business intelligence automation, USA market data, Australia data extraction, Nepal business intelligence">
-    <meta name="author" content="Crawlio Intelligence Team">
+        content="market , business data extraction, AI data insights, competitive monitoring, automated web data, lead generation data, market research tools, business  automation, USA market data, Australia data extraction, Nepal business ">
+    <meta name="author" content="Crawlio  Team">
     <link rel="canonical" href="https://pradipthapa.info.np{{ request.url.path }}">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://pradipthapa.info.np{{ request.url.path }}">
     <meta property="og:title"
-        content="{% block og_title %}Crawlio Intelligence | Enterprise-Grade Market Insights{% endblock %}">
+        content="{% block og_title %}Crawlio  | Enterprise-Grade Market Insights{% endblock %}">
     <meta property="og:description"
-        content="{% block og_description %}Unleash the power of data with Crawlio Intelligence. Automated extraction for strategic business decisions.{% endblock %}">
+        content="{% block og_description %}Unleash the power of data with Crawlio . Automated extraction for strategic business decisions.{% endblock %}">
     <meta property="og:image" content="https://pradipthapa.info.np/static/images/og-image.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://pradipthapa.info.np{{ request.url.path }}">
     <meta property="twitter:title"
-        content="{% block twitter_title %}Crawlio Intelligence | Enterprise-Grade Market Insights{% endblock %}">
+        content="{% block twitter_title %}Crawlio  | Enterprise-Grade Market Insights{% endblock %}">
     <meta property="twitter:description"
-        content="{% block twitter_description %}Unleash the power of data with Crawlio Intelligence. Automated extraction for strategic business decisions.{% endblock %}">
+        content="{% block twitter_description %}Unleash the power of data with Crawlio . Automated extraction for strategic business decisions.{% endblock %}">
     <meta property="twitter:image" content="https://pradipthapa.info.np/static/images/og-image.jpg">
 
     <!-- Fonts -->
@@ -39,6 +39,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', path='/cookies.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/blog.css') }}">
     {% block head %}{% endblock %}
 </head>
 
@@ -49,12 +50,12 @@
                 <span class="announcement-text">
                     <strong>New Amazon API:</strong> We've just released a brand new way to scrape Amazon at scale
                 </span>
-                <a href="/register" class="announcement-btn">Start Free Trial 🐝</a>
+                <a href="/register" class="announcement-btn">Try Now</a>
             </div>
         </div>
         <nav>
             <div class="container nav-container">
-                <a href="/" class="logo">Crawlio Intelligence</a>
+                <a href="/" class="logo">Crawlio </a>
                 <button class="mobile-menu-toggle" aria-label="Toggle menu">
                     <span></span>
                     <span></span>
@@ -64,19 +65,35 @@
                     <li><a href="/" class="{{ 'active' if active_page == 'home' else '' }}">Home</a></li>
                     <li><a href="/about" class="{{ 'active' if active_page == 'about' else '' }}">About</a></li>
 
+                    <li class="dropdown">
+                        <span class="dropdown-toggle {{ 'active' if active_page in ['blog', 'faq'] else '' }}">Resources</span>
+                        <div class="dropdown-menu">
+                            <a href="/blog" class="dropdown-item">Blog</a>
+                            <a href="/faq" class="dropdown-item">FAQ</a>
+                            <a href="/company" class="dropdown-item">Team</a>
+                        </div>
+                    </li>
+
                     {% if user %}
-                    {% if user.is_superuser %}
-                    <li><a href="/admin/contacts" class="{{ 'active' if active_page == 'admin_contacts' else '' }}">📬
-                            Contacts</a></li>
-                    {% endif %}
-                    <li><a href="/dashboard" class="{{ 'active' if active_page == 'dashboard' else '' }}">Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="/auth/logout" class="logout-link">Logout</a>
-                    </li>
+                        {% if user.is_superuser %}
+                        <li class="dropdown">
+                            <span class="dropdown-toggle {{ 'active' if active_page in ['admin_contacts', 'admin_blog', 'dashboard'] else '' }}">Admin</span>
+                            <div class="dropdown-menu">
+                                <a href="/dashboard" class="dropdown-item">Dashboard</a>
+                                <a href="/admin/contacts" class="dropdown-item">Contacts</a>
+                                <a href="/admin/blog" class="dropdown-item">Manage Blog</a>
+                            </div>
+                        </li>
+                        {% else %}
+                        <li><a href="/dashboard" class="{{ 'active' if active_page == 'dashboard' else '' }}">Dashboard</a></li>
+                        {% endif %}
+
+                        <li>
+                            <a href="/auth/logout" class="logout-link">Logout</a>
+                        </li>
                     {% else %}
-                    <li><a href="/contact" class="{{ 'active' if active_page == 'contact' else '' }}">Contact</a></li>
-                    <li><a href="/register" class="btn-primary">Get Started</a></li>
+                        <li><a href="/contact" class="{{ 'active' if active_page == 'contact' else '' }}">Contact</a></li>
+                        <li><a href="/register" class="btn-primary">Get Started</a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -89,7 +106,7 @@
         {% if active_page != 'dashboard' %}
         <footer>
             <div class="container text-center">
-                <div class="footer-logo">Crawlio Intelligence</div>
+                <div class="footer-logo">Crawlio </div>
                 <div class="footer-links">
                     <a href="/">Home</a>
                     <a href="/about">About</a>
@@ -109,7 +126,7 @@
                     <a href="https://www.w3.org/TR/dx-prof-conneg/" target="_blank" rel="noopener noreferrer"
                         class="resource-link">W3C Data Standards</a>
                 </div>
-                <p>&copy; 2025 Crawlio Intelligence. Built for data driven teams.</p>
+                <p>&copy; 2025 Crawlio . Built for data driven teams.</p>
             </div>
         </footer>
         {% endif %}

@@ -15,7 +15,7 @@
     <link rel="manifest" href="{{ url_for('static', path='/favicon_io/site.webmanifest') }}">
 
     <!-- SEO Meta Tags -->
-    <meta name="google-site-verification" content="YOUR_VERIFICATION_TOKEN" />
+    <meta name="google-adsense-account" content="ca-pub-2021823000621310">
     <meta name="keywords"
         content="web scraping service, data extraction API, automated scraping, enterprise crawler, python web scraper, google search scraping, market intelligence, business data extraction, AI data insights, competitive monitoring, automated web data, lead generation data, market research tools, business automation, USA market data, Australia data extraction">
     <meta name="author" content="Crawlio Team">
@@ -45,9 +45,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', path='/cookies.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', path='/blog.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', path='/toast.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/cookies.css') }}" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="{{ url_for('static', path='/cookies.css') }}"></noscript>
+    <link rel="stylesheet" href="{{ url_for('static', path='/blog.css') }}" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="{{ url_for('static', path='/blog.css') }}"></noscript>
+    <link rel="stylesheet" href="{{ url_for('static', path='/toast.css') }}" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="{{ url_for('static', path='/toast.css') }}"></noscript>
     {% block head %}{% endblock %}
 </head>
 
@@ -61,7 +64,7 @@
                 <span class="announcement-text">
                     <strong>New Amazon API:</strong> We've just released a brand new way to scrape Amazon at scale
                 </span>
-                <a href="/register" class="announcement-btn">Try Now</a>
+                <a href="/register" class="announcement-btn">Try Amazon API</a>
             </div>
         </div>
         <nav>
@@ -182,8 +185,8 @@
     </script>
 
     {% include 'includes/cookie_consent.html' %}
-    <script src="{{ url_for('static', path='/cookies.js') }}"></script>
-    <script src="{{ url_for('static', path='/toast.js') }}"></script>
+    <script src="{{ url_for('static', path='/cookies.js') }}" defer></script>
+    <script src="{{ url_for('static', path='/toast.js') }}" defer></script>
     {% block scripts %}{% endblock %}
 </body>
 

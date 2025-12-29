@@ -1298,6 +1298,67 @@ footer p {
   opacity: 0.8;
 }
 
+/* Dashboard-specific Navbar Overrides (Wide Layout) */
+.nav-dashboard {
+  background-color: var(--white) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+.nav-dashboard .nav-container {
+  max-width: none !important;
+  padding: 0 1.5rem !important;
+}
+
+.nav-dashboard .logo {
+  color: var(--slack-purple) !important;
+}
+
+.nav-dashboard .nav-links a {
+  color: var(--text-muted) !important;
+}
+
+.nav-dashboard .nav-links a:hover,
+.nav-dashboard .nav-links a.active {
+  color: var(--slack-purple) !important;
+}
+
+.nav-dashboard .nav-links a.active::after,
+.nav-dashboard .nav-links a:hover::after {
+  background-color: var(--slack-purple) !important;
+}
+
+.nav-dashboard .dropdown-toggle {
+  color: var(--text-muted) !important;
+}
+
+.nav-dashboard .dropdown-toggle:hover,
+.nav-dashboard .dropdown-toggle.active {
+  color: var(--slack-purple) !important;
+}
+
+.nav-dashboard .mobile-menu-toggle span {
+  background-color: var(--slack-purple) !important;
+}
+
+.nav-dashboard .dropdown-menu {
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+}
+
+.nav-dashboard .dropdown-item {
+  color: var(--text-dark) !important;
+}
+
+.nav-dashboard .dropdown-item:hover {
+  background-color: #f8f8f8 !important;
+  color: var(--slack-purple) !important;
+}
+
+
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .container {

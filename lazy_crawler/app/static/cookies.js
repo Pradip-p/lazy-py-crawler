@@ -5,7 +5,7 @@ class CookieConsent {
     constructor() {
         this.banner = document.getElementById('cookie-consent-banner');
         this.acceptBtn = document.getElementById('cookie-accept');
-        this.prefsBtn = document.getElementById('cookie-preferences');
+        this.rejectBtn = document.getElementById('cookie-reject');
         this.cookieName = 'crawlio_cookie_consent';
 
         if (this.banner && !this.getCookie(this.cookieName)) {
@@ -19,21 +19,28 @@ class CookieConsent {
             this.banner.style.display = 'block';
         }, 1000);
 
-        this.acceptBtn.addEventListener('click', () => this.acceptAll());
-        this.prefsBtn.addEventListener('click', () => this.openPreferences());
+        if (this.acceptBtn) {
+            this.acceptBtn.addEventListener('click', () => this.acceptAll());
+        }
+        if (this.rejectBtn) {
+            this.rejectBtn.addEventListener('click', () => this.rejectAll());
+        }
     }
 
     acceptAll() {
-        this.setCookie(this.cookieName, 'accepted', 365);
+        this.setConsent('accepted');
+    }
+
+    rejectAll() {
+        this.setConsent('rejected');
+    }
+
+    setConsent(status) {
+        this.setCookie(this.cookieName, status, 365);
         this.banner.style.opacity = '0';
         setTimeout(() => {
             this.banner.style.display = 'none';
         }, 500);
-    }
-
-    openPreferences() {
-        // In a real app, this would open a modal
-        alert('Cookie preferences would be managed here.');
     }
 
     setCookie(name, value, days) {

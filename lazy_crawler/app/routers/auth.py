@@ -86,7 +86,7 @@ async def login_for_access_token(
 
 
 @router.get("/google")
-async def login_google():
+async def login_google(request: Request):
     """Redirect to Google OAuth consent screen"""
     if not config.GOOGLE_CLIENT_ID:
         raise HTTPException(
@@ -94,11 +94,21 @@ async def login_google():
             detail="Google OAuth is not configured. Please set GOOGLE_CLIENT_ID in environment variables.",
         )
 
+    # Determine redirect URI dynamically if it's just a path or if we want to support multiple domains
+    redirect_uri = config.GOOGLE_REDIRECT_URI
+    if not redirect_uri.startswith("http"):
+        base_url = str(request.base_url).rstrip("/")
+        redirect_uri = f"{base_url}{redirect_uri}"
+    elif "localhost" in redirect_uri and "localhost" not in str(request.base_url):
+        # If config has localhost but user is on a real domain, use the current domain
+        base_url = str(request.base_url).rstrip("/")
+        redirect_uri = f"{base_url}/auth/google/callback"
+
     google_auth_url = (
         f"https://accounts.google.com/o/oauth2/v2/auth"
         f"?response_type=code"
         f"&client_id={config.GOOGLE_CLIENT_ID}"
-        f"&redirect_uri={config.GOOGLE_REDIRECT_URI}"
+        f"&redirect_uri={redirect_uri}"
         f"&scope=openid%20profile%20email"
         f"&access_type=offline"
     )
@@ -106,7 +116,9 @@ async def login_google():
 
 
 @router.get("/google/callback")
-async def google_callback(code: str, session: AsyncSession = Depends(get_session)):
+async def google_callback(
+    request: Request, code: str, session: AsyncSession = Depends(get_session)
+):
     """Handle Google OAuth callback and create/update user"""
     if not config.GOOGLE_CLIENT_ID or not config.GOOGLE_CLIENT_SECRET:
         raise HTTPException(
@@ -114,12 +126,21 @@ async def google_callback(code: str, session: AsyncSession = Depends(get_session
             detail="Google OAuth is not configured. Please set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET.",
         )
 
+    # Determine redirect URI dynamically
+    redirect_uri = config.GOOGLE_REDIRECT_URI
+    if not redirect_uri.startswith("http"):
+        base_url = str(request.base_url).rstrip("/")
+        redirect_uri = f"{base_url}{redirect_uri}"
+    elif "localhost" in redirect_uri and "localhost" not in str(request.base_url):
+        base_url = str(request.base_url).rstrip("/")
+        redirect_uri = f"{base_url}/auth/google/callback"
+
     token_url = "https://oauth2.googleapis.com/token"
     data = {
         "code": code,
         "client_id": config.GOOGLE_CLIENT_ID,
         "client_secret": config.GOOGLE_CLIENT_SECRET,
-        "redirect_uri": config.GOOGLE_REDIRECT_URI,
+        "redirect_uri": redirect_uri,
         "grant_type": "authorization_code",
     }
 

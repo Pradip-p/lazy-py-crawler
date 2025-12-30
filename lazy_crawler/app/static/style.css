@@ -127,9 +127,10 @@ nav:hover {
 .logo {
   font-size: 1.8rem;
   font-weight: 900;
+  font-style: italic;
   color: var(--slack-purple);
   text-decoration: none;
-  letter-spacing: -1.2px;
+  letter-spacing: -0.5px;
   display: flex;
   align-items: center;
   transition: all 0.3s ease;
@@ -1229,7 +1230,8 @@ footer {
 
 .footer-logo {
   font-size: 1.5rem;
-  font-weight: 800;
+  font-weight: 900;
+  font-style: italic;
   color: var(--slack-purple);
   margin-bottom: 1.5rem;
 }
@@ -1356,8 +1358,6 @@ footer p {
   background-color: #f8f8f8 !important;
   color: var(--slack-purple) !important;
 }
-
-
 
 /* Responsive Design */
 @media (max-width: 1024px) {

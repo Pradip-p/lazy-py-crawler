@@ -216,10 +216,91 @@ nav:hover {
   transform: rotate(-45deg) translate(7px, -7px);
 }
 
+/* Dropdown Menu */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dropdown-toggle::after {
+  content: '';
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid currentColor;
+  margin-top: 2px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: white;
+  min-width: 200px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  padding: 0.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  z-index: 1000;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid white;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: var(--text-dark) !important;
+  text-decoration: none;
+  font-size: 0.9rem !important;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+  font-weight: 500 !important;
+  text-align: left;
+}
+
+.dropdown-item:hover {
+  background-color: #f5f5f5;
+  color: var(--slack-purple) !important;
+}
+
+.dropdown-item::after {
+  display: none !important;
+}
+
 .btn-primary {
   background-color: var(--slack-purple);
   color: var(--white) !important;
-  padding: 1rem 2.5rem;
+  padding: 1rem 2.5rem !important;
   border-radius: 50px;
   font-weight: 700;
   text-transform: uppercase;
@@ -228,9 +309,10 @@ nav:hover {
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
-  display: inline-flex;
+  display: inline-flex !important;
   align-items: center;
   justify-content: center;
+  width: auto !important;
 }
 
 .btn-primary:hover {
@@ -708,11 +790,9 @@ nav:hover {
   font-size: 2.8rem;
   font-weight: 800;
   margin: 0.5rem 0;
-  background: linear-gradient(
-    135deg,
-    var(--slack-purple) 0%,
-    var(--slack-blue) 100%
-  );
+  background: linear-gradient(135deg,
+      var(--slack-purple) 0%,
+      var(--slack-blue) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1141,11 +1221,9 @@ nav:hover {
 
 /* Regional Highlight */
 .regional-highlight {
-  background: linear-gradient(
-    135deg,
-    rgba(74, 21, 75, 0.05) 0%,
-    rgba(18, 100, 163, 0.05) 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(74, 21, 75, 0.05) 0%,
+      rgba(18, 100, 163, 0.05) 100%);
   padding: 0.25rem 0.75rem;
   border-radius: 4px;
   font-weight: 600;
@@ -1390,7 +1468,8 @@ footer p {
     right: 0;
     flex-direction: column;
     background-color: var(--white);
-    padding: 1rem 0; /* Reduced from 2rem */
+    padding: 1rem 0;
+    /* Reduced from 2rem */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transform: translateY(-100%);
     opacity: 0;
@@ -1408,12 +1487,75 @@ footer p {
   .nav-links li {
     width: 100%;
     text-align: center;
-    padding: 0.25rem 0; /* Reduced from 0.5rem */
+    padding: 0.25rem 0;
+    /* Reduced from 0.5rem */
   }
 
   .nav-links a {
     display: block;
     padding: 0.75rem 1rem;
+  }
+
+  .dropdown {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+
+  .dropdown-toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 0.25rem 0;
+    width: 100%;
+    color: var(--text-dark);
+    font-weight: 600;
+  }
+
+  .dropdown-menu {
+    position: static !important;
+    width: 100% !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    background: transparent !important;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    border-left: none !important;
+    margin-top: 0 !important;
+    left: auto !important;
+  }
+
+  .dropdown-menu::before {
+    display: none !important;
+  }
+
+  .dropdown.active .dropdown-menu {
+    max-height: 500px !important;
+    margin-bottom: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .dropdown-item {
+    padding: 0.65rem 0 !important;
+    color: var(--text-muted) !important;
+    text-align: center !important;
+    font-size: 0.95rem !important;
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .dropdown-item:hover {
+    background: transparent !important;
+    color: var(--slack-purple) !important;
   }
 
   .hero {
@@ -1537,7 +1679,7 @@ footer p {
   }
 
   .btn-primary {
-    padding: 0.85rem 1.75rem;
+    padding: 0.75rem 1.75rem !important;
     font-size: 0.85rem;
   }
 

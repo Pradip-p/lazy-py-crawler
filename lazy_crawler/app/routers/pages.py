@@ -221,7 +221,9 @@ async def get_sitemap(session: AsyncSession = Depends(get_session)):
     for post in blog_posts:
         xml_content += f"    <url>\n"
         xml_content += f"        <loc>{base_url}/blog/{post.slug}</loc>\n"
-        xml_content += f"        <lastmod>{post.created_at.strftime('%Y-%m-%d')}</lastmod>\n"
+        xml_content += (
+            f"        <lastmod>{post.created_at.strftime('%Y-%m-%d')}</lastmod>\n"
+        )
         xml_content += f"        <changefreq>weekly</changefreq>\n"
         xml_content += f"        <priority>0.7</priority>\n"
         xml_content += f"    </url>\n"

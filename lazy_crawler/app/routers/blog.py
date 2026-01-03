@@ -57,6 +57,16 @@ async def blog_detail(
         if not current_user or not current_user.is_superuser:
             raise HTTPException(status_code=404, detail="Post not found")
 
+    # Fetch latest 3 posts for "Related Posts" section (excluding current)
+    latest_statement = (
+        select(BlogPost)
+        .where(BlogPost.published == True, BlogPost.id != post.id)
+        .order_by(BlogPost.created_at.desc())
+        .limit(3)
+    )
+    latest_results = await session.exec(latest_statement)
+    latest_posts = latest_results.all()
+
     return templates.TemplateResponse(
         "blog_detail.html",
         {
@@ -64,5 +74,6 @@ async def blog_detail(
             "active_page": "blog",
             "user": current_user,
             "post": post,
+            "latest_posts": latest_posts,
         },
     )

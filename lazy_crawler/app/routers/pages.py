@@ -4,7 +4,7 @@ Page routes - template rendering for web pages
 
 from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import RedirectResponse, FileResponse
+from fastapi.responses import RedirectResponse, FileResponse, Response
 from lazy_crawler.app import config
 from lazy_crawler.app.auth import get_current_user_optional
 from lazy_crawler.app.database import User, get_session, BlogPost
@@ -187,9 +187,48 @@ def read_company(
 
 
 @router.get("/sitemap.xml")
-def get_sitemap():
-    """Sitemap for SEO"""
-    return FileResponse(os.path.join(config.STATIC_DIR, "sitemap.xml"))
+async def get_sitemap(session: AsyncSession = Depends(get_session)):
+    """Dynamic Sitemap for SEO"""
+    base_url = "https://crawlio.org"
+    static_pages = [
+        {"loc": "/", "changefreq": "daily", "priority": "1.0"},
+        {"loc": "/about", "changefreq": "monthly", "priority": "0.8"},
+        {"loc": "/contact", "changefreq": "monthly", "priority": "0.7"},
+        {"loc": "/privacy", "changefreq": "monthly", "priority": "0.5"},
+        {"loc": "/register", "changefreq": "monthly", "priority": "0.8"},
+        {"loc": "/company", "changefreq": "monthly", "priority": "0.7"},
+        {"loc": "/blog", "changefreq": "daily", "priority": "0.8"},
+        {"loc": "/faq", "changefreq": "monthly", "priority": "0.6"},
+    ]
+
+    # Fetch all published blog posts
+    statement = select(BlogPost).where(BlogPost.published == True)
+    results = await session.exec(statement)
+    blog_posts = results.all()
+
+    xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    xml_content += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+
+    # Add static pages
+    for page in static_pages:
+        xml_content += f"    <url>\n"
+        xml_content += f"        <loc>{base_url}{page['loc']}</loc>\n"
+        xml_content += f"        <changefreq>{page['changefreq']}</changefreq>\n"
+        xml_content += f"        <priority>{page['priority']}</priority>\n"
+        xml_content += f"    </url>\n"
+
+    # Add blog posts
+    for post in blog_posts:
+        xml_content += f"    <url>\n"
+        xml_content += f"        <loc>{base_url}/blog/{post.slug}</loc>\n"
+        xml_content += f"        <lastmod>{post.created_at.strftime('%Y-%m-%d')}</lastmod>\n"
+        xml_content += f"        <changefreq>weekly</changefreq>\n"
+        xml_content += f"        <priority>0.7</priority>\n"
+        xml_content += f"    </url>\n"
+
+    xml_content += "</urlset>"
+
+    return Response(content=xml_content, media_type="application/xml")
 
 
 @router.get("/robots.txt")

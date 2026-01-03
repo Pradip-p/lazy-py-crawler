@@ -2,6 +2,38 @@
 
 {% block title %}{{ post.title }} | Crawlio Blog{% endblock %}
 
+{% block description %}{{ post.excerpt }}{% endblock %}
+
+{% block head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ post.title }}",
+  "description": "{{ post.excerpt }}",
+  "image": "{{ post.image_url if post.image_url else 'https://crawlio.org/static/images/og-image.jpg' }}",
+  "author": {
+    "@type": "Organization",
+    "name": "Crawlio Team",
+    "url": "https://crawlio.org/company"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Crawlio",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://crawlio.org/static/images/logo.png"
+    }
+  },
+  "datePublished": "{{ post.created_at.isoformat() }}",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://crawlio.org/blog/{{ post.slug }}"
+  }
+}
+</script>
+{% endblock %}
+
 {% block content %}
 <article class="blog-post-wrapper">
     <header class="blog-post-header">
@@ -9,6 +41,14 @@
             {% if post.published == False %}
             <div class="blog-draft-badge">DRAFT PREVIEW</div>
             {% endif %}
+
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <a href="/">Home</a>
+                <span class="separator">/</span>
+                <a href="/blog">Blog</a>
+                <span class="separator">/</span>
+                <span class="current">{{ post.title }}</span>
+            </nav>
 
             <h1 class="blog-title">
                 {{ post.title }}
@@ -41,17 +81,37 @@
         <section class="blog-share-section">
             <p class="share-label">Share this article</p>
             <div class="share-buttons">
-                <button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href); alert('Link copied!');">
+                <button class="share-btn"
+                    onclick="navigator.clipboard.writeText(window.location.href); alert('Link copied!');">
                     Copy Link
                 </button>
-                <a href="https://twitter.com/intent/tweet?text={{ post.title }}&url={{ request.url }}" target="_blank" class="share-btn">
+                <a href="https://twitter.com/intent/tweet?text={{ post.title }}&url={{ request.url }}" target="_blank"
+                    class="share-btn">
                     Twitter
                 </a>
-                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" target="_blank" class="share-btn">
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" target="_blank"
+                    class="share-btn">
                     LinkedIn
                 </a>
             </div>
         </section>
+
+        {% if latest_posts %}
+        <section class="blog-related-section">
+            <h2 class="section-title-small">Latest Insights</h2>
+            <div class="related-grid">
+                {% for p in latest_posts %}
+                <a href="/blog/{{ p.slug }}" class="related-card">
+                    <div class="related-card-content">
+                        <h3>{{ p.title }}</h3>
+                        <p>{{ p.excerpt[:100] }}...</p>
+                        <span class="read-more">Read Article →</span>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
 
         <div class="blog-footer-nav">
             <a href="/blog" class="back-link">

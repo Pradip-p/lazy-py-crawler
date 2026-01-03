@@ -3,46 +3,44 @@
 {% block title %}{{ post.title }} | Crawlio Blog{% endblock %}
 
 {% block content %}
-<section class="blog-header-section">
-    <div class="container" style="max-width: 800px; text-align: center;">
-        {% if post.published == False %}
-        <div style="background: #fff5f5; color: #e01e5a; display: inline-block; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.8rem; font-weight: 700; margin-bottom: 1rem;">DRAFT PREVIEW</div>
-        {% endif %}
+<article class="blog-post-wrapper">
+    <header class="blog-post-header">
+        <div class="container blog-container">
+            {% if post.published == False %}
+            <div class="blog-draft-badge">DRAFT PREVIEW</div>
+            {% endif %}
 
-        <h1 style="font-size: 3rem; font-weight: 800; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 1.5rem; color: var(--text-dark);">
-            {{ post.title }}
-        </h1>
+            <h1 class="blog-title">
+                {{ post.title }}
+            </h1>
 
-        <div class="blog-meta">
-            <div class="blog-meta-item">
-                <span style="background: #e8e8e8; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--text-muted);">
-                    C
-                </span>
-                <span>Crawlio Team</span>
-            </div>
-            <span>•</span>
-            <div class="blog-meta-item">
-                {{ post.created_at.strftime('%B %d, %Y') }}
+            <div class="blog-meta">
+                <div class="blog-meta-item author">
+                    <span class="author-avatar">C</span>
+                    <span>Crawlio Team</span>
+                </div>
+                <span class="meta-separator">•</span>
+                <div class="blog-meta-item date">
+                    {{ post.created_at.strftime('%B %d, %Y') }}
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </header>
 
-<section class="section" style="padding-top: 3rem;">
-    <div class="container" style="max-width: 740px;">
+    <div class="container blog-container">
         {% if post.image_url %}
-        <div style="margin-bottom: 3rem; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.08);">
-            <img src="{{ post.image_url }}" alt="{{ post.title }}" style="width: 100%; display: block;">
+        <div class="blog-featured-image">
+            <img src="{{ post.image_url }}" alt="{{ post.title }}">
         </div>
         {% endif %}
 
-        <div class="blog-content" style="font-size: 1.15rem; line-height: 1.8; color: #2c2c2c;">
+        <div class="blog-content">
             {{ post.content | safe }}
         </div>
 
-        <div style="margin-top: 5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); text-align: center;">
-            <p style="font-weight: 600; margin-bottom: 1.5rem; color: var(--text-muted); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Share this article</p>
-            <div style="display: flex; gap: 1rem; justify-content: center;">
+        <section class="blog-share-section">
+            <p class="share-label">Share this article</p>
+            <div class="share-buttons">
                 <button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href); alert('Link copied!');">
                     Copy Link
                 </button>
@@ -53,13 +51,13 @@
                     LinkedIn
                 </a>
             </div>
-        </div>
+        </section>
 
-        <div style="text-align: center; margin-top: 4rem;">
-            <a href="/blog" style="color: var(--text-muted); text-decoration: none; font-weight: 600; border-bottom: 2px solid transparent; transition: all 0.2s;">
+        <div class="blog-footer-nav">
+            <a href="/blog" class="back-link">
                 ← Back to All Articles
             </a>
         </div>
     </div>
-</section>
+</article>
 {% endblock %}

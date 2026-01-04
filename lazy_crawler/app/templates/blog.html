@@ -1,55 +1,124 @@
 {% extends "base.html" %}
 
-{% block title %}Blog | Crawlio {% endblock %}
+{% block title %}Engineering at Crawlio{% endblock %}
 
 {% block content %}
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [{
-    "@type": "ListItem",
-    "position": 1,
-    "name": "Home",
-    "item": "https://crawlio.org"
-  },{
-    "@type": "ListItem",
-    "position": 2,
-    "name": "Blog",
-    "item": "https://crawlio.org/blog"
-  }]
-}
-</script>
-<section class="section" style="padding-top: 4rem;">
-    <div class="container">
-        <h1 class="section-title text-center" style="margin-bottom: 1rem;">Latest Updates</h1>
-        <p class="section-subtitle">Insights, tutorials, and news from the Crawlio team.</p>
+<section class="hero">
+    <div class="container text-center">
+        <h1>Engineering & Insights</h1>
+        <p>Lessons, updates, and deep dives from the Crawlio engineering team.</p>
+    </div>
+</section>
 
-        <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
-            {% for post in posts %}
-            <div class="card" style="display: flex; flex-direction: column;">
-                {% if post.image_url %}
-                <img src="{{ post.image_url }}" alt="{{ post.title }}" height="200" loading="lazy" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0; margin: -2rem -2rem 1.5rem -2rem; width: calc(100% + 4rem);">
-                {% endif %}
-                <div style="flex-grow: 1;">
-                    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">
-                        {{ post.created_at.strftime('%B %d, %Y') }}
-                    </div>
-                    <h3 style="margin-bottom: 0.75rem;">
-                        <a href="/blog/{{ post.slug }}" style="text-decoration: none; color: inherit;">{{ post.title }}</a>
-                    </h3>
-                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">{{ post.excerpt }}</p>
-                </div>
-                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
-                    <a href="/blog/{{ post.slug }}" style="text-decoration: none; color: var(--slack-purple); font-weight: 600; font-size: 0.9rem;">Read Article →</a>
-                </div>
+<section class="section">
+    <div class="container">
+        {% if posts %}
+        <!-- Featured Post (First Post) -->
+        {% set featured = posts[0] %}
+        <div class="card"
+            style="margin-bottom: 4rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; padding: 0; overflow: hidden; border-radius: 16px;">
+            {% if featured.image_url %}
+            <div style="height: 100%; min-height: 300px;">
+                <img src="{{ featured.image_url }}" alt="{{ featured.title }}"
+                    style="width: 100%; height: 100%; object-fit: cover;">
             </div>
-            {% else %}
-            <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 0; color: var(--text-muted);">
-                <p>No blog posts found. Check back later!</p>
+            {% endif %}
+            <div style="padding: 3rem; display: flex; flex-direction: column; justify-content: center;">
+                <div
+                    style="text-transform: uppercase; font-size: 0.8rem; font-weight: 800; color: var(--slack-purple); margin-bottom: 1rem; letter-spacing: 1px;">
+                    Latest Post</div>
+                <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.5rem; line-height: 1.2;">{{
+                    featured.title }}</h2>
+                <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.7;">{{
+                    featured.excerpt[:200] }}...</p>
+                <a href="/blog/{{ featured.slug }}" class="btn-primary" style="width: fit-content !important;">Read
+                    Article</a>
+            </div>
+        </div>
+
+        <!-- Search Filter -->
+        <div style="margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+            <input type="text" id="blogSearch"
+                style="width: 100%; padding: 1rem 1.5rem; border: 1px solid var(--border-color); border-radius: 50px; font-size: 1rem; outline: none; transition: border-color 0.3s;"
+                placeholder="Search articles...">
+        </div>
+
+        <!-- Archive Grid -->
+        <div class="grid" id="blogGrid">
+            {% for post in posts[1:] %}
+            <div class="card blog-card" data-title="{{ post.title }}"
+                style="padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+                {% if post.image_url %}
+                <div style="height: 200px;">
+                    <img src="{{ post.image_url }}" alt="{{ post.title }}"
+                        style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                {% endif %}
+                <div style="padding: 2rem; flex-grow: 1; display: flex; flex-direction: column;">
+                    <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;">{{
+                        post.created_at.strftime('%B %d, %Y') }}</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;"><a
+                            href="/blog/{{ post.slug }}" style="text-decoration: none; color: inherit;">{{ post.title
+                            }}</a></h3>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1;">{{
+                        post.excerpt[:120] }}...</p>
+                    <a href="/blog/{{ post.slug }}"
+                        style="color: var(--slack-purple); font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+                        Read More <span style="font-size: 1.2rem;">→</span>
+                    </a>
+                </div>
             </div>
             {% endfor %}
         </div>
+
+        <div id="noResults" style="display:none; text-align:center; padding: 4rem 0; color: var(--text-muted);">
+            No articles found matching your search.
+        </div>
+
+        {% else %}
+        <div class="text-center" style="padding: 8rem 0;">
+            <h2 style="color: var(--text-muted);">No articles found. Check back soon!</h2>
+        </div>
+        {% endif %}
     </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('blogSearch');
+        const grid = document.getElementById('blogGrid');
+        const noResults = document.getElementById('noResults');
+
+        if (!searchInput || !grid) return;
+
+        const cards = grid.getElementsByClassName('blog-card');
+
+        searchInput.addEventListener('input', function (e) {
+            const term = e.target.value.toLowerCase();
+            let hasVisible = false;
+
+            Array.from(cards).forEach(card => {
+                const title = card.getAttribute('data-title').toLowerCase();
+                if (title.includes(term)) {
+                    card.style.display = 'flex';
+                    hasVisible = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (hasVisible) {
+                noResults.style.display = 'none';
+                grid.style.display = 'grid';
+            } else {
+                noResults.style.display = 'block';
+                grid.style.display = 'none';
+            }
+        });
+
+        // Hover effect for input
+        searchInput.addEventListener('focus', () => searchInput.style.borderColor = 'var(--slack-purple)');
+        searchInput.addEventListener('blur', () => searchInput.style.borderColor = 'var(--border-color)');
+    });
+</script>
 {% endblock %}

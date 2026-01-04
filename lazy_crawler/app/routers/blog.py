@@ -6,9 +6,25 @@ from lazy_crawler.app.database import get_session, User, BlogPost
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select
 from typing import Optional
+import markdown_it
 
 router = APIRouter(prefix="/blog", tags=["blog"])
 templates = Jinja2Templates(directory=config.TEMPLATES_DIR)
+
+# Markdown Filter
+md = markdown_it.MarkdownIt()
+
+
+def markdown_filter(text):
+    if not text or not isinstance(text, str):
+        return ""
+    try:
+        return md.render(text)
+    except Exception:
+        return text
+
+
+templates.env.filters["markdown"] = markdown_filter
 
 
 @router.get("/")

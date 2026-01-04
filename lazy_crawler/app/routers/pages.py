@@ -12,11 +12,27 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select
 from typing import Optional
 import os
+import markdown_it
 
 router = APIRouter(tags=["pages"])
 
 # Template Engine
 templates = Jinja2Templates(directory=config.TEMPLATES_DIR)
+
+# Markdown Filter
+md = markdown_it.MarkdownIt()
+
+
+def markdown_filter(text):
+    if not text or not isinstance(text, str):
+        return ""
+    try:
+        return md.render(text)
+    except Exception:
+        return text
+
+
+templates.env.filters["markdown"] = markdown_filter
 
 
 @router.get("/")
@@ -142,14 +158,14 @@ def read_company(
             "image": "https://ui-avatars.com/api/?name=Emily+R&background=e01e5a&color=fff",
         },
         {
-            "name": "James Wilson",
+            "name": "Emily Wilson",
             "role": "Data aquistion Lead",
-            "image": "https://ui-avatars.com/api/?name=James+Wilson&background=2eb67d&color=fff",
+            "image": "https://ui-avatars.com/api/?name=Emily+Wilson&background=2eb67d&color=fff",
         },
         {
             "name": "William Lee",
             "role": "Lead Data Scientist",
-            "image": "https://ui-avatars.com/api/?name=Emily+R&background=e01e5a&color=fff",
+            "image": "https://ui-avatars.com/api/?name=William+Lee&background=e01e5a&color=fff",
         },
     ]
 

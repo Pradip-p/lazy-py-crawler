@@ -68,10 +68,12 @@
   <noscript>
     <link rel="stylesheet" href="{{ url_for('static', path='/cookies.css') }}" />
   </noscript>
+  {% if active_page in ['blog', 'admin_blog'] %}
   <link rel="stylesheet" href="{{ url_for('static', path='/blog.css') }}" media="print" onload="this.media='all'" />
   <noscript>
     <link rel="stylesheet" href="{{ url_for('static', path='/blog.css') }}" />
   </noscript>
+  {% endif %}
   <link rel="stylesheet" href="{{ url_for('static', path='/toast.css') }}" media="print" onload="this.media='all'" />
   <noscript>
     <link rel="stylesheet" href="{{ url_for('static', path='/toast.css') }}" />

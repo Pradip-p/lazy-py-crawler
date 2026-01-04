@@ -2,7 +2,7 @@
 :root {
   --slack-purple: #4a154b;
   --slack-purple-hover: #350d36;
-  --slack-blue: #1264a3;
+  --slack-blue: #4a154b;
   --slack-green: #2eb67d;
   --slack-red: #e01e5a;
   --slack-yellow: #ecb22e;
@@ -13,6 +13,25 @@
   --white: #ffffff;
   --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
+
+.prose-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.auth-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.auth-button-container .btn-primary {
+  width: 100% !important;
+  max-width: 300px;
+}
+
 
 * {
   margin: 0;

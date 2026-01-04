@@ -8,7 +8,7 @@ services:
     depends_on:
       - mongodb
       - postgres
-      - ollama
+      # - ollama
     volumes:
       - .:/app
     restart: unless-stopped
@@ -75,29 +75,29 @@ services:
         reservations:
           memory: 128M
 
-  ollama:
-    image: ollama/ollama:latest
-    restart: unless-stopped
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollama_data:/root/.ollama
-      - ./pull-and-serve.sh:/pull-and-serve.sh
-    entrypoint: ["/bin/sh", "/pull-and-serve.sh"]
-    networks:
-      - lazy-crawler-network
-    deploy:
-      resources:
-        limits:
-          cpus: "0.20"
-          memory: 512M
-        reservations:
-          memory: 256M
+  # ollama:
+  #   image: ollama/ollama:latest
+  #   restart: unless-stopped
+  #   ports:
+  #     - "11434:11434"
+  #   volumes:
+  #     - ollama_data:/root/.ollama
+  #     - ./pull-and-serve.sh:/pull-and-serve.sh
+  #   entrypoint: ["/bin/sh", "/pull-and-serve.sh"]
+  #   networks:
+  #     - lazy-crawler-network
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: "0.20"
+  #         memory: 512M
+  #       reservations:
+  #         memory: 256M
 
 volumes:
   mongodb_data:
   postgres_data:
-  ollama_data:
+  # ollama_data:
 
 networks:
   lazy-crawler-network:

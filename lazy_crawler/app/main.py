@@ -14,6 +14,7 @@ from lazy_crawler.app.routers import (
     health,
     admin,
     blog,
+    projects,
 )
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
@@ -66,6 +67,7 @@ app.include_router(data.router)
 app.include_router(health.router)
 app.include_router(admin.router)
 app.include_router(blog.router)
+app.include_router(projects.router)
 
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi import Request

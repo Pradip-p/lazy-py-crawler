@@ -353,6 +353,251 @@
             font-size: 0.8125rem;
         }
     }
+
+    /* Pro Projects Table Styling */
+    .pro-table-wrapper {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .pro-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .pro-table th {
+        background: #f8fafc;
+        padding: 1.25rem 1.5rem;
+        font-weight: 600;
+        color: #64748b;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .pro-table td {
+        padding: 1.25rem 1.5rem;
+        border-bottom: 1px solid #f1f5f9;
+        vertical-align: middle;
+        color: #1e293b;
+        font-size: 0.875rem;
+    }
+
+    .pro-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .pro-table tr:hover {
+        background-color: #fbfcfe;
+    }
+
+    .status-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        gap: 0.375rem;
+    }
+
+    .status-pill:before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+    }
+
+    .status-completed {
+        background: #ecfdf5;
+        color: #065f46;
+    }
+
+    .status-completed:before {
+        background: #10b981;
+    }
+
+    .status-processing {
+        background: #eff6ff;
+        color: #1e40af;
+    }
+
+    .status-processing:before {
+        background: #3b82f6;
+    }
+
+    .status-pending {
+        background: #f8fafc;
+        color: #475569;
+    }
+
+    .status-pending:before {
+        background: #94a3b8;
+    }
+
+    .status-failed {
+        background: #fef2f2;
+        color: #991b1b;
+    }
+
+    .status-failed:before {
+        background: #ef4444;
+    }
+
+    .project-name {
+        font-weight: 600;
+        color: #0f172a;
+        margin-bottom: 0.25rem;
+        display: block;
+    }
+
+    .project-meta {
+        font-size: 0.75rem;
+        color: #64748b;
+    }
+
+    .action-btn {
+        background: white;
+        border: 1px solid #e2e8f0;
+        color: #1e293b;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .action-btn:hover {
+        background: #f8fafc;
+        border-color: #cbd5e1;
+        transform: translateY(-1px);
+    }
+
+    /* --- Premium Dashboard Enhancements --- */
+    .dashboard-header-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(106, 76, 147, 0.08);
+    }
+
+    .stat-label {
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.025em;
+    }
+
+    .stat-value {
+        font-size: 1.875rem;
+        font-weight: 800;
+        color: #0f172a;
+    }
+
+    .stat-trend {
+        font-size: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+    }
+
+    .trend-up {
+        color: #10b981;
+    }
+
+    /* Skeleton Loader */
+    @keyframes shimmer {
+        0% {
+            background-position: -468px 0;
+        }
+
+        100% {
+            background-position: 468px 0;
+        }
+    }
+
+    .skeleton {
+        background: #f6f7f8;
+        background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+        background-repeat: no-repeat;
+        background-size: 800px 104px;
+        display: inline-block;
+        position: relative;
+        animation: shimmer 1.2s infinite linear;
+        border-radius: 4px;
+    }
+
+    /* Pulsing status for processing */
+    @keyframes pulse {
+        0% {
+            transform: scale(0.95);
+            opacity: 0.5;
+        }
+
+        50% {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        100% {
+            transform: scale(0.95);
+            opacity: 0.5;
+        }
+    }
+
+    .status-processing:before {
+        animation: pulse 1.5s infinite;
+    }
+
+    .projects-container-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .projects-container-header h2 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin: 0;
+    }
+
+    /* Override container to be more airy */
+    .dashboard-main .container {
+        padding: 2rem;
+        background: transparent;
+        box-shadow: none;
+        border: none;
+    }
 </style>
 {% endblock %}
 
@@ -362,48 +607,157 @@
 </button>
 <div class="dashboard-wrapper">
     <aside class="dashboard-sidebar" id="dashboard-sidebar">
-        <div class="sidebar-header">My Uploads</div>
-        <ul class="collection-list" id="uploads-list">
-            <!-- Loaded via JS -->
-        </ul>
-        <div class="sidebar-header">Scraped Data</div>
-        <ul class="collection-list" id="collection-list">
-            <!-- Loaded via JS -->
+        <div class="sidebar-header">Workspace</div>
+        <ul class="collection-list" id="project-list-sidebar">
+            <li class="collection-item active" id="btn-projects-view"># All Projects</li>
         </ul>
     </aside>
 
     <main class="dashboard-main">
-        <div class="container">
-            <div class="actions-bar" style="display: flex; gap: 1rem; margin-bottom: 2rem;">
-                <input type="text" class="search-input" id="search-input"
-                    placeholder="Search data in this collection..." style="margin-bottom: 0; flex: 1;">
-                <button class="btn-primary" id="upload-btn" style="background-color: var(--slack-green);">Upload
-                    Dataset</button>
-                <input type="file" id="file-upload" style="display: none;" accept=".csv, .xlsx, .xls">
+        <!-- New Project View -->
+        <div id="projects-view" style="display: none;">
+            <div class="container">
+                <!-- Summary Stats -->
+                <div class="dashboard-header-stats">
+                    <div class="stat-card">
+                        <span class="stat-label">Total Projects</span>
+                        <span class="stat-value" id="stat-total-projects">0</span>
+                        <span class="stat-trend trend-up">Active workspace</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Running now</span>
+                        <span class="stat-value" id="stat-running-projects">0</span>
+                        <div class="status-pill status-processing" style="font-size: 0.65rem; padding: 2px 6px;">Live
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Success Rate</span>
+                        <span class="stat-value" id="stat-success-rate">0%</span>
+                        <span class="stat-trend trend-up">Overall efficiency</span>
+                    </div>
+                </div>
+
+                <div class="projects-container-header">
+                    <h2>Scraping Projects</h2>
+                    <button class="btn-primary" id="new-project-btn"
+                        style="background-color: var(--slack-purple); border-radius: 8px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                            style="margin-right: 0.5rem;">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        Create New Project
+                    </button>
+                </div>
+
+                <div class="pro-table-wrapper">
+                    <table class="pro-table">
+                        <thead>
+                            <tr>
+                                <th>Project Detail</th>
+                                <th>Current Status</th>
+                                <th>Category & Format</th>
+                                <th>Date Created</th>
+                                <th style="text-align: right;">Results</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projects-table-body">
+                            <!-- Skeleton loaders will be inserted here by JS -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
+        </div>
 
-            <div id="loader" class="loader"><span></span></div>
+        <!-- Data View (Original Table) -->
+        <div id="data-view">
+            <div class="container"
+                style="background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); padding: 1.5rem;">
+                <div class="actions-bar" style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                    <input type="text" class="search-input" id="search-input"
+                        placeholder="Search data in this collection..." style="margin-bottom: 0; flex: 1;">
+                    <button class="btn-primary" id="upload-btn" style="background-color: var(--slack-green);">Upload
+                        Dataset</button>
+                    <input type="file" id="file-upload" style="display: none;" accept=".csv, .xlsx, .xls">
+                </div>
 
-            <div id="data-table-container">
-                <table>
-                    <thead>
-                        <tr id="table-head"></tr>
-                    </thead>
-                    <tbody id="table-body">
-                        <tr>
-                            <td colspan="5" class="text-center">Select a collection to view data</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                <div id="loader" class="loader"><span></span></div>
 
-            <div class="pagination">
-                <button class="btn-primary" id="prev-btn" disabled>Previous</button>
-                <span id="page-info" style="color: var(--text-muted); font-size: 0.9rem;">Page 1</span>
-                <button class="btn-primary" id="next-btn" disabled>Next</button>
+                <div id="data-table-container">
+                    <table>
+                        <thead>
+                            <tr id="table-head"></tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <tr>
+                                <td colspan="5" class="text-center">Select a collection to view data</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination">
+                    <button class="btn-primary" id="prev-btn" disabled>Previous</button>
+                    <span id="page-info" style="color: var(--text-muted); font-size: 0.9rem;">Page 1</span>
+                    <button class="btn-primary" id="next-btn" disabled>Next</button>
+                </div>
             </div>
         </div>
     </main>
+
+    <!-- Project Creation Modal -->
+    <div id="project-modal" class="modal"
+        style="display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);">
+        <div class="modal-content"
+            style="background: white; margin: 5% auto; padding: 2.5rem; width: 90%; max-width: 600px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2 style="margin: 0;">New Scraping Project</h2>
+                <span id="close-project-modal" style="font-size: 2rem; cursor: pointer;">&times;</span>
+            </div>
+            <form id="project-form">
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Project Name</label>
+                    <input type="text" id="proj-name" class="form-control search-input" style="width: 100%;"
+                        placeholder="e.g. Amazon Laptops Scraper" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">URLs (One per line)</label>
+                    <textarea id="proj-urls" class="form-control search-input" style="width: 100%; height: 120px;"
+                        placeholder="https://example.com/product/1\nhttps://example.com/product/2" required></textarea>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+                    <div class="form-group">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Data Type</label>
+                        <select id="proj-data-type" class="form-control search-input" style="width: 100%;">
+                            <option value="E-commerce">E-commerce</option>
+                            <option value="Real Estate">Real Estate</option>
+                            <option value="Lead Generation">Lead Generation</option>
+                            <option value="Generic">Generic</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Output Format</label>
+                        <select id="proj-format" class="form-control search-input" style="width: 100%;">
+                            <option value="CSV">CSV</option>
+                            <option value="JSON">JSON</option>
+                            <option value="Excel">Excel</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 2rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Frequency</label>
+                    <select id="proj-type" class="form-control search-input" style="width: 100%;">
+                        <option value="One-time">One-time</option>
+                        <option value="Daily">Daily</option>
+                        <option value="Weekly">Weekly</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%; padding: 1rem; font-size: 1rem;">Create
+                    Project</button>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}
 

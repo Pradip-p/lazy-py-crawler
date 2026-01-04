@@ -48,3 +48,18 @@ class BlogPost(SQLModel, table=True):
     published: bool = Field(default=True)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     user_id: Optional[int] = Field(default=None, foreign_key="user.id")
+
+
+class Project(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(foreign_key="user.id")
+    name: str = Field(index=True)
+    description: Optional[str] = None
+    data_type: str = Field(default="Generic")  # E-commerce, Real Estate, etc.
+    output_format: str = Field(default="CSV")  # CSV, JSON, Excel
+    project_type: str = Field(default="One-time")  # One-time, Recurring
+    urls: str  # Comma-separated or multi-line URLs
+    status: str = Field(default="Pending")  # Pending, Processing, Completed, Failed
+    mongo_collection: Optional[str] = None
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)

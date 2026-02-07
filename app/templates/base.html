@@ -196,6 +196,13 @@
                 >About</a
               >
             </li>
+            <li>
+              <a
+                href="/#pricing"
+                class="{{ 'active' if active_page == 'pricing' else '' }}"
+                >Pricing</a
+              >
+            </li>
 
             <li class="dropdown">
               <span
@@ -289,11 +296,20 @@
               >W3C Data Standards</a
             >
           </div>
-          <p>&copy; 2025 Crawlio . Built for data driven teams.</p>
+          <p>
+            &copy; <span id="current-year">2025</span> Crawlio . Built for data
+            driven teams.
+          </p>
         </div>
       </footer>
       {% endif %}
     </div>
+
+    <script>
+      // Set current year
+      document.getElementById("current-year").textContent =
+        new Date().getFullYear();
+    </script>
 
     <script>
       // Mobile menu toggle

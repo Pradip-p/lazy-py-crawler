@@ -1,0 +1,47 @@
+{% extends "base.html" %} {% block title %}Page Not Found | Crawlio {% endblock
+%} {% block content %}
+<section
+  class="section"
+  style="
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  "
+>
+  <div class="container">
+    <h1
+      style="
+        font-size: 6rem;
+        font-weight: 800;
+        color: var(--slack-purple);
+        margin-bottom: 1rem;
+        line-height: 1;
+      "
+    >
+      404
+    </h1>
+    <h2 style="font-size: 2rem; margin-bottom: 1.5rem; color: var(--text-dark)">
+      Page Not Found
+    </h2>
+    <p
+      style="
+        font-size: 1.2rem;
+        color: var(--text-muted);
+        max-width: 500px;
+        margin: 0 auto 3rem;
+      "
+    >
+      Oops! The page you are looking for has been moved, removed, or doesn't
+      exist.
+    </p>
+    <a
+      href="/"
+      class="btn-primary"
+      style="padding: 1rem 2.5rem; font-size: 1.1rem"
+      >Go Back Home</a
+    >
+  </div>
+</section>
+{% endblock %}

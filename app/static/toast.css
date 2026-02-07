@@ -1,0 +1,55 @@
+/* Toast Notification */
+#toast-container {
+  position: fixed;
+  top: 90px;
+  right: 24px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.toast {
+  min-width: 300px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transform: translateX(120%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border-left: 4px solid;
+}
+
+.toast.show {
+  transform: translateX(0);
+}
+
+.toast-success {
+  border-left-color: var(--slack-green);
+}
+
+.toast-error {
+  border-left-color: var(--slack-red);
+}
+
+.toast-info {
+  border-left-color: var(--slack-blue);
+}
+
+.toast-warning {
+  border-left-color: var(--slack-yellow);
+}
+
+.toast-icon {
+  font-size: 1.2rem;
+}
+
+.toast-message {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  margin: 0;
+}

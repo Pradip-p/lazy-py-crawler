@@ -25,7 +25,7 @@ def get_day():
 
 
 def get_month():
-    """
+    """1
     returns current month
     :return:  int
     """

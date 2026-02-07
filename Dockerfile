@@ -26,4 +26,4 @@ RUN playwright install chromium
 EXPOSE 8000
 
 # Start the FastAPI application
-CMD ["python", "-m", "lazy_crawler.app.main"]
+CMD ["python", "-m", "app.main"]

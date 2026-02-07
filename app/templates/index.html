@@ -1,0 +1,603 @@
+{% extends "base.html" %} {% block title %}Enterprise Web Scraping & Data
+Extraction Services | Crawlio{% endblock %} {% block head %}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Crawlio",
+    "url": "https://crawlio.org",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://crawlio.org/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+</script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Crawlio",
+    "operatingSystem": "Linux, Windows, macOS",
+    "applicationCategory": "BusinessApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "ratingCount": "150"
+    },
+    "description": "AI-powered web scraping and data extraction services. Get clean, structured data from any website with automated tracking and intelligent insights."
+  }
+</script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Web Scraping & Data Extraction",
+    "provider": {
+      "@type": "Organization",
+      "name": "Crawlio",
+      "url": "https://crawlio.org"
+    },
+    "areaServed": "Global",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Data Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "E-commerce Data Extraction"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Real Estate Property Scraping"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "B2B Lead Generation Data"
+          }
+        }
+      ]
+    }
+  }
+</script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Crawlio ",
+    "url": "https://crawlio.org",
+    "logo": "https://crawlio.org/static/images/logo.png",
+    "sameAs": ["https://github.com/pradip-p/lazy-py-crawler"]
+  }
+</script>
+{% endblock %} {% block content %}
+<section class="hero">
+  <div class="container text-center">
+    <h1>AI-powered data extraction <br />& web scraping</h1>
+    <p class="hero-subtitle">
+      Serving <span class="">150+ enterprises globally</span>
+    </p>
+    <p>
+      Get the edge with automated extraction, intelligent insights, and reliable
+      data delivery. Specialized solutions for Enterprise, Real Estate & Lead
+      Generation.
+    </p>
+
+    <div
+      class="hero-cta-group"
+      style="
+        margin-top: 2.5rem;
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+      "
+    >
+      <input
+        type="email"
+        id="heroEmail"
+        placeholder="Enter your work email"
+        style="
+          padding: 1rem 1.5rem;
+          border: none;
+          border-radius: 6px;
+          width: 300px;
+          font-size: 1rem;
+        "
+      />
+      <button
+        onclick="redirectWithEmail()"
+        class="btn-white"
+        style="border: none; cursor: pointer"
+      >
+        Get a Free Sample
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="section platform-scale-section">
+  <div class="container">
+    <div class="scale-grid">
+      <div class="scale-item">
+        <h4>1M+</h4>
+        <p>Residential Proxies</p>
+      </div>
+      <div class="scale-item">
+        <h4>5.2B</h4>
+        <p>Data Points Scraped</p>
+      </div>
+      <div class="scale-item">
+        <h4>100%</h4>
+        <p>Audit Accuracy</p>
+      </div>
+      <div class="scale-item">
+        <h4>24/7</h4>
+        <p>Live QC Monitoring</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why Choose Crawlio Section -->
+<section class="section why-choose-section">
+  <div class="container">
+    <h2 class="section-title">Why Choose Crawlio</h2>
+    <p class="section-subtitle">
+      Your trusted partner for enterprise-grade data extraction with proven
+      results
+    </p>
+    <div class="why-grid">
+      <div class="why-card">
+        <h3>10+ Years Experience</h3>
+        <p>
+          Combined team expertise in web scraping, data engineering, and AI.
+          We've solved complex extraction challenges for Fortune 500 companies
+          and startups alike.
+        </p>
+      </div>
+      <div class="why-card">
+        <h3>Global Reach, Local Support</h3>
+        <p>
+          Dedicated 24/7 global support teams. We ensure international
+          compliance including GDPR, CCPA & Privacy Acts.
+        </p>
+      </div>
+      <div class="why-card">
+        <h3>99.9% Uptime SLA</h3>
+        <p>
+          Enterprise-grade reliability with automated monitoring, instant
+          failover, and guaranteed data delivery. Your pipelines never sleep.
+        </p>
+      </div>
+      <div class="why-card">
+        <h3>Security First</h3>
+        <p>
+          SOC 2 Type II compliant infrastructure. All data encrypted in transit
+          and at rest. Regular security audits and penetration testing.
+        </p>
+      </div>
+      <div class="why-card">
+        <h3>Rapid Deployment</h3>
+        <p>
+          From consultation to first data delivery in under 48 hours. Pre-built
+          templates for 100+ popular websites and platforms.
+        </p>
+      </div>
+      <div class="why-card">
+        <h3>AI-Powered</h3>
+        <p>
+          Not just raw data. Our AI models provide predictive insights, anomaly
+          detection, and automated executive summaries.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section industries-explorer-section" id="industries">
+  <div class="container">
+    <div class="explorer-header text-center">
+      <h2 class="section-title">Established Expertise Across Key Sectors</h2>
+      <p class="section-subtitle">
+        Delivering high-fidelity data pipelines for global enterprises since
+        2015.
+      </p>
+    </div>
+
+    <div class="explorer-container">
+      <!-- Sidebar Navigation -->
+      <div class="explorer-nav">
+        <button class="explorer-tab active" data-sector="retail">
+          <span class="tab-icon"></span>
+          <span class="tab-label">E-commerce & Retail</span>
+        </button>
+        <button class="explorer-tab" data-sector="real-estate">
+          <span class="tab-icon"></span>
+          <span class="tab-label">Real Estate & Property</span>
+        </button>
+        <button class="explorer-tab" data-sector="lead-gen">
+          <span class="tab-icon"></span>
+          <span class="tab-label">Lead & Business Data</span>
+        </button>
+      </div>
+
+      <!-- Content Panel -->
+      <div class="explorer-content">
+        <div id="sector-details" class="sector-panel">
+          <!-- Retail / E-commerce (Active by default) -->
+          <div class="sector-display active" id="retail">
+            <div class="sector-info">
+              <h3>E-commerce & Retail</h3>
+              <p class="sector-desc">
+                Master market dynamics with granular pricing and digital shelf
+                analytics. Monitor competitor inventory levels, price
+                elasticity, and promotional velocity in real-time.
+              </p>
+
+              <div class="data-points-grid">
+                <div class="data-point">
+                  <span class="dp-label">Primary Datasets</span>
+                  <ul class="dp-list">
+                    <li>Global price monitoring</li>
+                    <li>Inventory stock-out alerts</li>
+                    <li>MAP policy enforcement</li>
+                    <li>Review & sentiment tracking</li>
+                  </ul>
+                </div>
+                <div class="data-point">
+                  <span class="dp-label">Business Impact</span>
+                  <div class="impact-metric">
+                    <span class="metric-val">300%</span>
+                    <span class="metric-label">ROI on Pricing Strategy</span>
+                  </div>
+                  <p class="impact-text">
+                    Optimizing digital shelf presence for global Fortune 500 CPG
+                    brands.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="sector-visual">
+              <div class="code-preview">
+                <div class="preview-header">
+                  <span class="dot"></span><span class="dot"></span
+                  ><span class="dot"></span>
+                  <span class="preview-title">price_tracker.json</span>
+                </div>
+                <pre><code>{
+  "product_id": "SKU-9921",
+  "competitor_price": 89.99,
+  "your_price": 94.50,
+  "stock_status": "low",
+  "action": "price_drop_recommended"
+}</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Real Estate -->
+          <div class="sector-display" id="real-estate">
+            <div class="sector-info">
+              <h3>Real Estate & Property</h3>
+              <p class="sector-desc">
+                Gain deep visibility into inventory shifts, pricing volatility,
+                and emerging trends across global property markets with granular
+                data feeds.
+              </p>
+              <div class="data-points-grid">
+                <div class="data-point">
+                  <span class="dp-label">Primary Datasets</span>
+                  <ul class="dp-list">
+                    <li>Historical pricing & valuation</li>
+                    <li>Agent performance metrics</li>
+                    <li>Zoning & planning permits</li>
+                    <li>Rental yield forecasting</li>
+                  </ul>
+                </div>
+                <div class="data-point">
+                  <span class="dp-label">Business Impact</span>
+                  <div class="impact-metric">
+                    <span class="metric-val">4.2M+</span>
+                    <span class="metric-label">Properties Tracked Daily</span>
+                  </div>
+                  <p class="impact-text">
+                    Empowering PropTech leaders to build 99% accurate valuation
+                    models.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lead Generation -->
+          <div class="sector-display" id="lead-gen">
+            <div class="sector-info">
+              <h3>Lead & Business Data</h3>
+              <p class="sector-desc">
+                Build high-intent prospect lists by extracting business data
+                from LinkedIn, Google Maps, and industry directories. Automate
+                your top-of-funnel growth.
+              </p>
+              <div class="data-points-grid">
+                <div class="data-point">
+                  <span class="dp-label">Primary Datasets</span>
+                  <ul class="dp-list">
+                    <li>B2B contact information</li>
+                    <li>Company technographics</li>
+                    <li>Hiring intent signals</li>
+                    <li>Executive move detection</li>
+                  </ul>
+                </div>
+                <div class="data-point">
+                  <span class="dp-label">Business Impact</span>
+                  <div class="impact-metric">
+                    <span class="metric-val">50x</span>
+                    <span class="metric-label">Sales Outreach Velocity</span>
+                  </div>
+                  <p class="impact-text">
+                    Providing the fundamental data layer for high-growth sales
+                    teams.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section pricing-section">
+  <div class="container">
+    <h2 class="section-title">Professional Data Solutions</h2>
+    <p class="section-subtitle">
+      Choose the plan that fits your execution needs
+    </p>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-header">
+          <h3>Starter</h3>
+          <div class="price">$100<span> one-time</span></div>
+          <p class="pricing-desc">
+            Perfect for tracking up to 5,000 products or listings.
+          </p>
+        </div>
+        <ul class="pricing-features">
+          <li><span class="checkmark"></span> Up to 5,000 Data Points</li>
+          <li><span class="checkmark"></span> Weekly Data Refresh</li>
+          <li><span class="checkmark"></span> CSV / Excel Delivery</li>
+          <li><span class="checkmark"></span> Email Notifications</li>
+          <li><span class="checkmark"></span> Standard Proxies</li>
+        </ul>
+        <a href="/contact?type=starter" class="pricing-btn">Get Started</a>
+      </div>
+      <div class="pricing-card featured-pricing">
+        <div class="popular-badge">Growth Choice</div>
+        <div class="pricing-header">
+          <h3>Growth Choice</h3>
+          <div class="price">$200<span>/mo</span></div>
+          <p class="pricing-desc">
+            High-frequency tracking with daily updates and API access.
+          </p>
+        </div>
+        <ul class="pricing-features">
+          <li><span class="checkmark"></span> Up to 10,000 Data Points</li>
+          <li><span class="checkmark"></span> Daily Delivery</li>
+          <li><span class="checkmark"></span> REST API & Webhooks</li>
+          <li><span class="checkmark"></span> Competitor Price Alerts</li>
+          <li><span class="checkmark"></span> Residential Proxies</li>
+          <li><span class="checkmark"></span> Priority Support</li>
+        </ul>
+        <a href="/contact?type=pro" class="pricing-btn primary">Get Pro Now</a>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-header">
+          <h3>Enterprise</h3>
+          <div class="price">Custom</div>
+          <p class="pricing-desc">
+            Unlimited scale, custom delivery pipelines, and 24/7 monitoring.
+          </p>
+        </div>
+        <ul class="pricing-features">
+          <li><span class="checkmark"></span> Unlimited Data Volume</li>
+          <li><span class="checkmark"></span> Real-time Extraction</li>
+          <li><span class="checkmark"></span> Custom Data Schemas</li>
+          <li><span class="checkmark"></span> Dedicated Proxy Pools</li>
+          <li><span class="checkmark"></span> SOC 2 Type II Security</li>
+          <li><span class="checkmark"></span> Dedicated Account Manager</li>
+        </ul>
+        <a href="/contact" class="pricing-btn">Talk to Sales</a>
+      </div>
+    </div>
+
+    <div class="delivery-info">
+      <h3 style="margin-bottom: 1rem; font-size: 1.2rem; font-weight: 700">
+        Zero-Maintenance Data Delivery
+      </h3>
+      <p
+        style="
+          color: var(--text-muted);
+          font-size: 0.95rem;
+          margin-bottom: 1.5rem;
+        "
+      >
+        We handle the scrapers, proxies, and cleaning. You get the data in your
+        preferred format.
+      </p>
+      <div class="format-tags">
+        <span class="format-tag">CSV / Excel</span>
+        <span class="format-tag">Google Sheets</span>
+        <span class="format-tag">JSON / API</span>
+        <span class="format-tag">Webhooks</span>
+        <span class="format-tag">S3 / SFTP</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section getting-started-section" id="how-it-works">
+  <div class="container">
+    <div class="process-label text-center">PROCESS</div>
+    <h2 class="section-title white-text">Getting started with Crawlio</h2>
+    <p class="section-subtitle white-text">
+      Start your data journey in a few simple steps. Our AI-powered workflows
+      handle the heavy lifting, so you can focus on insights and growth.
+    </p>
+
+    <div class="steps-timeline">
+      <div class="step-item">
+        <div class="step-number">1</div>
+        <h3>Initial project consultation</h3>
+        <p>
+          We review your data needs and key KPIs to define a clear roadmap for a
+          successful project.
+        </p>
+      </div>
+      <div class="step-item">
+        <div class="step-number">2</div>
+        <h3>Setup & Testing</h3>
+        <p>
+          Automated crawlers are configured for your use-case, and a sample
+          dataset is provided for approval before full-scale extraction.
+        </p>
+      </div>
+      <div class="step-item">
+        <div class="step-number">3</div>
+        <h3>Begin data collection</h3>
+        <p>
+          Once approved, we scale the extraction and deliver structured,
+          high-quality data on the agreed schedule.
+        </p>
+      </div>
+      <div class="step-item">
+        <div class="step-number">4</div>
+        <h3>Ongoing Maintenance</h3>
+        <p>
+          We monitor every run to ensure seamless, reliable data delivery with
+          minimal disruption.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Customer Success Stories -->
+<section class="section testimonials-section">
+  <div class="container">
+    <h2 class="section-title">What Our Customers Say</h2>
+    <p class="section-subtitle">Trusted by leading enterprises worldwide</p>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <p class="testimonial-text">
+          "Crawlio reduced our data collection time by 75%. What used to take
+          our team 2 weeks now happens automatically every day. The quality and
+          reliability are exceptional."
+        </p>
+        <div class="testimonial-author">
+          <div
+            class="author-avatar"
+            style="
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            "
+          >
+            SM
+          </div>
+          <div class="author-info">
+            <h4>Sarah Mitchell</h4>
+            <p>Head of Analytics, E-commerce (Retail)</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-text">
+          "The team's expertise in handling complex JavaScript-heavy sites is
+          unmatched. They delivered a solution that our in-house team couldn't
+          crack in 3 months."
+        </p>
+        <div class="testimonial-author">
+          <div
+            class="author-avatar"
+            style="
+              background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            "
+          >
+            JC
+          </div>
+          <div class="author-info">
+            <h4>James Chen</h4>
+            <p>CTO, PropTech Startup</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-text">
+          "Outstanding support and compliance expertise. They helped us navigate
+          global privacy requirements while delivering exactly the data we
+          needed."
+        </p>
+        <div class="testimonial-author">
+          <div
+            class="author-avatar"
+            style="
+              background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            "
+          >
+            RP
+          </div>
+          <div class="author-info">
+            <h4>Rachel Patel</h4>
+            <p>Data Director, Global Consulting</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %} {% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Industry Explorer Tabs
+    const explorerTabs = document.querySelectorAll(".explorer-tab");
+    const sectorDisplays = document.querySelectorAll(".sector-display");
+
+    explorerTabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const sectorId = tab.getAttribute("data-sector");
+
+        // Update active tab
+        explorerTabs.forEach((t) => t.classList.remove("active"));
+        tab.classList.add("active");
+
+        // Update active display
+        sectorDisplays.forEach((display) => {
+          display.classList.remove("active");
+          if (display.id === sectorId) {
+            display.classList.add("active");
+          }
+        });
+      });
+    });
+  });
+
+  function redirectWithEmail() {
+    const email = document.getElementById("heroEmail").value;
+    window.location.href = `/contact?type=free-sample${email ? "&email=" + encodeURIComponent(email) : ""}`;
+  }
+</script>
+{% endblock %}

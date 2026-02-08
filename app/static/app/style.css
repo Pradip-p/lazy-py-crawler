@@ -153,13 +153,12 @@ nav:hover {
 }
 
 .logo img {
-  height: 70px;
+.logo img {
+  max-height: 48px;
   width: auto;
   transition: all 0.3s ease;
-  position: relative;
-  top: -2px; /* Fine-tune alignment */
+  display: block;
 }
-
 .logo:hover {
   transform: scale(1.05);
   filter: brightness(1.1);

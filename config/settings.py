@@ -200,3 +200,8 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_Unique_EMAIL = True
 SOCIALACCOUNT_QUERY_EMAIL = True
 ACCOUNT_ADAPTER = 'app.adapter.MyAccountAdapter'
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://crawlio.org",
+    "https://www.crawlio.org",
+]

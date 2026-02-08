@@ -1,5 +1,8 @@
-{% extends "base.html" %} {% block title %}Company | Crawlio {% endblock %} {%
-block content %}
+{% extends "base.html" %}
+
+{% block title %}Company | Crawlio{% endblock %}
+
+{% block content %}
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -36,24 +39,20 @@ block content %}
     </div>
 
     <!-- Teams Section (with negative margin to pull up like contact form) -->
-    <div
-      style="
+    <div style="
         margin-top: -6rem;
         margin-bottom: 6rem;
         position: relative;
         z-index: 10;
-      "
-    >
-      <div
-        style="
+      ">
+      <div style="
           background: white;
           padding: 2rem;
           border-radius: 16px;
           box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
           margin-bottom: 3rem;
           text-align: center;
-        "
-      >
+        ">
         <p class="section-subtitle" style="margin: 0; font-size: 1.1rem">
           We are a distributed team of engineers, data scientists, and
           strategists.
@@ -65,18 +64,13 @@ block content %}
         <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2rem">
           Leadership Team
         </h2>
-        <div
-          class="grid"
-          style="
+        <div class="grid" style="
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
             justify-content: center;
-          "
-        >
+          ">
           {% for member in team_members %}
-          <div
-            class="team-card text-center"
-            style="
+          <div class="team-card text-center" style="
               background: white;
               border: 1px solid rgba(0, 0, 0, 0.05);
               border-radius: 20px;
@@ -86,10 +80,8 @@ block content %}
               display: flex;
               flex-direction: column;
               align-items: center;
-            "
-          >
-            <div
-              style="
+            ">
+            <div style="
                 width: 90px;
                 height: 90px;
                 border-radius: 50%;
@@ -98,28 +90,18 @@ block content %}
                 overflow: hidden;
                 border: 3px solid white;
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-              "
-            >
-              <img
-                src="{{ member.image }}"
-                alt="{{ member.name }}"
-                width="90"
-                height="90"
-                loading="lazy"
-                style="width: 100%; height: 100%; object-fit: cover"
-              />
+              ">
+              <img src="{{ member.image }}" alt="{{ member.name }}" width="90" height="90" loading="lazy"
+                style="width: 100%; height: 100%; object-fit: cover" />
             </div>
-            <h3
-              style="
+            <h3 style="
                 margin-bottom: 0.35rem;
                 font-size: 1.15rem;
                 font-weight: 700;
-              "
-            >
+              ">
               {{ member.name }}
             </h3>
-            <div
-              style="
+            <div style="
                 background: rgba(74, 21, 75, 0.05);
                 color: var(--slack-purple);
                 padding: 0.2rem 0.8rem;
@@ -130,17 +112,14 @@ block content %}
                 margin-bottom: 1rem;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
-              "
-            >
+              ">
               {{ member.role }}
             </div>
-            <p
-              style="
+            <p style="
                 font-size: 0.9rem;
                 color: var(--text-muted);
                 line-height: 1.6;
-              "
-            >
+              ">
               {{ member.bio }}
             </p>
           </div>
@@ -149,38 +128,32 @@ block content %}
       </div>
 
       <!-- Divider -->
-      <div
-        style="
+      <div style="
           height: 1px;
           background: var(--border-color);
           margin: 0 auto 6rem;
           max-width: 200px;
-        "
-      ></div>
+        "></div>
 
       <!-- Careers Section -->
       <div>
         <h2 style="text-align: center; margin-bottom: 1rem; font-size: 2rem">
           Join Our Mission
         </h2>
-        <p
-          style="
+        <p style="
             text-align: center;
             color: var(--text-muted);
             margin-bottom: 3rem;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-          "
-        >
+          ">
           We're always looking for brilliant minds to join our distributed team.
         </p>
 
         <div style="max-width: 900px; margin: 0 auto">
           {% for job in job_openings %}
-          <div
-            class="card"
-            style="
+          <div class="card" style="
               display: flex;
               justify-content: space-between;
               align-items: center;
@@ -188,47 +161,36 @@ block content %}
               border: 1px solid var(--border-color);
               padding: 2rem;
               transition: all 0.2s ease;
-            "
-          >
+            ">
             <div class="job-info">
               <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem">
                 {{ job.title }}
               </h3>
-              <p
-                style="
+              <p style="
                   color: var(--text-muted);
                   margin-bottom: 0.75rem;
                   font-size: 0.95rem;
-                "
-              >
+                ">
                 {{ job.department }} - {{ job.location }}
               </p>
               <div style="display: flex; gap: 0.5rem">
                 {% for tag in job.tags %}
-                <span
-                  style="
+                <span style="
                     background: rgba(74, 21, 75, 0.08);
                     color: var(--slack-purple);
                     padding: 0.25rem 0.75rem;
                     border-radius: 4px;
                     font-size: 0.75rem;
                     font-weight: 600;
-                  "
-                  >{{ tag }}</span
-                >
+                  ">{{ tag }}</span>
                 {% endfor %}
               </div>
             </div>
-            <a
-              href="/contact?subject=Job Application: {{ job.title }}"
-              class="btn-primary"
-              style="
+            <a href="/contact?subject=Job Application: {{ job.title }}" class="btn-primary" style="
                 text-decoration: none;
                 padding: 0.75rem 1.5rem;
                 font-size: 0.9rem;
-              "
-              >Apply Now</a
-            >
+              ">Apply Now</a>
           </div>
           {% endfor %}
         </div>
@@ -236,11 +198,7 @@ block content %}
         <div class="text-center" style="margin-top: 4rem">
           <p style="color: var(--text-muted)">
             Don't see a role that fits?
-            <a
-              href="/contact"
-              style="color: var(--slack-purple); font-weight: 600"
-              >Contact us</a
-            >
+            <a href="/contact" style="color: var(--slack-purple); font-weight: 600">Contact us</a>
           </p>
         </div>
       </div>

@@ -1,5 +1,8 @@
-{% extends "base.html" %} {% block title %}Frequently Asked Questions | Crawlio
-{% endblock %} {% block content %}
+{% extends "base.html" %}
+
+{% block title %}Frequently Asked Questions | Crawlio{% endblock %}
+
+{% block content %}
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -95,10 +98,7 @@
   </div>
 </section>
 
-<section
-  class="section faq-section"
-  style="padding-top: 0; margin-top: -3rem; position: relative; z-index: 10"
->
+<section class="section faq-section" style="padding-top: 0; margin-top: -3rem; position: relative; z-index: 10">
   <div class="container">
     <div class="faq-container">
       <div class="faq-item">
@@ -133,10 +133,8 @@
       </div>
       <div class="faq-item">
         <div class="faq-question">
-          <span
-            >Is Crawlio compliant with Australian Privacy Act and
-            CCPA/GDPR?</span
-          >
+          <span>Is Crawlio compliant with Australian Privacy Act and
+            CCPA/GDPR?</span>
           <span class="faq-icon">+</span>
         </div>
         <div class="faq-answer">
@@ -208,9 +206,7 @@
       </div>
       <div class="faq-item">
         <div class="faq-question">
-          <span
-            >What makes Crawlio different from other scraping services?</span
-          >
+          <span>What makes Crawlio different from other scraping services?</span>
           <span class="faq-icon">+</span>
         </div>
         <div class="faq-answer">
@@ -225,10 +221,8 @@
       </div>
       <div class="faq-item">
         <div class="faq-question">
-          <span
-            >How does Crawlio help with E-commerce product and price
-            scraping?</span
-          >
+          <span>How does Crawlio help with E-commerce product and price
+            scraping?</span>
           <span class="faq-icon">+</span>
         </div>
         <div class="faq-answer">
@@ -243,10 +237,8 @@
       </div>
       <div class="faq-item">
         <div class="faq-question">
-          <span
-            >Can I use Crawlio for large-scale real estate data
-            extraction?</span
-          >
+          <span>Can I use Crawlio for large-scale real estate data
+            extraction?</span>
           <span class="faq-icon">+</span>
         </div>
         <div class="faq-answer">
@@ -264,7 +256,9 @@
 </section>
 
 <!-- Trust Badges -->
-{% endblock %} {% block scripts %}
+{% endblock %}
+
+{% block scripts %}
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     // FAQ Accordion

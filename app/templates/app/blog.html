@@ -1,4 +1,7 @@
-{% extends "base.html" %} {% block title %}Engineering at Crawlio{% endblock %}
+{% extends "base.html" %}
+
+{% block title %}Engineering at Crawlio{% endblock %}
+
 {% block content %}
 <section class="hero">
   <div class="container text-center">
@@ -12,9 +15,7 @@
     {% if posts %}
     <!-- Featured Post (First Post) -->
     {% with featured=posts.0 %}
-    <div
-      class="card"
-      style="
+    <div class="card" style="
         margin-bottom: 4rem;
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -22,70 +23,51 @@
         padding: 0;
         overflow: hidden;
         border-radius: 16px;
-      "
-    >
-      <div
-        style="
+      ">
+      <div style="
           padding: 3rem;
           display: flex;
           flex-direction: column;
           justify-content: center;
-        "
-      >
-        <div
-          style="
+        ">
+        <div style="
             text-transform: uppercase;
             font-size: 0.8rem;
             font-weight: 800;
             color: var(--slack-purple);
             margin-bottom: 1rem;
             letter-spacing: 1px;
-          "
-        >
+          ">
           Latest Post
         </div>
-        <h2
-          style="
+        <h2 style="
             font-size: 2.5rem;
             font-weight: 800;
             margin-bottom: 1.5rem;
             line-height: 1.2;
-          "
-        >
+          ">
           {{ featured.title }}
         </h2>
-        <p
-          style="
+        <p style="
             color: var(--text-muted);
             font-size: 1.1rem;
             margin-bottom: 2rem;
             line-height: 1.7;
-          "
-        >
+          ">
           {{ featured.excerpt|slice:":200" }}...
         </p>
-        <a
-          href="/blog/{{ featured.slug }}"
-          class="btn-primary"
-          style="width: fit-content !important"
-          >Read Article</a
-        >
+        <a href="/blog/{{ featured.slug }}" class="btn-primary" style="width: fit-content !important">Read Article</a>
       </div>
     </div>
 
     <!-- Search Filter -->
-    <div
-      style="
+    <div style="
         margin-bottom: 3rem;
         max-width: 600px;
         margin-left: auto;
         margin-right: auto;
-      "
-    >
-      <input
-        type="text"
-        id="blogSearch"
-        style="
+      ">
+      <input type="text" id="blogSearch" style="
           width: 100%;
           padding: 1rem 1.5rem;
           border: 1px solid var(--border-color);
@@ -93,69 +75,50 @@
           font-size: 1rem;
           outline: none;
           transition: border-color 0.3s;
-        "
-        placeholder="Search articles..."
-      />
+        " placeholder="Search articles..." />
     </div>
 
     <!-- Archive Grid -->
     <div class="grid" id="blogGrid">
       {% for post in posts|slice:"1:" %}
-      <div
-        class="card blog-card"
-        data-title="{{ post.title }}"
-        style="
+      <div class="card blog-card" data-title="{{ post.title }}" style="
           padding: 0;
           overflow: hidden;
           display: flex;
           flex-direction: column;
-        "
-      >
-        <div
-          style="
+        ">
+        <div style="
             padding: 2rem;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-          "
-        >
-          <div
-            style="
+          ">
+          <div style="
               font-size: 0.8rem;
               color: var(--text-muted);
               margin-bottom: 0.5rem;
-            "
-          >
+            ">
             {{ post.created_at|date:"F d, Y" }}
           </div>
           <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem">
-            <a
-              href="/blog/{{ post.slug }}"
-              style="text-decoration: none; color: inherit"
-              >{{ post.title }}</a
-            >
+            <a href="/blog/{{ post.slug }}" style="text-decoration: none; color: inherit">{{ post.title }}</a>
           </h3>
-          <p
-            style="
+          <p style="
               color: var(--text-muted);
               font-size: 0.95rem;
               margin-bottom: 1.5rem;
               flex-grow: 1;
-            "
-          >
+            ">
             {{ post.excerpt|slice:":120" }}...
           </p>
-          <a
-            href="/blog/{{ post.slug }}"
-            style="
+          <a href="/blog/{{ post.slug }}" style="
               color: var(--slack-purple);
               font-weight: 700;
               text-decoration: none;
               display: flex;
               align-items: center;
               gap: 0.5rem;
-            "
-          >
+            ">
             Read More <span style="font-size: 1.2rem">→</span>
           </a>
         </div>
@@ -163,15 +126,12 @@
       {% endfor %}
     </div>
 
-    <div
-      id="noResults"
-      style="
+    <div id="noResults" style="
         display: none;
         text-align: center;
         padding: 4rem 0;
         color: var(--text-muted);
-      "
-    >
+      ">
       No articles found matching your search.
     </div>
 

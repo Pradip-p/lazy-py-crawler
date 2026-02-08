@@ -9,6 +9,7 @@ repos:
         language: python
         types: [text]
         stages: [commit, push, manual]
+        exclude: ^(app/templates/|app/static/|staticfiles/)
 
       - id: end-of-file-fixer
         name: fix end of files
@@ -17,6 +18,7 @@ repos:
         language: python
         types: [text]
         stages: [commit, push, manual]
+        exclude: ^(app/templates/|app/static/|staticfiles/)
 
       - id: detect-aws-credentials
         name: detect aws credentials
@@ -86,6 +88,7 @@ repos:
     rev: v3.3.3
     hooks:
       - id: prettier
+        exclude: ^(app/templates/|app/static/|staticfiles/)
         args:
           [
             --ignore-unknown,

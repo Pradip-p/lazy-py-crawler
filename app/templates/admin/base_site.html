@@ -1,6 +1,9 @@
-{% extends "admin/base.html" %} {% block title %}{{ title }} | {{
-site_title|default:_('Django site admin') }}{% endblock %} {% block extrastyle
-%} {{ block.super }}
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
 <style>
   :root {
     --primary: #4a154b !important;
@@ -54,19 +57,18 @@ site_title|default:_('Django site admin') }}{% endblock %} {% block extrastyle
     letter-spacing: -1px !important;
   }
 </style>
-{% endblock %} {% block branding %}
+{% endblock %}
+
+{% block branding %}
 <h1 id="site-name">
   <a href="{% url 'admin:index' %}">
     <span style="color: #ffffff">CRAWLIO</span>
-    <span
-      style="
+    <span style="
         color: rgba(255, 255, 255, 0.7);
         font-size: 0.6em;
         font-style: normal;
         vertical-align: middle;
-      "
-      >ADMIN</span
-    >
+      ">ADMIN</span>
   </a>
 </h1>
 {% endblock %}

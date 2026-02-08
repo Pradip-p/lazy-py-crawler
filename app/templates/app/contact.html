@@ -1,5 +1,8 @@
-{% extends "base.html" %} {% block title %}Contact Support | Crawlio {% endblock
-%} {% block head %}
+{% extends "base.html" %}
+
+{% block title %}Contact Support | Crawlio{% endblock %}
+
+{% block head %}
 <style>
   .contact-form {
     max-width: 600px;
@@ -34,7 +37,9 @@
     border-color: var(--slack-purple);
   }
 </style>
-{% endblock %} {% block content %}
+{% endblock %}
+
+{% block content %}
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -75,41 +80,19 @@
         <div id="dynamicFields"></div>
         <div class="form-group">
           <label>Full Name</label>
-          <input
-            type="text"
-            id="fullName"
-            class="form-control"
-            placeholder="John"
-            required
-          />
+          <input type="text" id="fullName" class="form-control" placeholder="John" required />
         </div>
         <div class="form-group">
           <label>Business Email</label>
-          <input
-            type="email"
-            id="email"
-            class="form-control"
-            placeholder="john@company.com"
-            required
-          />
+          <input type="email" id="email" class="form-control" placeholder="john@company.com" required />
         </div>
         <div class="form-group" id="messageGroup">
           <label>Message</label>
-          <textarea
-            id="message"
-            class="form-control"
-            style="height: 150px"
-            placeholder="Tell us about your data needs..."
-            required
-          ></textarea>
+          <textarea id="message" class="form-control" style="height: 150px"
+            placeholder="Tell us about your data needs..." required></textarea>
         </div>
         <center>
-          <button
-            type="submit"
-            id="submitBtn"
-            class="btn-primary"
-            style="width: 100%"
-          >
+          <button type="submit" id="submitBtn" class="btn-primary" style="width: 100%">
             Send Message
           </button>
         </center>

@@ -1,21 +1,21 @@
-{% extends "base.html" %} {% block title %}{{ post.title }} | Crawlio
-Engineering{% endblock %} {% block content %}
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} | Crawlio Engineering{% endblock %}
+
+{% block content %}
 <section class="hero">
   <div class="container text-center">
-    <div
-      style="
+    <div style="
         text-transform: uppercase;
         font-size: 0.85rem;
         font-weight: 800;
         color: rgba(255, 255, 255, 0.8);
         margin-bottom: 1rem;
         letter-spacing: 2px;
-      "
-    >
+      ">
       Engineering & Insights
     </div>
-    <h1
-      style="
+    <h1 style="
         font-size: 3.5rem;
         font-weight: 800;
         line-height: 1.1;
@@ -23,20 +23,17 @@ Engineering{% endblock %} {% block content %}
         max-width: 950px;
         margin-left: auto;
         margin-right: auto;
-      "
-    >
+      ">
       {{ post.title }}
     </h1>
-    <div
-      style="
+    <div style="
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 1.5rem;
         font-weight: 600;
         opacity: 0.9;
-      "
-    >
+      ">
       <span>{{ post.created_at|date:"F d, Y" }}</span>
       <span style="opacity: 0.5">•</span>
       <span>5 min read</span>
@@ -46,64 +43,47 @@ Engineering{% endblock %} {% block content %}
 
 <section class="section" style="background: white">
   <div class="container">
-    <div
-      style="
+    <div style="
         display: grid;
         grid-template-columns: 1fr 300px;
         gap: 4rem;
         align-items: start;
-      "
-    >
+      ">
       <!-- Main Content Area -->
       <article>
         {% if post.image_url %}
-        <div
-          style="
+        <div style="
             margin-bottom: 3rem;
             border-radius: 16px;
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
-          "
-        >
-          <img
-            src="{{ post.image_url }}"
-            alt="{{ post.title }}"
-            style="width: 100%; height: auto; display: block"
-            onerror="this.style.display='none'"
-          />
+          ">
+          <img src="{{ post.image_url }}" alt="{{ post.title }}" style="width: 100%; height: auto; display: block"
+            onerror="this.style.display='none'" />
         </div>
         {% endif %}
 
-        <div
-          class="blog-article-content ck-content"
-          style="font-size: 1.2rem; line-height: 1.8; color: var(--text-dark)"
-        >
+        <div class="blog-article-content ck-content"
+          style="font-size: 1.2rem; line-height: 1.8; color: var(--text-dark)">
           {{ post.content | safe }}
         </div>
 
-        <div
-          style="
+        <div style="
             margin-top: 5rem;
             padding-top: 3rem;
             border-top: 1px solid var(--border-color);
             display: flex;
             align-items: center;
             gap: 1.5rem;
-          "
-        >
-          <img
-            src="https://ui-avatars.com/api/?name=Crawlio+Team&background=4a154b&color=fff"
-            alt="Crawlio Team"
-            style="width: 64px; height: 64px; border-radius: 50%"
-          />
+          ">
+          <img src="https://ui-avatars.com/api/?name=Crawlio+Team&background=4a154b&color=fff" alt="Crawlio Team"
+            style="width: 64px; height: 64px; border-radius: 50%" />
           <div>
-            <h4
-              style="
+            <h4 style="
                 margin-bottom: 0.25rem;
                 font-weight: 700;
                 font-size: 1.1rem;
-              "
-            >
+              ">
               Crawlio Engineering Team
             </h4>
             <p style="color: var(--text-muted); font-size: 1rem; margin: 0">
@@ -116,31 +96,25 @@ Engineering{% endblock %} {% block content %}
       <!-- Sidebar -->
       <aside style="position: sticky; top: 100px">
         <div style="margin-bottom: 3rem">
-          <h5
-            style="
+          <h5 style="
               text-transform: uppercase;
               font-size: 0.75rem;
               letter-spacing: 1px;
               color: var(--text-muted);
               margin-bottom: 1rem;
               font-weight: 800;
-            "
-          >
+            ">
             Information
           </h5>
-          <div
-            style="
+          <div style="
               display: flex;
               flex-direction: column;
               gap: 1rem;
               font-size: 0.95rem;
-            "
-          >
+            ">
             <div style="display: flex; justify-content: space-between">
               <span style="color: var(--text-muted)">Published</span>
-              <span style="font-weight: 600"
-                >{{ post.created_at|date:"b d, Y" }}</span
-              >
+              <span style="font-weight: 600">{{ post.created_at|date:"b d, Y" }}</span>
             </div>
             <div style="display: flex; justify-content: space-between">
               <span style="color: var(--text-muted)">Reading Time</span>
@@ -148,30 +122,24 @@ Engineering{% endblock %} {% block content %}
             </div>
             <div style="display: flex; justify-content: space-between">
               <span style="color: var(--text-muted)">Category</span>
-              <span style="font-weight: 600; color: var(--slack-purple)"
-                >Engineering</span
-              >
+              <span style="font-weight: 600; color: var(--slack-purple)">Engineering</span>
             </div>
           </div>
         </div>
 
         <div>
-          <h5
-            style="
+          <h5 style="
               text-transform: uppercase;
               font-size: 0.75rem;
               letter-spacing: 1px;
               color: var(--text-muted);
               margin-bottom: 1.5rem;
               font-weight: 800;
-            "
-          >
+            ">
             Share this article
           </h5>
           <div style="display: flex; flex-direction: column; gap: 0.75rem">
-            <button
-              onclick="navigator.clipboard.writeText(window.location.href); alert('Link copied!')"
-              style="
+            <button onclick="navigator.clipboard.writeText(window.location.href); alert('Link copied!')" style="
                 width: 100%;
                 text-align: left;
                 padding: 0.75rem 1rem;
@@ -181,14 +149,11 @@ Engineering{% endblock %} {% block content %}
                 cursor: pointer;
                 font-weight: 600;
                 transition: all 0.2s;
-              "
-            >
+              ">
               Copy Link
             </button>
-            <a
-              href="https://twitter.com/intent/tweet?text={{ post.title }}&url={{ request.build_absolute_uri }}"
-              target="_blank"
-              style="
+            <a href="https://twitter.com/intent/tweet?text={{ post.title }}&url={{ request.build_absolute_uri }}"
+              target="_blank" style="
                 width: 100%;
                 text-align: center;
                 padding: 0.75rem 1rem;
@@ -197,14 +162,11 @@ Engineering{% endblock %} {% block content %}
                 color: white;
                 text-decoration: none;
                 font-weight: 600;
-              "
-            >
+              ">
               Twitter / X
             </a>
-            <a
-              href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}"
-              target="_blank"
-              style="
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}"
+              target="_blank" style="
                 width: 100%;
                 text-align: center;
                 padding: 0.75rem 1rem;
@@ -213,17 +175,14 @@ Engineering{% endblock %} {% block content %}
                 color: white;
                 text-decoration: none;
                 font-weight: 600;
-              "
-            >
+              ">
               LinkedIn
             </a>
           </div>
         </div>
 
         <div style="margin-top: 4rem">
-          <a
-            href="/blog"
-            style="
+          <a href="/blog" style="
               color: var(--slack-purple);
               font-weight: 700;
               text-decoration: none;
@@ -231,8 +190,7 @@ Engineering{% endblock %} {% block content %}
               display: flex;
               align-items: center;
               gap: 0.5rem;
-            "
-          >
+            ">
             ← All Articles
           </a>
         </div>
@@ -243,7 +201,7 @@ Engineering{% endblock %} {% block content %}
 
 <style>
   @media (max-width: 992px) {
-    .section .container > div {
+    .section .container>div {
       grid-template-columns: 1fr !important;
       gap: 3rem !important;
     }

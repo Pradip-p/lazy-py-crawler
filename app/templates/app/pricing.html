@@ -1,5 +1,8 @@
-{% extends "base.html" %} {% block title %}Pricing & FAQ | Enterprise Data
-Extraction | Crawlio{% endblock %} {% block head %}
+{% extends "base.html" %}
+
+{% block title %}Pricing & FAQ | Enterprise Data Extraction | Crawlio{% endblock %}
+
+{% block head %}
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -88,7 +91,9 @@ Extraction | Crawlio{% endblock %} {% block head %}
     ]
   }
 </script>
-{% endblock %} {% block content %}
+{% endblock %}
+
+{% block content %}
 <section class="section pricing-section" id="pricing" style="padding-top: 6rem">
   <div class="container">
     <h2 class="section-title">Professional Data Solutions</h2>
@@ -155,13 +160,11 @@ Extraction | Crawlio{% endblock %} {% block head %}
       <h3 style="margin-bottom: 1rem; font-size: 1.2rem; font-weight: 700">
         Zero-Maintenance Data Delivery
       </h3>
-      <p
-        style="
+      <p style="
           color: var(--text-muted);
           font-size: 0.95rem;
           margin-bottom: 1.5rem;
-        "
-      >
+        ">
         We handle the scrapers, proxies, and cleaning. You get the data in your
         preferred format.
       </p>
@@ -176,11 +179,7 @@ Extraction | Crawlio{% endblock %} {% block head %}
   </div>
 </section>
 
-<section
-  class="section faq-section"
-  id="faq"
-  style="padding-top: 4rem; padding-bottom: 8rem"
->
+<section class="section faq-section" id="faq" style="padding-top: 4rem; padding-bottom: 8rem">
   <div class="container">
     <h2 class="section-title">Frequently Asked Questions</h2>
     <p class="section-subtitle">Everything you need to know about Crawlio</p>
@@ -218,10 +217,8 @@ Extraction | Crawlio{% endblock %} {% block head %}
       </div>
       <div class="faq-item">
         <div class="faq-question">
-          <span
-            >Is Crawlio compliant with Australian Privacy Act and
-            CCPA/GDPR?</span
-          >
+          <span>Is Crawlio compliant with Australian Privacy Act and
+            CCPA/GDPR?</span>
           <span class="faq-icon">+</span>
         </div>
         <div class="faq-answer">
@@ -293,9 +290,7 @@ Extraction | Crawlio{% endblock %} {% block head %}
       </div>
       <div class="faq-item">
         <div class="faq-question">
-          <span
-            >What makes Crawlio different from other scraping services?</span
-          >
+          <span>What makes Crawlio different from other scraping services?</span>
           <span class="faq-icon">+</span>
         </div>
         <div class="faq-answer">
@@ -310,10 +305,8 @@ Extraction | Crawlio{% endblock %} {% block head %}
       </div>
       <div class="faq-item">
         <div class="faq-question">
-          <span
-            >How does Crawlio help with E-commerce product and price
-            scraping?</span
-          >
+          <span>How does Crawlio help with E-commerce product and price
+            scraping?</span>
           <span class="faq-icon">+</span>
         </div>
         <div class="faq-answer">
@@ -328,10 +321,8 @@ Extraction | Crawlio{% endblock %} {% block head %}
       </div>
       <div class="faq-item">
         <div class="faq-question">
-          <span
-            >Can I use Crawlio for large-scale real estate data
-            extraction?</span
-          >
+          <span>Can I use Crawlio for large-scale real estate data
+            extraction?</span>
           <span class="faq-icon">+</span>
         </div>
         <div class="faq-answer">
@@ -347,7 +338,9 @@ Extraction | Crawlio{% endblock %} {% block head %}
     </div>
   </div>
 </section>
-{% endblock %} {% block scripts %}
+{% endblock %}
+
+{% block scripts %}
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     // FAQ Accordion

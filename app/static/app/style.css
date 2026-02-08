@@ -147,20 +147,22 @@ nav:hover {
 }
 
 .logo {
-  font-size: 1.8rem;
-  font-weight: 900;
-  font-style: italic;
-  color: var(--slack-purple);
-  text-decoration: none;
-  letter-spacing: -0.5px;
   display: flex;
   align-items: center;
   transition: all 0.3s ease;
 }
 
+.logo img {
+  height: 70px;
+  width: auto;
+  transition: all 0.3s ease;
+  position: relative;
+  top: -2px; /* Fine-tune alignment */
+}
+
 .logo:hover {
   transform: scale(1.05);
-  filter: brightness(1.2);
+  filter: brightness(1.1);
 }
 
 .nav-links {
@@ -812,11 +814,9 @@ nav:hover {
   font-size: 2.8rem;
   font-weight: 800;
   margin: 0.5rem 0;
-  background: linear-gradient(
-    135deg,
-    var(--slack-purple) 0%,
-    var(--slack-blue) 100%
-  );
+  background: linear-gradient(135deg,
+      var(--slack-purple) 0%,
+      var(--slack-blue) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1247,11 +1247,9 @@ nav:hover {
 
 /* Regional Highlight */
 .regional-highlight {
-  background: linear-gradient(
-    135deg,
-    rgba(74, 21, 75, 0.05) 0%,
-    rgba(18, 100, 163, 0.05) 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(74, 21, 75, 0.05) 0%,
+      rgba(18, 100, 163, 0.05) 100%);
   padding: 0.25rem 0.75rem;
   border-radius: 4px;
   font-weight: 600;

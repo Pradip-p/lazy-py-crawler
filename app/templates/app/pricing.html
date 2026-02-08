@@ -1,0 +1,366 @@
+{% extends "base.html" %} {% block title %}Pricing & FAQ | Enterprise Data
+Extraction | Crawlio{% endblock %} {% block head %}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What's included in each pricing tier?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Starter tier ($100 one-time) includes up to 5,000 data points and weekly refreshes. Growth Choice ($200/mo) adds daily delivery, REST API & Webhooks, and priority support. Enterprise tier includes dedicated infrastructure, custom integrations, 99.9% SLA, and 24/7 dedicated support."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you handle JavaScript-heavy websites?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We use advanced Playwright integration to render JavaScript-heavy sites (React, Vue, Angular) in real browsers. This ensures we capture fully rendered content handling dynamic loading, infinite scroll, and complex interactions seamlessly."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Crawlio compliant with Australian Privacy Act and CCPA/GDPR?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, absolutely. We're fully compliant with the Australian Privacy Act 1988, CCPA, and GDPR. Our infrastructure is SOC 2 Type II certified, and we only collect publicly available data."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What data formats do you support?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We deliver data in CSV, Excel, JSON, Google Sheets, and via webhooks/APIs. You can also integrate directly with your database (MongoDB, PostgreSQL) or data warehouse (Snowflake, BigQuery)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you have local teams in Australia and USA?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! We have dedicated support teams operating in Australian (AEST/AEDT) and US (EST/PST) time zones suitable for your business hours."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How quickly can I start collecting data?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For standard use cases, you can start immediately with our open-source tool. For custom enterprise solutions, we typically deliver first data samples within 48 hours. Full production deployment usually takes 3-5 business days."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you offer free trials for the Pro Dashboard?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! Contact us for a 14-day free trial of the Pro Dashboard. For Enterprise customers, we offer a 30-day pilot program."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What makes Crawlio different from other scraping services?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Unlike basic scraping tools, Crawlio combines automation, AI, and human expertise. We deliver structured, validated, production-ready data with predictive insights and anomaly detection."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does Crawlio help with E-commerce product and price scraping?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Crawlio provides specialized crawlers for major e-commerce platforms like Amazon, eBay, and Walmart. We track millions of SKUs, monitoring price changes, inventory levels, and competitor promotions in real-time, helping you maintain a competitive edge."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use Crawlio for large-scale real estate data extraction?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, our platform is built for scale. We extract property listings, historical pricing, and agent data from global real estate portals. With our residential proxy network, we ensure high success rates even on sites with advanced bot protection."
+        }
+      }
+    ]
+  }
+</script>
+{% endblock %} {% block content %}
+<section class="section pricing-section" id="pricing" style="padding-top: 6rem">
+  <div class="container">
+    <h2 class="section-title">Professional Data Solutions</h2>
+    <p class="section-subtitle">
+      Choose the plan that fits your execution needs
+    </p>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-header">
+          <h3>Starter</h3>
+          <div class="price">$100<span> one-time</span></div>
+          <p class="pricing-desc">
+            Perfect for tracking up to 5,000 products or listings.
+          </p>
+        </div>
+        <ul class="pricing-features">
+          <li><span class="checkmark">✓</span> Up to 5,000 Data Points</li>
+          <li><span class="checkmark">✓</span> Weekly Data Refresh</li>
+          <li><span class="checkmark">✓</span> CSV / Excel Delivery</li>
+          <li><span class="checkmark">✓</span> Standard Proxies</li>
+        </ul>
+        <a href="/contact?type=starter" class="pricing-btn">Get Started</a>
+      </div>
+      <div class="pricing-card featured-pricing">
+        <div class="popular-badge">Growth Choice</div>
+        <div class="pricing-header">
+          <h3>Growth Choice</h3>
+          <div class="price">$200<span>/mo</span></div>
+          <p class="pricing-desc">
+            High-frequency tracking with daily updates and API access.
+          </p>
+        </div>
+        <ul class="pricing-features">
+          <li><span class="checkmark">✓</span> Up to 10,000 Data Points</li>
+          <li><span class="checkmark">✓</span> Daily Delivery</li>
+          <li><span class="checkmark">✓</span> REST API & Webhooks</li>
+          <li><span class="checkmark">✓</span> Competitor Price Alerts</li>
+          <li><span class="checkmark">✓</span> Residential Proxies</li>
+          <li><span class="checkmark">✓</span> Priority Support</li>
+        </ul>
+        <a href="/contact?type=pro" class="pricing-btn primary">Get Pro Now</a>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-header">
+          <h3>Enterprise</h3>
+          <div class="price">Custom</div>
+          <p class="pricing-desc">
+            Unlimited scale, custom delivery pipelines, and 24/7 monitoring.
+          </p>
+        </div>
+        <ul class="pricing-features">
+          <li><span class="checkmark">✓</span> Unlimited Data Volume</li>
+          <li><span class="checkmark">✓</span> Real-time Extraction</li>
+          <li><span class="checkmark">✓</span> Custom Data Schemas</li>
+          <li><span class="checkmark">✓</span> Dedicated Proxy Pools</li>
+          <li><span class="checkmark">✓</span> SOC 2 Type II Security</li>
+          <li><span class="checkmark">✓</span> Dedicated Account Manager</li>
+        </ul>
+        <a href="/contact" class="pricing-btn">Talk to Sales</a>
+      </div>
+    </div>
+
+    <div class="delivery-info">
+      <h3 style="margin-bottom: 1rem; font-size: 1.2rem; font-weight: 700">
+        Zero-Maintenance Data Delivery
+      </h3>
+      <p
+        style="
+          color: var(--text-muted);
+          font-size: 0.95rem;
+          margin-bottom: 1.5rem;
+        "
+      >
+        We handle the scrapers, proxies, and cleaning. You get the data in your
+        preferred format.
+      </p>
+      <div class="format-tags">
+        <span class="format-tag">CSV / Excel</span>
+        <span class="format-tag">Google Sheets</span>
+        <span class="format-tag">JSON / API</span>
+        <span class="format-tag">Webhooks</span>
+        <span class="format-tag">S3 / SFTP</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section
+  class="section faq-section"
+  id="faq"
+  style="padding-top: 4rem; padding-bottom: 8rem"
+>
+  <div class="container">
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <p class="section-subtitle">Everything you need to know about Crawlio</p>
+
+    <div class="faq-container" style="margin-top: 3rem">
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>What's included in each pricing tier?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>
+            The Starter tier ($100 one-time) includes up to 5,000 data points
+            and weekly refreshes. Growth Choice ($200/mo) adds daily delivery,
+            REST API & Webhooks, and priority support. Enterprise tier includes
+            dedicated infrastructure, custom integrations, 99.9% SLA, and 24/7
+            dedicated support with custom pricing based on your needs.
+          </p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>How do you handle JavaScript-heavy websites?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>
+            We use advanced Playwright integration to render JavaScript-heavy
+            sites (React, Vue, Angular) in real browsers. This ensures we
+            capture fully rendered content just as a human user would see it,
+            handling dynamic loading, infinite scroll, and complex interactions
+            seamlessly.
+          </p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span
+            >Is Crawlio compliant with Australian Privacy Act and
+            CCPA/GDPR?</span
+          >
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>
+            Yes, absolutely. We're fully compliant with the Australian Privacy
+            Act 1988, CCPA, and GDPR. Our infrastructure is SOC 2 Type II
+            certified, and we only collect publicly available data. We provide
+            detailed compliance documentation and work with your legal team to
+            ensure all requirements are met.
+          </p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>What data formats do you support?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>
+            We deliver data in CSV, Excel, JSON, Google Sheets, and via
+            webhooks/APIs. You can also integrate directly with your database
+            (MongoDB, PostgreSQL) or data warehouse (Snowflake, BigQuery).
+            Custom formats are available for Enterprise customers.
+          </p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Do you have local teams in Australia and USA?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>
+            Yes! We have dedicated support teams operating in Australian
+            (AEST/AEDT) and US (EST/PST) time zones. This ensures you get timely
+            responses during your business hours and that we understand regional
+            compliance and business requirements.
+          </p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>How quickly can I start collecting data?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>
+            For standard use cases, you can start immediately with our
+            open-source tool. For custom enterprise solutions, we typically
+            deliver first data samples within 48 hours of initial consultation.
+            Full production deployment usually takes 3-5 business days depending
+            on complexity.
+          </p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Do you offer free trials for the Pro Dashboard?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>
+            Yes! Contact us for a 14-day free trial of the Pro Dashboard. For
+            Enterprise customers, we offer a 30-day pilot program with full
+            access to all features to ensure it meets your requirements before
+            commitment.
+          </p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span
+            >What makes Crawlio different from other scraping services?</span
+          >
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>
+            Unlike basic scraping tools, Crawlio combines automation, AI, and
+            human expertise. We don't just extract data - we deliver structured,
+            validated, production-ready AI-powered . Our AI models provide
+            predictive insights and anomaly detection, not just raw data dumps.
+            Plus, our regional presence and compliance expertise set us apart.
+          </p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span
+            >How does Crawlio help with E-commerce product and price
+            scraping?</span
+          >
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>
+            Crawlio provides specialized crawlers for major e-commerce platforms
+            like Amazon, eBay, and Walmart. We track millions of SKUs,
+            monitoring price changes, inventory levels, and competitor
+            promotions in real-time, helping you maintain a competitive edge and
+            optimize your digital shelf presence.
+          </p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span
+            >Can I use Crawlio for large-scale real estate data
+            extraction?</span
+          >
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>
+            Yes, our platform is built for scale. We extract property listings,
+            historical pricing, and agent data from global real estate portals.
+            With our residential proxy network and advanced session management,
+            we ensure high success rates even on sites with advanced
+            anti-scraping protections.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %} {% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // FAQ Accordion
+    const faqItems = document.querySelectorAll(".faq-item");
+
+    faqItems.forEach((item) => {
+      const question = item.querySelector(".faq-question");
+      question.addEventListener("click", () => {
+        const isActive = item.classList.contains("active");
+        faqItems.forEach((otherItem) => otherItem.classList.remove("active"));
+        if (!isActive) item.classList.add("active");
+      });
+    });
+  });
+</script>
+{% endblock %}

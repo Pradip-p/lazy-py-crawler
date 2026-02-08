@@ -22,8 +22,8 @@ RUN uv pip install --system -e .
 # Install Chromium browser binary (dependencies are already in the base image)
 RUN playwright install chromium
 
-# Expose the port FastAPI will run on
+# Expose the port Django will run on
 EXPOSE 8000
 
-# Start the FastAPI application
-CMD ["python", "-m", "app.main"]
+# Start the Django application
+CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]

@@ -1,0 +1,72 @@
+{% extends "admin/base.html" %} {% block title %}{{ title }} | {{
+site_title|default:_('Django site admin') }}{% endblock %} {% block extrastyle
+%} {{ block.super }}
+<style>
+  :root {
+    --primary: #4a154b !important;
+    --secondary: #350d36 !important;
+    --link-fg: #4a154b !important;
+    --link-hover-color: #350d36 !important;
+    --header-bg: #4a154b !important;
+    --header-link-color: #ffffff !important;
+    --breadcrumbs-fg: #f8f8f8 !important;
+    --breadcrumbs-bg: #350d36 !important;
+    --button-bg: #4a154b !important;
+    --button-hover-bg: #350d36 !important;
+    --default-button-bg: #616061 !important;
+    --close-button-bg: #e01e5a !important;
+    --delete-button-bg: #ba2121 !important;
+  }
+
+  #header {
+    background: var(--header-bg) !important;
+    color: var(--header-link-color) !important;
+  }
+
+  .module h2,
+  .panel h2,
+  .panel.caption {
+    background: var(--primary) !important;
+  }
+
+  div.breadcrumbs {
+    background: var(--breadcrumbs-bg) !important;
+    color: var(--breadcrumbs-fg) !important;
+  }
+
+  .button,
+  input[type="submit"],
+  input[type="button"],
+  .submit-row input,
+  a.button {
+    background: var(--button-bg) !important;
+    border-radius: 4px !important;
+  }
+
+  .button.default,
+  input[type="submit"].default {
+    background: var(--secondary) !important;
+  }
+
+  #branding h1 {
+    font-weight: 800 !important;
+    font-style: italic !important;
+    letter-spacing: -1px !important;
+  }
+</style>
+{% endblock %} {% block branding %}
+<h1 id="site-name">
+  <a href="{% url 'admin:index' %}">
+    <span style="color: #ffffff">CRAWLIO</span>
+    <span
+      style="
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.6em;
+        font-style: normal;
+        vertical-align: middle;
+      "
+      >ADMIN</span
+    >
+  </a>
+</h1>
+{% endblock %}

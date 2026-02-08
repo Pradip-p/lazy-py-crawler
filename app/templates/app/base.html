@@ -1,0 +1,320 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Crawlio {% endblock %}</title>
+    <meta
+      name="description"
+      content="{% block description %}AI-powered web scraping and data extraction services. Get clean, structured data from any website with automated tracking and intelligent insights.{% endblock %}"
+    />
+    <meta
+      name="google-site-verification"
+      content="d9Xz735S7Z5biUJFc08fRU-Ye1qJdGpp_HOo_8HqPUg"
+    />
+
+    <!-- Favicon -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{% static 'app/favicon_io/apple-touch-icon.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{% static 'app/favicon_io/favicon-32x32.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{% static 'app/favicon_io/favicon-16x16.png' %}"
+    />
+    <link
+      rel="manifest"
+      href="{% static 'app/favicon_io/site.webmanifest' %}"
+    />
+
+    <!-- Google AdSense -->
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2021823000621310"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- SEO Meta Tags -->
+    <meta name="google-adsense-account" content="ca-pub-2021823000621310" />
+    <meta
+      name="keywords"
+      content="{% block keywords %}web scraping service, data extraction API, automated scraping, enterprise crawler, python web scraper, google search scraping, market intelligence, business data extraction, AI data insights, competitive monitoring, automated web data, lead generation data, market research tools, business automation{% endblock %}"
+    />
+    <meta name="author" content="Crawlio Team" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://crawlio.org{{ request.path }}" />
+
+    <!-- Favicons -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{% static 'app/favicon_io/apple-touch-icon.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{% static 'app/favicon_io/favicon-32x32.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{% static 'app/favicon_io/favicon-16x16.png' %}"
+    />
+    <link
+      rel="shortcut icon"
+      href="{% static 'app/favicon_io/favicon.ico' %}"
+    />
+    <link
+      rel="manifest"
+      href="{% static 'app/favicon_io/site.webmanifest' %}"
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://crawlio.org{{ request.path }}" />
+    <meta
+      property="og:title"
+      content="{% block og_title %}Crawlio | AI-powered data extraction & web scraping Services{% endblock %}"
+    />
+    <meta
+      property="og:description"
+      content="{% block og_description %}AI-powered web scraping and data extraction services. Get clean, structured data from any website with automated tracking and intelligent insights.{% endblock %}"
+    />
+    <meta
+      property="og:image"
+      content="https://crawlio.org/static/images/og-image.jpg"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://crawlio.org{{ request.path }}"
+    />
+    <meta
+      property="twitter:title"
+      content="{% block twitter_title %}Crawlio | Enterprise Web Scraping & Data Extraction Services{% endblock %}"
+    />
+    <meta
+      property="twitter:description"
+      content="{% block twitter_description %}Automated web scraping and data extraction services. Get clean, structured data from any website. Trusted by enterprises for market intelligence and lead generation.{% endblock %}"
+    />
+    <meta
+      property="twitter:image"
+      content="https://crawlio.org/static/images/og-image.jpg"
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'app/style.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static 'app/cookies.css' %}"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="{% static 'app/cookies.css' %}" />
+    </noscript>
+    {% if active_page == 'blog' or active_page == 'admin_blog' %}
+    <link
+      rel="stylesheet"
+      href="{% static 'app/blog.css' %}"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="{% static 'app/blog.css' %}" />
+    </noscript>
+    {% endif %}
+    <link
+      rel="stylesheet"
+      href="{% static 'app/toast.css' %}"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="{% static 'app/toast.css' %}" />
+    </noscript>
+    {% block head %}{% endblock %}
+  </head>
+
+  <body>
+    <!-- Global Toast Container -->
+    <div id="toast-container"></div>
+
+    <div class="page-wrapper">
+      {% include 'includes/promo_bar.html' %}
+      <nav class="{% if active_page == 'dashboard' %}nav-dashboard{% endif %}">
+        <div class="container nav-container">
+          <a href="/" class="logo">crawlio </a>
+          <button class="mobile-menu-toggle" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <ul class="nav-links">
+            <li>
+              <a
+                href="/"
+                class="{% if active_page == 'home' %}active{% endif %}"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="/about"
+                class="{% if active_page == 'about' %}active{% endif %}"
+                >About</a
+              >
+            </li>
+            <li>
+              <a
+                href="/pricing"
+                class="{% if active_page == 'pricing' %}active{% endif %}"
+                >Pricing</a
+              >
+            </li>
+            <li>
+              <a
+                href="/blog"
+                class="{% if active_page == 'blog' %}active{% endif %}"
+                >Blog</a
+              >
+            </li>
+            <!-- team -->
+            <li>
+              <a
+                href="/company"
+                class="{% if active_page == 'company' %}active{% endif %}"
+                >Team</a
+              >
+            </li>
+
+            {% if user.is_authenticated %} {% if user.is_superuser %}
+            <!-- admin -->
+            <li>
+              <a
+                href="/admin"
+                class="{% if active_page == 'admin_contacts' or active_page == 'admin_blog' or active_page == 'dashboard' %}active{% endif %}"
+                >Admin Panel</a
+              >
+            </li>
+            {% else %}
+            <li>
+              <a
+                href="/dashboard"
+                class="{% if active_page == 'dashboard' %}active{% endif %}"
+                >Dashboard</a
+              >
+            </li>
+            {% endif %}
+
+            <li>
+              <a href="/auth/logout" class="logout-link">Logout</a>
+            </li>
+            {% else %}
+            <li>
+              <a
+                href="/contact"
+                class="{% if active_page == 'contact' %}active{% endif %}"
+                >Contact</a
+              >
+            </li>
+            <li><a href="/login" class="btn-primary">Get Started</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
+
+      <main>{% block content %}{% endblock %}</main>
+
+      {% if active_page != 'dashboard' %}
+      <footer>
+        <div class="container text-center">
+          <div class="footer-logo">crawlio</div>
+          <p style="margin-bottom: 1rem; opacity: 0.8">Kathmandu, Nepal</p>
+          <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/company">Team</a>
+            <a href="/contact">Support</a>
+            <a href="/faq">FAQ</a>
+            <a href="/privacy">Privacy Policy</a>
+          </div>
+          <p>
+            &copy; <span id="current-year">2025</span> Crawlio . Built for data
+            driven teams.
+          </p>
+        </div>
+      </footer>
+      {% endif %}
+    </div>
+
+    <script>
+      // Set current year
+      document.getElementById("current-year").textContent =
+        new Date().getFullYear();
+    </script>
+
+    <script>
+      // Mobile menu toggle
+      document.addEventListener("DOMContentLoaded", function () {
+        const menuToggle = document.querySelector(".mobile-menu-toggle");
+        const navLinks = document.querySelector(".nav-links");
+
+        if (menuToggle) {
+          menuToggle.addEventListener("click", function () {
+            navLinks.classList.toggle("active");
+            menuToggle.classList.toggle("active");
+          });
+
+          // Close menu when clicking outside
+          document.addEventListener("click", function (event) {
+            if (!event.target.closest(".nav-container")) {
+              navLinks.classList.remove("active");
+              menuToggle.classList.remove("active");
+            }
+          });
+        }
+
+        // Mobile Dropdown Toggle
+        const dropdowns = document.querySelectorAll(".dropdown");
+        dropdowns.forEach((dropdown) => {
+          const toggle = dropdown.querySelector(".dropdown-toggle");
+          if (toggle) {
+            toggle.addEventListener("click", (e) => {
+              // Only on mobile/tablet
+              if (window.innerWidth <= 768) {
+                e.preventDefault();
+                dropdown.classList.toggle("active");
+              }
+            });
+          }
+        });
+      });
+    </script>
+
+    {% include 'includes/cookie_consent.html' %}
+    <script src="{% static 'app/cookies.js' %}" defer></script>
+    <script src="{% static 'app/toast.js' %}" defer></script>
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

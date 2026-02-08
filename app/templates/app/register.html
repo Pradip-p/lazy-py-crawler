@@ -1,0 +1,236 @@
+{% extends "base.html" %} {% block title %}Register | Crawlio {% endblock %} {%
+block content %}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://crawlio.org"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Register",
+        "item": "https://crawlio.org/register"
+      }
+    ]
+  }
+</script>
+<section
+  class="hero"
+  style="
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--slack-purple);
+  "
+>
+  <div
+    class="container"
+    style="display: flex; justify-content: center; width: 100%"
+  >
+    <div
+      class="auth-card"
+      style="
+        width: 100%;
+        max-width: 420px;
+        padding: 2.5rem;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      "
+    >
+      <div class="text-center" style="margin-bottom: 2rem">
+        <h1
+          style="
+            color: #1d1c1d;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+            font-size: 2rem;
+          "
+        >
+          Create Account
+        </h1>
+        <p style="color: #616061; font-size: 1.1rem">Join Crawlio today</p>
+      </div>
+
+      <form method="post" style="text-align: left">
+        {% csrf_token %} {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+          {% for error in form.non_field_errors %} {{ error }} {% endfor %}
+        </div>
+        {% endif %}
+
+        <div style="margin-bottom: 1.25rem">
+          <label
+            for="id_full_name"
+            style="
+              display: block;
+              margin-bottom: 0.5rem;
+              color: #1d1c1d;
+              font-weight: 600;
+            "
+            >Full Name</label
+          >
+          <input
+            type="text"
+            id="id_full_name"
+            name="full_name"
+            placeholder="John Doe"
+            required
+            style="
+              width: 100%;
+              padding: 0.9rem;
+              border-radius: 6px;
+              border: 1px solid #ccc;
+              font-size: 1rem;
+              color: #1d1c1d;
+              transition: border 0.2s;
+            "
+          />
+          {% if form.full_name.errors %}
+          <div
+            class="text-danger"
+            style="font-size: 0.875em; margin-top: 0.25rem"
+          >
+            {{ form.full_name.errors.0 }}
+          </div>
+          {% endif %}
+        </div>
+
+        <div style="margin-bottom: 1.25rem">
+          <label
+            for="id_email"
+            style="
+              display: block;
+              margin-bottom: 0.5rem;
+              color: #1d1c1d;
+              font-weight: 600;
+            "
+            >Email</label
+          >
+          <input
+            type="email"
+            id="id_email"
+            name="email"
+            placeholder="name@work-email.com"
+            required
+            style="
+              width: 100%;
+              padding: 0.9rem;
+              border-radius: 6px;
+              border: 1px solid #ccc;
+              font-size: 1rem;
+              color: #1d1c1d;
+              transition: border 0.2s;
+            "
+          />
+          {% if form.email.errors %}
+          <div
+            class="text-danger"
+            style="font-size: 0.875em; margin-top: 0.25rem"
+          >
+            {{ form.email.errors.0 }}
+          </div>
+          {% endif %}
+        </div>
+
+        <div style="margin-bottom: 1.25rem">
+          <label
+            for="id_password1"
+            style="
+              display: block;
+              margin-bottom: 0.5rem;
+              color: #1d1c1d;
+              font-weight: 600;
+            "
+            >Password</label
+          >
+          <input
+            type="password"
+            id="id_password1"
+            name="password1"
+            placeholder="Create a password"
+            required
+            style="
+              width: 100%;
+              padding: 0.9rem;
+              border-radius: 6px;
+              border: 1px solid #ccc;
+              font-size: 1rem;
+              color: #1d1c1d;
+              transition: border 0.2s;
+            "
+          />
+        </div>
+        <div style="margin-bottom: 1.5rem">
+          <label
+            for="id_password2"
+            style="
+              display: block;
+              margin-bottom: 0.5rem;
+              color: #1d1c1d;
+              font-weight: 600;
+            "
+            >Confirm Password</label
+          >
+          <input
+            type="password"
+            id="id_password2"
+            name="password2"
+            placeholder="Confirm password"
+            required
+            style="
+              width: 100%;
+              padding: 0.9rem;
+              border-radius: 6px;
+              border: 1px solid #ccc;
+              font-size: 1rem;
+              color: #1d1c1d;
+              transition: border 0.2s;
+            "
+          />
+          {% if form.password2.errors %}
+          <div
+            class="text-danger"
+            style="font-size: 0.875em; margin-top: 0.25rem"
+          >
+            {{ form.password2.errors.0 }}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="auth-button-container">
+          <button
+            type="submit"
+            class="btn-primary"
+            style="font-size: 1.1rem; padding: 1rem"
+          >
+            Sign Up
+          </button>
+        </div>
+      </form>
+
+      <div class="text-center" style="margin-top: 2rem">
+        <p style="font-size: 0.95rem; color: #616061">
+          Already have an account?
+          <a
+            href="/login"
+            style="
+              color: var(--slack-blue);
+              font-weight: 600;
+              text-decoration: none;
+            "
+            >Sign in</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

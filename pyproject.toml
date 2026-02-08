@@ -1,5 +1,5 @@
 [project]
-name = "lazy-crawler"
+name = "crawlio"
 version = "2.0.1"
 description = "A powerful and extensible web crawling framework built with Scrapy and Playwright."
 readme = "README.md"
@@ -49,7 +49,7 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/Pradip-p/lazy-py-crawler"
+Homepage = "https://github.com/Pradip-p/crawlio"
 
 [build-system]
 requires = ["hatchling"]

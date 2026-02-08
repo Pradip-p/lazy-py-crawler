@@ -1,5 +1,5 @@
 """
-Django settings for lazy_crawler_django project.
+Django settings for crawlio project.
 """
 
 import os
@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # Use PostgreSQL as the primary production database
 DATABASES = {
-    'default': env.db('DATABASE_URL_DJANGO', default=f'postgres://{env("POSTGRES_USER", default="postgres")}:{env("POSTGRES_PASSWORD", default="postgres")}@{env("POSTGRES_SERVER", default="postgres")}:{env("POSTGRES_PORT", default="5432")}/{env("POSTGRES_DB", default="lazy_crawler")}')
+    'default': env.db('DATABASE_URL_DJANGO', default=f'postgres://{env("POSTGRES_USER", default="postgres")}:{env("POSTGRES_PASSWORD", default="postgres")}@{env("POSTGRES_SERVER", default="postgres")}:{env("POSTGRES_PORT", default="5432")}/crawlio')
 }
 
 # Custom User Model

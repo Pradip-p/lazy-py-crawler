@@ -20,6 +20,6 @@ jobs:
           username: ${{ secrets.UBUNTU_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /root/lazy-py-crawler
+            cd /root/crawlio
             git pull origin main
             docker compose up -d --build --force-recreate

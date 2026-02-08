@@ -19,7 +19,7 @@ services:
       retries: 3
       start_period: 40s
     networks:
-      - lazy-crawler-network
+      - crawlio-network
     deploy:
       resources:
         limits:
@@ -41,7 +41,7 @@ services:
       - app
     restart: unless-stopped
     networks:
-      - lazy-crawler-network
+      - crawlio-network
 
   postgres:
     image: postgres:15
@@ -58,7 +58,7 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - lazy-crawler-network
+      - crawlio-network
     deploy:
       resources:
         limits:
@@ -82,7 +82,7 @@ services:
       retries: 3
       start_period: 40s
     networks:
-      - lazy-crawler-network
+      - crawlio-network
     deploy:
       resources:
         limits:
@@ -101,7 +101,7 @@ services:
   #     - ./pull-and-serve.sh:/pull-and-serve.sh
   #   entrypoint: ["/bin/sh", "/pull-and-serve.sh"]
   #   networks:
-  #     - lazy-crawler-network
+  #     - crawlio-network
   #   deploy:
   #     resources:
   #       limits:
@@ -116,5 +116,5 @@ volumes:
   # ollama_data:
 
 networks:
-  lazy-crawler-network:
+  crawlio-network:
     driver: bridge

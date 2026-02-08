@@ -1,8 +1,8 @@
 <div align="center">
-    <h1>Lazy Crawler</h1>
+    <h1>Crawlio</h1>
     <p><strong>Extensible web crawling and data extraction framework.</strong></p>
     <p>A technical foundation for building scalable data pipelines using Scrapy and Playwright.</p>
-    <a href="https://github.com/pradip-p/lazy-crawler/releases">
+    <a href="https://github.com/pradip-p/crawlio/releases">
         <img src="https://img.shields.io/github/v/release/pradip-p/lazy-crawler?logo=github" alt="Release Version" />
     </a>
 </div>
@@ -59,17 +59,17 @@ graph TD
 | **Core Stack**    | ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) ![Scrapy](https://img.shields.io/badge/Scrapy-100000?style=for-the-badge&logo=scrapy&logoColor=white) ![Playwright](https://img.shields.io/badge/Playwright-2EAD33?style=for-the-badge&logo=playwright&logoColor=white) |
 | :---------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Code Quality**  | [![PEP8 Style](https://img.shields.io/badge/code%20style-pep8-blue)](https://www.python.org/dev/peps/pep-0008/) [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://pre-commit.com)                                                                         |
-| **Documentation** | [![docs](https://img.shields.io/badge/docs-available-brightgreen)](https://pradip-p.github.io/lazy-crawler/) [![license](https://img.shields.io/github/license/pradip-p/lazy-crawler.svg)](https://github.com/pradip-p/lazy-crawler/blob/main/LICENSE.md)                                                                     |
+| **Documentation** | [![docs](https://img.shields.io/badge/docs-available-brightgreen)](https://pradip-p.github.io/lazy-crawler/) [![license](https://img.shields.io/github/license/pradip-p/lazy-crawler.svg)](https://github.com/pradip-p/crawlio/blob/main/LICENSE.md)                                                                          |
 
 </div>
 
 ---
 
-**Lazy Crawler** is an extensible web crawling framework designed for both developers and organizations that need robust data extraction pipelines. It combines the speed of **Scrapy** with the dynamic rendering capabilities of **Playwright** to handle modern websites that use heavy JavaScript.
+**Crawlio** is an extensible web crawling framework designed for both developers and organizations that need robust data extraction pipelines. It combines the speed of **Scrapy** with the dynamic rendering capabilities of **Playwright** to handle modern websites that use heavy JavaScript.
 
-## What is Lazy Crawler?
+## What is Crawlio?
 
-If you need to collect data from websites—whether it's product prices, news articles, or social media updates—Lazy Crawler handles the hard parts for you:
+If you need to collect data from websites—whether it's product prices, news articles, or social media updates—Crawlio handles the hard parts for you:
 
 - **Automatic Scrolling & Clicking**: It can "browse" like a human to see content that only appears when you scroll or click.
 - **Multiple Save Locations**: Send your data directly to Excel (CSV), Google Sheets, or professional databases (PostgreSQL/MongoDB).
@@ -94,10 +94,10 @@ This project uses **uv** for dependency management.
 
 ```bash
 # Install from PyPI
-pip install lazy-crawler
+pip install crawlio
 
 # OR install locally with uv
-uv add lazy-crawler
+uv add crawlio
 ```
 
 For development:
@@ -258,7 +258,7 @@ Technical contributions and bug reports are welcome.
 
 ## License
 
-Lazy Crawler is licensed under the [MIT License](LICENSE).
+Crawlio is licensed under the [MIT License](LICENSE).
 
 ---
 

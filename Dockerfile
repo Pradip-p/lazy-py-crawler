@@ -26,4 +26,6 @@ RUN playwright install chromium
 EXPOSE 8000
 
 # Start the Django application
-CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+ENTRYPOINT ["docker-entrypoint.sh"]

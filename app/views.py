@@ -13,7 +13,23 @@ def index(request):
 def about(request):
     return render(request, 'about.html', {'active_page': 'about'})
 
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
 def contact(request):
+    if request.method == 'POST':
+        import json
+        from django.http import JsonResponse
+        try:
+            data = json.loads(request.body)
+            ContactSubmission.objects.create(
+                full_name=data.get('full_name'),
+                email=data.get('email'),
+                message=data.get('message')
+            )
+            return JsonResponse({'message': 'Thank you! Your message has been received.'}, status=200)
+        except Exception as e:
+            return JsonResponse({'detail': str(e)}, status=400)
     return render(request, 'app/contact.html', {'active_page': 'contact'})
 
 def pricing(request):
@@ -67,7 +83,8 @@ def register_view(request):
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
+            # Specify backend explicitly when multiple backends are configured
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             # Redirect superusers to admin, normal users to dashboard
             if user.is_superuser:
                 return redirect('/admin/')

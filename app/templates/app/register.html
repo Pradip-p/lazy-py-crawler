@@ -151,6 +151,18 @@
         </div>
       </form>
 
+      <div style="margin: 1.5rem 0; display: flex; align-items: center; gap: 1rem">
+        <div style="flex: 1; height: 1px; background: #e0e0e0"></div>
+        <span style="color: #616061; font-size: 0.9rem">OR</span>
+        <div style="flex: 1; height: 1px; background: #e0e0e0"></div>
+      </div>
+
+      {% load socialaccount %}
+      <a href="{% provider_login_url 'google' %}" class="btn-google">
+        <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" />
+        Continue with Google
+      </a>
+
       <div class="text-center" style="margin-top: 2rem">
         <p style="font-size: 0.95rem; color: #616061">
           Already have an account?

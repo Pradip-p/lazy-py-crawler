@@ -28,6 +28,21 @@ services:
         reservations:
           memory: 256M
 
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./staticfiles:/app/staticfiles:ro
+      - /etc/ssl/cloudflare:/etc/ssl/cloudflare:ro
+    depends_on:
+      - app
+    restart: unless-stopped
+    networks:
+      - lazy-crawler-network
+
   postgres:
     image: postgres:15
     ports:

@@ -17,7 +17,7 @@ WORKDIR /app
 COPY . .
 
 # Install the project and dependencies using uv
-RUN uv pip install --system -e .
+RUN uv pip install --system .
 
 # Install Chromium browser binary (dependencies are already in the base image)
 RUN playwright install chromium

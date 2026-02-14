@@ -46,6 +46,7 @@ dependencies = [
     "django-ckeditor-5>=0.2.19",
     "django-allauth>=65.14.1",
     "pyjwt>=2.11.0",
+    "gunicorn>=22.0.0",
 ]
 
 [project.urls]

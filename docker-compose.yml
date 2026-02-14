@@ -1,41 +1,40 @@
 services:
   app:
     build: .
-    ports:
-      - "127.0.0.1:8001:8000"
+    container_name: crawlio-app
+    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 3
+    expose:
+      - "8000"
     env_file:
       - .env
     depends_on:
-      - mongodb
-      - postgres
-      # - ollama
+      postgres:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
     volumes:
       - .:/app
+      - static_volume:/app/staticfiles
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
     networks:
       - crawlio-network
     deploy:
       resources:
         limits:
-          cpus: "0.30"
+          cpus: "0.50"
           memory: 512M
         reservations:
           memory: 256M
 
   nginx:
     image: nginx:alpine
+    container_name: crawlio-nginx
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
-      - ./staticfiles:/app/staticfiles:ro
+      - static_volume:/app/staticfiles:ro
       - /etc/ssl/cloudflare:/etc/ssl/cloudflare:ro
     depends_on:
       - app
@@ -45,15 +44,14 @@ services:
 
   postgres:
     image: postgres:15
-    ports:
-      - "5433:5432"
+    container_name: crawlio-postgres
     env_file:
       - .env
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -62,16 +60,15 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.20"
+          cpus: "0.30"
           memory: 384M
         reservations:
           memory: 128M
 
   mongodb:
     image: mongo:latest
+    container_name: crawlio-mongodb
     command: ["mongod", "--quiet", "--logpath", "/dev/null"]
-    ports:
-      - "27017:27017"
     volumes:
       - mongodb_data:/data/db
     restart: unless-stopped
@@ -86,34 +83,15 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.20"
+          cpus: "0.30"
           memory: 384M
         reservations:
           memory: 128M
 
-  # ollama:
-  #   image: ollama/ollama:latest
-  #   restart: unless-stopped
-  #   ports:
-  #     - "11434:11434"
-  #   volumes:
-  #     - ollama_data:/root/.ollama
-  #     - ./pull-and-serve.sh:/pull-and-serve.sh
-  #   entrypoint: ["/bin/sh", "/pull-and-serve.sh"]
-  #   networks:
-  #     - crawlio-network
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         cpus: "0.20"
-  #         memory: 512M
-  #       reservations:
-  #         memory: 256M
-
 volumes:
-  mongodb_data:
   postgres_data:
-  # ollama_data:
+  mongodb_data:
+  static_volume:
 
 networks:
   crawlio-network:
